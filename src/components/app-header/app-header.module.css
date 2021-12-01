@@ -1,0 +1,27 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    max-width: 1920px;
+    width: 100%;
+
+    background: var(--background-element);
+}
+.list {
+    display: flex;
+    alignitems: center;
+    margin: 0 auto;
+}
+.item {
+    display: flex;
+    align-items: center;
+}
+.header__logo {
+    margin: 0 auto;
+}
+.header__profile {
+    display: flex;
+    alignitems: center;
+    margin: 0 auto;
+}

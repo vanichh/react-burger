@@ -1,0 +1,24 @@
+.constructor {
+    max-width: 600px;
+    width: 100%;
+}
+.list {
+    display: flex;
+}
+
+.constructor__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.constructor__items {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.constructor__wrapper {
+    display: flex;
+    align-items: center;
+}
