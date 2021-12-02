@@ -1,12 +1,8 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import {
-    Tab,
-    Counter,
-    CurrencyIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
-
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-constructor.module.css';
+import ElemConstructor from './elem-constructor';
 
 interface DataProps {
     _id: string;
@@ -26,26 +22,6 @@ export const BurgerConstructor = (props: {
     data: Array<DataProps>;
 }): JSX.Element => {
     const [current, setCurrent] = React.useState('one');
-
-    const ElemConstructor = ({ name, image, fat }: any): JSX.Element => {
-
-        const count = (): void => {
-            
-        }
-        return (
-            <div
-                className={`${styles.constructor__items} mt-6 ml-6 mb-10 mr-4`}
-            >
-                <Counter count={1} size='default' />
-                <img className='ml-4 mr-4' src={image} alt={name} />
-                <div className={`${styles.constructor__wrapper} mt-4 mb-4`}>
-                    <p className='text text_type_main-medium mr-2'>{fat}</p>
-                    <CurrencyIcon type='primary' />
-                </div>
-                <p className='text text_type_main-default'>{name}</p>
-            </div>
-        );
-    };
 
     return (
         <section className={`${styles.constructor} ml-10`}>
@@ -89,7 +65,7 @@ export const BurgerConstructor = (props: {
                         <ElemConstructor key={elem._id} {...elem} />
                     ))}
             </div>
-            <h3 className='text text_type_main-medium mt-5'>Ингридиенты</h3>
+            <h3 className='text text_type_main-medium mt-5'>Начинки</h3>
             <div className={styles.constructor__list}>
                 {props.data
                     .filter((elem: any) => elem.type === 'main')
