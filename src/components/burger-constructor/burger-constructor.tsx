@@ -18,17 +18,19 @@ interface DataProps {
     image_large: string;
     __v: number;
 }
-export const BurgerConstructor = (props: {
+type ingtidientType = 'bun' | 'sauce' | 'main';
+export const BurgerConstructor = ({
+    data,
+}: {
     data: Array<DataProps>;
 }): JSX.Element => {
-    const [current, setCurrent] = React.useState<'bun' | 'sauce' | 'main'>(
-        'bun'
-    );
-    const titleIngridient = {
-        bun: 'Булки',
-        sauce: 'Соусы',
-        main: 'Начинки',
+    const [current, setCurrent] = React.useState<ingtidientType>('bun');
+    enum titleIngridient  {
+        bun = 'Булки',
+        sauce ='Соусы',
+        main = 'Начинки',
     };
+    const arrType: string[] = ['bun', 'sauce', 'main'];
 
     return (
         <section className={`${styles.constructor} ml-10`}>
@@ -56,16 +58,20 @@ export const BurgerConstructor = (props: {
                     Начинки
                 </Tab>
             </div>
-            <h3 className='text text_type_main-medium mt-5'>
-                {titleIngridient[current]}
-            </h3>
-            <div className={styles.constructor__list}>
-                {props.data
-                    .filter((elem: any) => elem.type === current)
-                    .map((elem: any) => (
-                        <ElemConstructor key={elem._id} {...elem} />
-                    ))}
-            </div>
+            {arrType.map((item: any, index) => (
+                <section key={index} id={item}>
+                    <h3 className='text text_type_main-medium mt-5'>
+                        {titleIngridient[item]}
+                    </h3>
+                    <div className={styles.constructor__list}>
+                        {data
+                            .filter((elem: any) => elem.type === item)
+                            .map((elem: any) => (
+                                <ElemConstructor key={elem._id} {...elem} />
+                            ))}
+                    </div>
+                </section>
+            ))}
         </section>
     );
 };
