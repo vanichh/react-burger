@@ -5,6 +5,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './burger-ingredients.module.css';
+import iconIngreidient from '../../images/burger-ingredients/icon-ingridients.png';
 
 interface DataProps {
     _id: string;
@@ -22,34 +23,19 @@ interface DataProps {
 }
 
 const BurgerIngredients = (props: { data: Array<DataProps> }): JSX.Element => {
-    const ElemIngredients = ({
-        type,
-        isLocked,
-        handleClose,
-        text,
-        thumbnail,
-        price,
-    }: any): JSX.Element => {
-        return (
-            <ConstructorElement
-                type={type}
-                isLocked={isLocked}
-                handleClose={handleClose}
-                text={text}
-                thumbnail={thumbnail}
-                price={price}
-            />
-        );
-    };
-
     return (
         <section className={`${styles.ingridients} mt-25 ml-4 mr-4`}>
             {props.data.map((item, index, array) => (
                 <div
                     key={item._id}
-                    className={`${styles.ingridients__wrapper} mb-4`}
+                    className={`${styles.ingridients__wrapper} mb-4 ml-4 mr-4`}
                 >
-                    <ElemIngredients
+                    <img
+                        src={iconIngreidient}
+                        alt={item.name}
+                        className={styles.ingridients__img}
+                    />
+                    <ConstructorElement
                         type={
                             index === 0
                                 ? 'top'
@@ -57,7 +43,7 @@ const BurgerIngredients = (props: { data: Array<DataProps> }): JSX.Element => {
                                 ? 'bottom'
                                 : undefined
                         }
-                        handleClose={false}
+                        handleClose={() => false}
                         price={item.price}
                         text={item.name}
                         thumbnail={item.image}

@@ -5,17 +5,27 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-constructor.module.css';
 
-const ElemConstructor = ({ name, image, fat }: any): JSX.Element => {
-    const [current, setCurrent] = React.useState(0);
+interface ElemConstructorProps {
+    name: string;
+    image: string;
+    fat: string;
+}
+
+const ElemConstructor = ({
+    name,
+    image,
+    fat,
+}: ElemConstructorProps): JSX.Element => {
+    const [current, setCurrent] = React.useState<number>(0);
 
     const cuppentPlus = () => setCurrent((prev) => ++prev);
 
     return (
         <div
-            className={`${styles.constructor__items} mt-6 ml-6 mb-10 mr-4`}
+            className={`${styles.constructor__items} mt-6 ml-4 mb-10 mr-4`}
             onClick={cuppentPlus}
         >
-            <Counter count={current} size='default' />
+            {current ? <Counter count={current} size='default' /> : null}
             <img className='ml-4 mr-4' src={image} alt={name} />
             <div className={`${styles.constructor__wrapper} mt-4 mb-4`}>
                 <p className='text text_type_main-medium mr-2'>{fat}</p>

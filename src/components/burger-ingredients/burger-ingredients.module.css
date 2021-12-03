@@ -1,9 +1,7 @@
 .ingridients {
     max-width: 600px;
+    justify-self: end;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
 }
 .ingridients__wrapper {
     display: flex;
@@ -12,5 +10,9 @@
 .ingridients__buy {
     display: flex;
     align-items: center;
-    align-self: end;
+    width: fit-content;
+    margin-left: auto;
+}
+.ingridients__img {
+    margin-right: auto;
 }

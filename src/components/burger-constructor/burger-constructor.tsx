@@ -21,54 +21,47 @@ interface DataProps {
 export const BurgerConstructor = (props: {
     data: Array<DataProps>;
 }): JSX.Element => {
-    const [current, setCurrent] = React.useState('one');
+    const [current, setCurrent] = React.useState<'bun' | 'sauce' | 'main'>(
+        'bun'
+    );
+    const titleIngridient = {
+        bun: 'Булки',
+        sauce: 'Соусы',
+        main: 'Начинки',
+    };
 
     return (
         <section className={`${styles.constructor} ml-10`}>
             <h2 className='text text_type_main-large mt-10'>Соберите бургер</h2>
             <div className={`${styles.list} mt-5`}>
                 <Tab
-                    value='one'
-                    active={current === 'one'}
-                    onClick={setCurrent}
+                    value='bun'
+                    active={current === 'bun'}
+                    onClick={() => setCurrent('bun')}
                 >
                     Булки
                 </Tab>
                 <Tab
-                    value='two'
-                    active={current === 'two'}
-                    onClick={setCurrent}
+                    value='sauce'
+                    active={current === 'sauce'}
+                    onClick={() => setCurrent('sauce')}
                 >
                     Соусы
                 </Tab>
                 <Tab
-                    value='three'
-                    active={current === 'three'}
-                    onClick={setCurrent}
+                    value='main'
+                    active={current === 'main'}
+                    onClick={() => setCurrent('main')}
                 >
                     Начинки
                 </Tab>
             </div>
-            <h3 className='text text_type_main-medium mt-5'>Булки</h3>
+            <h3 className='text text_type_main-medium mt-5'>
+                {titleIngridient[current]}
+            </h3>
             <div className={styles.constructor__list}>
                 {props.data
-                    .filter((elem: any) => elem.type === 'bun')
-                    .map((elem: any) => (
-                        <ElemConstructor key={elem._id} {...elem} />
-                    ))}
-            </div>
-            <h3 className='text text_type_main-medium mt-5'>Соусы</h3>
-            <div className={styles.constructor__list}>
-                {props.data
-                    .filter((elem: any) => elem.type === 'sauce')
-                    .map((elem: any) => (
-                        <ElemConstructor key={elem._id} {...elem} />
-                    ))}
-            </div>
-            <h3 className='text text_type_main-medium mt-5'>Начинки</h3>
-            <div className={styles.constructor__list}>
-                {props.data
-                    .filter((elem: any) => elem.type === 'main')
+                    .filter((elem: any) => elem.type === current)
                     .map((elem: any) => (
                         <ElemConstructor key={elem._id} {...elem} />
                     ))}
