@@ -7,6 +7,23 @@
     display: flex;
 }
 
+.wrapper {
+    overflow-y: scroll;
+    max-height: inherit;
+}
+
+.wrapper::-webkit-scrollbar {
+    width: 8px; 
+    background-color: #2F2F37;
+    border-radius: 0;
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+    background-color: #8585AD;;
+    border-radius: 0;
+}
+
+
 .constructor__list {
     display: grid;
     grid-template-columns: 50% 50%;

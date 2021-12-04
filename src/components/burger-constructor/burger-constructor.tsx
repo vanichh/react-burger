@@ -25,12 +25,12 @@ export const BurgerConstructor = ({
     data: Array<DataProps>;
 }): JSX.Element => {
     const [current, setCurrent] = React.useState<ingtidientType>('bun');
-    enum titleIngridient  {
+    enum titleIngridient {
         bun = 'Булки',
-        sauce ='Соусы',
+        sauce = 'Соусы',
         main = 'Начинки',
-    };
-    const arrType: string[] = ['bun', 'sauce', 'main'];
+    }
+    const arrType: ('bun' | 'sauce' | 'main')[] = ['bun', 'sauce', 'main'];
 
     return (
         <section className={`${styles.constructor} ml-10`}>
@@ -39,39 +39,38 @@ export const BurgerConstructor = ({
                 <Tab
                     value='bun'
                     active={current === 'bun'}
-                    onClick={() => setCurrent('bun')}
-                >
+                    onClick={() => setCurrent('bun')}>
                     Булки
                 </Tab>
                 <Tab
                     value='sauce'
                     active={current === 'sauce'}
-                    onClick={() => setCurrent('sauce')}
-                >
+                    onClick={() => setCurrent('sauce')}>
                     Соусы
                 </Tab>
                 <Tab
                     value='main'
                     active={current === 'main'}
-                    onClick={() => setCurrent('main')}
-                >
+                    onClick={() => setCurrent('main')}>
                     Начинки
                 </Tab>
             </div>
-            {arrType.map((item: any, index) => (
-                <section key={index} id={item}>
-                    <h3 className='text text_type_main-medium mt-5'>
-                        {titleIngridient[item]}
-                    </h3>
-                    <div className={styles.constructor__list}>
-                        {data
-                            .filter((elem: any) => elem.type === item)
-                            .map((elem: any) => (
-                                <ElemConstructor key={elem._id} {...elem} />
-                            ))}
-                    </div>
-                </section>
-            ))}
+            <div className={styles.wrapper}>
+                {arrType.map((item, index) => (
+                    <section key={index} id={item}>
+                        <h3 className='text text_type_main-medium mt-5'>
+                            {titleIngridient[item]}
+                        </h3>
+                        <div className={styles.constructor__list}>
+                            {data
+                                .filter((elem: any) => elem.type === item)
+                                .map((elem: any) => (
+                                    <ElemConstructor key={elem._id} {...elem} />
+                                ))}
+                        </div>
+                    </section>
+                ))}
+            </div>
         </section>
     );
 };

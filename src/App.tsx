@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './App.module.css';
 
 import AppHeader from './components/app-header/app-header';
@@ -6,7 +5,7 @@ import BurgerConstructor from './components/burger-constructor/burger-constructo
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
 import DATA from './utils/data';
 
-function App() {
+export default function App() {
     return (
         <>
             <AppHeader />
@@ -17,5 +16,3 @@ function App() {
         </>
     );
 }
-
-export default App;
