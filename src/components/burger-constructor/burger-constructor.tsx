@@ -58,7 +58,7 @@ export const BurgerConstructor = ({
             <div className={styles.wrapper}>
                 {arrType.map((item, index) => (
                     <section key={index} id={item}>
-                        <h3 className='text text_type_main-medium mt-5'>
+                        <h3 className='text text_type_main-medium mt-5 mb-4'>
                             {titleIngridient[item]}
                         </h3>
                         <div className={styles.constructor__list}>
