@@ -3,21 +3,8 @@ import React from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-constructor.module.css';
 import ElemConstructor from './elem-constructor';
+import DataProps from '../../utils/types'
 
-interface DataProps {
-    _id: string;
-    name: string;
-    type: string;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    calories: number;
-    price: number;
-    image: string;
-    image_mobile: string;
-    image_large: string;
-    __v: number;
-}
 type ingtidientType = 'bun' | 'sauce' | 'main';
 export const BurgerConstructor = ({
     data,

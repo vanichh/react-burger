@@ -33,3 +33,6 @@
     background-color: #8585AD;;
     border-radius: 0;
 }
+.ingridients__wrapper_align{
+    justify-content: flex-end;
+}
