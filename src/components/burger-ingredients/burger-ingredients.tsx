@@ -14,7 +14,7 @@ const BurgerIngredients = ({
     data: Array<DataProps>;
 }): JSX.Element => {
     return (
-        <section className={`${styles.ingridients} mt-25 ml-4 mr-4`}>
+        <section className={`${styles.ingridients} pt-25 ml-4 mr-4`}>
             <div
                 className={`${styles.ingridients__wrapper} ${styles.ingridients__wrapper_align} mb-4 ml-4 mr-6`}>
                 <ConstructorElement
@@ -48,7 +48,7 @@ const BurgerIngredients = ({
                 ))}
             </div>
             <div
-                className={`${styles.ingridients__wrapper} ${styles.ingridients__wrapper_align} mb-4 ml-4 mr-6`}>
+                className={`${styles.ingridients__wrapper} ${styles.ingridients__wrapper_align} mt-4 ml-4 mr-6`}>
                 <ConstructorElement
                     type={'bottom'}
                     handleClose={() => false}
