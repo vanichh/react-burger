@@ -1,0 +1,16 @@
+.details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+}
+
+.wpapper {
+    display: flex;
+    justify-content: center;
+}
+
+.details__text {
+    text-align: center;
+}
