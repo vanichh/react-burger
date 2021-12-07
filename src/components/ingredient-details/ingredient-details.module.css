@@ -9,6 +9,7 @@
 .wpapper {
     display: flex;
     justify-content: center;
+    column-gap: 20px;
 }
 
 .details__text {

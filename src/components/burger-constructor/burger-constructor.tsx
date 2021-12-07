@@ -1,81 +1,97 @@
-import React from 'react';
-// import PropTypes from 'prop-types';
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './burger-constructor.module.css';
-import ElemConstructor from './elem-constructor';
-import DataProps from '../../utils/types'
+import { useState } from 'react';
+import {
+    ConstructorElement,
+    Button,
+    CurrencyIcon,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 
-type ingtidientType = 'bun' | 'sauce' | 'main';
-export const BurgerConstructor = ({
+import styles from './burger-constructor.module.css';
+import iconIngreidient from '../../images/burger-ingredients/icon-ingridients.png';
+import DataProps from '../../utils/types';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
+import ModalOverlay from '../modal-overlay/modal-overlay';
+
+const BurgerConstructor = ({
     data,
 }: {
     data: Array<DataProps>;
 }): JSX.Element => {
-    const [current, setCurrent] = React.useState<ingtidientType>('bun');
-    enum titleIngridient {
-        bun = 'Булки',
-        sauce = 'Соусы',
-        main = 'Начинки',
-    }
-    const arrType: ('bun' | 'sauce' | 'main')[] = ['bun', 'sauce', 'main'];
+    const [isModal, setisModal] = useState(false);
+    const ModalWindow = () => {
+        return (
+            <ModalOverlay IsOpen={setisModal}>
+                <Modal title='no' IsOpen={setisModal}>
+                    <OrderDetails />
+                </Modal>
+            </ModalOverlay>
+        );
+    };
 
     return (
-        <section className={`${styles.constructor} ml-10`}>
-            <h2 className='text text_type_main-large mt-10 mb-5'>Соберите бургер</h2>
-            <div className={`${styles.list}`}>
-                <Tab
-                    value='bun'
-                    active={current === 'bun'}
-                    onClick={() => setCurrent('bun')}>
-                    Булки
-                </Tab>
-                <Tab
-                    value='sauce'
-                    active={current === 'sauce'}
-                    onClick={() => setCurrent('sauce')}>
-                    Соусы
-                </Tab>
-                <Tab
-                    value='main'
-                    active={current === 'main'}
-                    onClick={() => setCurrent('main')}>
-                    Начинки
-                </Tab>
+        <section className={`${styles.constructor} pt-25 ml-4 mr-4`}>
+            <div
+                className={`${styles.constructor__wrapper} ${styles.constructor__wrapper_align} mb-4 ml-4 mr-6`}
+            >
+                <ConstructorElement
+                    type={'top'}
+                    handleClose={() => false}
+                    price={data[0].price}
+                    text={`${data[0].name}(верх)`}
+                    thumbnail={data[0].image_mobile}
+                    isLocked={true}
+                />
             </div>
             <div className={styles.wrapper}>
-                {arrType.map((item, index) => (
-                    <section key={index} id={item}>
-                        <h3 className='text text_type_main-medium mt-5 mb-4'>
-                            {titleIngridient[item]}
-                        </h3>
-                        <div className={styles.constructor__list}>
-                            {data
-                                .filter((elem: any) => elem.type === item)
-                                .map((elem: any) => (
-                                    <ElemConstructor key={elem._id} {...elem} />
-                                ))}
-                        </div>
-                    </section>
+                {data.slice(1, -1).map((item) => (
+                    <div
+                        key={item._id}
+                        className={`${styles.constructor__wrapper} mb-4 ml-4 mr-4`}
+                    >
+                        <img
+                            src={iconIngreidient}
+                            alt={item.name}
+                            className={styles.constructor__img}
+                        />
+                        <ConstructorElement
+                            type={undefined}
+                            handleClose={() => false}
+                            price={item.price}
+                            text={item.name}
+                            thumbnail={item.image_mobile}
+                            isLocked={false}
+                        />
+                    </div>
                 ))}
             </div>
+            <div
+                className={`${styles.constructor__wrapper} ${styles.constructor__wrapper_align} mt-4 ml-4 mr-6`}
+            >
+                <ConstructorElement
+                    type={'bottom'}
+                    handleClose={() => false}
+                    price={data[data.length - 1].price}
+                    text={`${data[data.length - 1].name}(низ)`}
+                    thumbnail={data[data.length - 1].image_mobile}
+                    isLocked={true}
+                />
+            </div>
+            <div className={`${styles.constructor__buy} mt-10`}>
+                <div className={`${styles.constructor__wrapper} mr-10`}>
+                    <p className='text text_type_digits-medium mr-2'>640</p>
+                    <CurrencyIcon type='primary' />
+                </div>
+                <Button
+                    onClick={() => setisModal(true)}
+                    type='primary'
+                    size='large'
+                >
+                    Оформить заказ
+                </Button>
+            </div>
+            {isModal && <ModalWindow />}
         </section>
     );
 };
-// BurgerConstructor.propTypes = {
-//     data: PropTypes.shape({
-//         _id: PropTypes.string,
-//         name: PropTypes.string,
-//         type: PropTypes.string,
-//         proteins: PropTypes.number,
-//         fat: PropTypes.number,
-//         carbohydrates: PropTypes.number,
-//         calories: PropTypes.number,
-//         price: PropTypes.number,
-//         image: PropTypes.string,
-//         image_mobile: PropTypes.string,
-//         image_large: PropTypes.string,
-//         __v: PropTypes.number,
-//     }),
-// };
 
 export default BurgerConstructor;

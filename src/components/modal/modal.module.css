@@ -1,0 +1,23 @@
+.modal {
+    background-color: #1c1c21;
+    border-radius: 40px;
+    cursor: initial;
+}
+.wrapper {
+    display: flex;
+    align-items: center;
+}
+.modal__title {
+    margin-right: auto;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+}
+.modal__close {
+    cursor: pointer;
+}

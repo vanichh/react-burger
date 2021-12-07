@@ -1,15 +1,23 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './modal.module.css';
-const Modal: React.FC = ({ children }): JSX.Element => {
+
+const Modal = ({ children, IsOpen, title = 'yes' }: any): JSX.Element => {
     return (
-        <div>
-            <div className='ml-10 mr-10'>
-                <h2 className='text text_type_main-medium'>
-                    Детали Ингридиента
+        <div className={`${styles.modal} p-10`}>
+            <div className={`${styles.wrapper}`}>
+                <h2
+                    className={`${styles.modal__title} text text_type_main-medium`}
+                >
+                    {title === 'yes' && 'Детали Ингридиента'}
                 </h2>
-                <CloseIcon type='primary' />
+                <div
+                    className={styles.modal__close}
+                    onClick={() => IsOpen(false)}
+                >
+                    <CloseIcon type='primary' />
+                </div>
             </div>
-            {children}
+            <div className={styles.container}>{children}</div>
         </div>
     );
 };

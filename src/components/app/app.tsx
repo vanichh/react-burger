@@ -1,8 +1,8 @@
 import styles from './app.module.css';
 import { useEffect, useState } from 'react';
 import AppHeader from '../app-header/app-header';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-ingredients/burger-ingredients';
+import BurgerIngredients from '../burger-constructor/burger-constructor';
 
 export default function App() {
     const [data, setData] = useState([]);

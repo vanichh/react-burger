@@ -1,33 +1,34 @@
 import styles from './ingredient-details.module.css';
 
 const IngredientDetails = (props: any) => {
+    const styleText = `${styles.details__text} text text_type_main-default text_color_inactive`
     return (
-        <div className={styles.details}>
-            <img src={props.images} alt={props.images} />
-            <p>{props.name}</p>
+        <>
+            <img className='mb-4' src={props.image_large} alt={props.name} />
+            <p className='text text_type_main-default mb-8'>{props.name}</p>
             <div className={styles.wpapper}>
-                <p className={styles.details__text}>
+                <p className={styleText}>
                     Калории, ккал
                     <br />
                     {props.calories}
                 </p>
-                <p className={styles.details__text}>
+                <p className={styleText}>
                     Белки, г
                     <br />
                     {props.proteins}
                 </p>
-                <p className={styles.details__text}>
+                <p className={styleText}>
                     Жиры, г
                     <br />
                     {props.fat}
                 </p>
-                <p className={styles.details__text}>
+                <p className={styleText}>
                     Углеводы, г
                     <br />
                     {props.carbohydrates}
                 </p>
             </div>
-        </div>
+        </>
     );
 };
 

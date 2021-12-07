@@ -1,8 +1,8 @@
 import styles from './app.module.css';
 
 import AppHeader from './components/app-header/app-header';
-import BurgerConstructor from './components/burger-constructor/burger-constructor';
-import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
+import BurgerConstructor from './components/burger-ingredients/burger-ingredients';
+import BurgerIngredients from './components/burger-constructor/burger-constructor';
 import DATA from './utils/data';
 
 function App() {
