@@ -1,0 +1,30 @@
+.header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    background: var(--background-element);
+}
+.wrapper {
+    max-width: 1300px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr)
+}
+
+.list {
+    display: flex;
+    align-items: center;
+}
+.item {
+    display: flex;
+    align-items: center;
+}
+.header__logo {
+    margin: 0 auto;
+}
+.header__profile {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
