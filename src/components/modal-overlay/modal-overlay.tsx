@@ -1,14 +1,21 @@
 import styles from './modal-overlay.module.css';
-import ReactDOM from 'react-dom';
+import { SyntheticEvent } from 'react';
 
-const ModalOverlay = ({ children, IsOpen }: any) => {
-    const modalElement = document.getElementById('modal-root') as HTMLElement;
+interface PropsModalOverlay {
+    children: React.ReactNode;
+    IsOpen: (arg0: boolean) => void;
+}
 
-    return ReactDOM.createPortal(
-        <div onClick={() => IsOpen(false)} className={styles.modal}>
+const ModalOverlay = ({ children, IsOpen }: PropsModalOverlay): JSX.Element => {
+    const closeWindows = ({ currentTarget, target }: SyntheticEvent) => {
+        if (currentTarget === target) {
+            IsOpen(false);
+        }
+    };
+    return (
+        <div onClick={closeWindows} className={styles.modal}>
             {children}
-        </div>,
-        modalElement
+        </div>
     );
 };
 

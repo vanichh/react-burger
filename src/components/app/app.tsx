@@ -13,7 +13,6 @@ export default function App() {
         fetch(urlString)
             .then((res) => res.json())
             .then((response) => {
-                console.log(response)
                 if (response.success) {
                     setData(response.data);
                     setIsLoding(true);

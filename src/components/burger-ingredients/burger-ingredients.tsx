@@ -2,11 +2,10 @@ import { useState } from 'react';
 // import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
-import ElemConstructor from './elem-burger-ingredients';
+import ElemBurgerIngredients from './elem-burger-ingredients';
 import DataProps from '../../utils/types';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import ModalOverlay from '../modal-overlay/modal-overlay';
 type ingtidientType = 'bun' | 'sauce' | 'main';
 export const BurgerIngredients = ({
     data,
@@ -18,13 +17,17 @@ export const BurgerIngredients = ({
     const [propsModal, SetPropsModal] = useState({});
     const ModalWindow = (props: any) => {
         return (
-            <ModalOverlay IsOpen={setisModal}>
-                <Modal IsOpen={setisModal}>
-                    <IngredientDetails {...props} />
-                </Modal>
-            </ModalOverlay>
+            <Modal IsOpen={setisModal}>
+                <IngredientDetails {...props} />
+            </Modal>
         );
     };
+
+    const onenWindows = (elem: any) => {
+        SetPropsModal({ ...elem });
+        setisModal(true);
+    };
+
     enum titleIngridient {
         bun = 'Булки',
         sauce = 'Соусы',
@@ -70,15 +73,14 @@ export const BurgerIngredients = ({
                             {data
                                 .filter((elem: any) => elem.type === item)
                                 .map((elem: any) => (
-                                    <div
+                                    <ElemBurgerIngredients
+                                        onenWindows={onenWindows.bind(
+                                            null,
+                                            elem
+                                        )}
                                         key={elem._id}
-                                        onClick={() => {
-                                            SetPropsModal({ ...elem });
-                                            setisModal(true);
-                                        }}
-                                    >
-                                        <ElemConstructor {...elem} />
-                                    </div>
+                                        {...elem}
+                                    />
                                 ))}
                         </div>
                     </section>
@@ -88,6 +90,5 @@ export const BurgerIngredients = ({
         </section>
     );
 };
-
 
 export default BurgerIngredients;

@@ -9,12 +9,14 @@ interface ElemBurgerIngredientsProps {
     name: string;
     image: string;
     fat: string;
+    onenWindows: () => void;
 }
 
 const ElemBurgerIngredients = ({
     name,
     image,
     fat,
+    onenWindows,
 }: ElemBurgerIngredientsProps): JSX.Element => {
     const [current, setCurrent] = React.useState<number>(0);
 
@@ -23,7 +25,10 @@ const ElemBurgerIngredients = ({
     return (
         <div
             className={`${styles.ingredients__items} mt-6 ml-4 mb-10 mr-4`}
-            onClick={cuppentPlus}
+            onClick={() => {
+                onenWindows();
+                cuppentPlus();
+            }}
         >
             {current ? <Counter count={current} size='default' /> : null}
             <img className='ml-4 mr-4' src={image} alt={name} />

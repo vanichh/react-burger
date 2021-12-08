@@ -10,7 +10,6 @@ import iconIngreidient from '../../images/burger-ingredients/icon-ingridients.pn
 import DataProps from '../../utils/types';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import ModalOverlay from '../modal-overlay/modal-overlay';
 
 const BurgerConstructor = ({
     data,
@@ -20,11 +19,9 @@ const BurgerConstructor = ({
     const [isModal, setisModal] = useState(false);
     const ModalWindow = () => {
         return (
-            <ModalOverlay IsOpen={setisModal}>
-                <Modal title='no' IsOpen={setisModal}>
-                    <OrderDetails />
-                </Modal>
-            </ModalOverlay>
+            <Modal title='no' IsOpen={setisModal}>
+                <OrderDetails />
+            </Modal>
         );
     };
 
