@@ -3,17 +3,17 @@ import { SyntheticEvent } from 'react';
 
 interface PropsModalOverlay {
     children: React.ReactNode;
-    IsOpen: (arg0: boolean) => void;
+    setIsModalOpen: (arg0: boolean) => void;
 }
 
-const ModalOverlay = ({ children, IsOpen }: PropsModalOverlay): JSX.Element => {
-    const closeWindows = ({ currentTarget, target }: SyntheticEvent) => {
+const ModalOverlay = ({ children, setIsModalOpen }: PropsModalOverlay): JSX.Element => {
+    const handleCloseWindows = ({ currentTarget, target }: SyntheticEvent) => {
         if (currentTarget === target) {
-            IsOpen(false);
+            setIsModalOpen(false);
         }
     };
     return (
-        <div onClick={closeWindows} className={styles.modal}>
+        <div onClick={handleCloseWindows} className={styles.modal}>
             {children}
         </div>
     );

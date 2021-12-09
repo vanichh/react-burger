@@ -1,20 +1,21 @@
 import styles from './app.module.css';
 import { useEffect, useState } from 'react';
 import AppHeader from '../app-header/app-header';
-import BurgerConstructor from '../burger-ingredients/burger-ingredients';
-import BurgerIngredients from '../burger-constructor/burger-constructor';
+import BurgerIngredients  from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
+
+const INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients';
 
 export default function App() {
-    const [data, setData] = useState([]);
+    const [dataIngredients, setDataIngredients] = useState([]);
     const [isLoding, setIsLoding] = useState<boolean>(false);
 
     useEffect(() => {
-        const urlString = 'https://norma.nomoreparties.space/api/ingredients';
-        fetch(urlString)
+        fetch(INGREDIENTS_URL)
             .then((res) => res.json())
             .then((response) => {
                 if (response.success) {
-                    setData(response.data);
+                    setDataIngredients(response.data);
                     setIsLoding(true);
                 }
             })
@@ -26,8 +27,8 @@ export default function App() {
             <AppHeader />
             {isLoding && (
                 <main className={styles.container}>
-                    <BurgerConstructor data={data} />
-                    <BurgerIngredients data={data} />
+                    <BurgerIngredients dataIngredients={dataIngredients} />
+                    <BurgerConstructor dataIngredients ={dataIngredients} />
                 </main>
             )}
         </>

@@ -12,14 +12,14 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 
 const BurgerConstructor = ({
-    data,
+    dataIngredients,
 }: {
-    data: Array<DataProps>;
+    dataIngredients: Array<DataProps>;
 }): JSX.Element => {
-    const [isModal, setisModal] = useState(false);
-    const ModalWindow = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const ModalWindow = (): JSX.Element => {
         return (
-            <Modal title='no' IsOpen={setisModal}>
+            <Modal title='no' setIsModalOpen={setIsModalOpen}>
                 <OrderDetails />
             </Modal>
         );
@@ -33,14 +33,14 @@ const BurgerConstructor = ({
                 <ConstructorElement
                     type={'top'}
                     handleClose={() => false}
-                    price={data[0].price}
-                    text={`${data[0].name}(верх)`}
-                    thumbnail={data[0].image_mobile}
+                    price={dataIngredients[0].price}
+                    text={`${dataIngredients[0].name}(верх)`}
+                    thumbnail={dataIngredients[0].image_mobile}
                     isLocked={true}
                 />
             </div>
             <div className={styles.wrapper}>
-                {data.slice(1, -1).map((item) => (
+                {dataIngredients.slice(1, -1).map((item) => (
                     <div
                         key={item._id}
                         className={`${styles.constructor__wrapper} mb-4 ml-4 mr-4`}
@@ -67,9 +67,13 @@ const BurgerConstructor = ({
                 <ConstructorElement
                     type={'bottom'}
                     handleClose={() => false}
-                    price={data[data.length - 1].price}
-                    text={`${data[data.length - 1].name}(низ)`}
-                    thumbnail={data[data.length - 1].image_mobile}
+                    price={dataIngredients[dataIngredients.length - 1].price}
+                    text={`${
+                        dataIngredients[dataIngredients.length - 1].name
+                    }(низ)`}
+                    thumbnail={
+                        dataIngredients[dataIngredients.length - 1].image_mobile
+                    }
                     isLocked={true}
                 />
             </div>
@@ -79,14 +83,14 @@ const BurgerConstructor = ({
                     <CurrencyIcon type='primary' />
                 </div>
                 <Button
-                    onClick={() => setisModal(true)}
+                    onClick={() => setIsModalOpen(true)}
                     type='primary'
                     size='large'
                 >
                     Оформить заказ
                 </Button>
             </div>
-            {isModal && <ModalWindow />}
+            {isModalOpen && <ModalWindow />}
         </section>
     );
 };

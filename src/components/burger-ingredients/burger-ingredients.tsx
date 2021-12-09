@@ -1,5 +1,4 @@
 import { useState } from 'react';
-// import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import ElemBurgerIngredients from './elem-burger-ingredients';
@@ -8,16 +7,16 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 type ingtidientType = 'bun' | 'sauce' | 'main';
 export const BurgerIngredients = ({
-    data,
+    dataIngredients,
 }: {
-    data: Array<DataProps>;
+    dataIngredients: Array<DataProps>;
 }): JSX.Element => {
     const [current, setCurrent] = useState<ingtidientType>('bun');
-    const [isModal, setisModal] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [propsModal, SetPropsModal] = useState({});
-    const ModalWindow = (props: any) => {
+    const ModalWindow = (props: any): JSX.Element => {
         return (
-            <Modal IsOpen={setisModal}>
+            <Modal setIsModalOpen={setIsModalOpen}>
                 <IngredientDetails {...props} />
             </Modal>
         );
@@ -25,7 +24,7 @@ export const BurgerIngredients = ({
 
     const onenWindows = (elem: any) => {
         SetPropsModal({ ...elem });
-        setisModal(true);
+        setIsModalOpen(true);
     };
 
     enum titleIngridient {
@@ -70,7 +69,7 @@ export const BurgerIngredients = ({
                             {titleIngridient[item]}
                         </h3>
                         <div className={styles.ingredients__list}>
-                            {data
+                            {dataIngredients
                                 .filter((elem: any) => elem.type === item)
                                 .map((elem: any) => (
                                     <ElemBurgerIngredients
@@ -86,7 +85,7 @@ export const BurgerIngredients = ({
                     </section>
                 ))}
             </div>
-            {isModal && <ModalWindow {...propsModal} />}
+            {isModalOpen && <ModalWindow {...propsModal} />}
         </section>
     );
 };
