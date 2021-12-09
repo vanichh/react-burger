@@ -5,13 +5,20 @@ import ElemBurgerIngredients from './elem-burger-ingredients';
 import DataProps from '../../utils/types';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-type ingtidientType = 'bun' | 'sauce' | 'main';
+type ingredientType = 'bun' | 'sauce' | 'main';
+enum titleIngridient {
+    bun = 'Булки',
+    sauce = 'Соусы',
+    main = 'Начинки',
+}
+const ARR_TYPE_INGREDIENT: ingredientType[] = ['bun', 'sauce', 'main'];
+
 export const BurgerIngredients = ({
     dataIngredients,
 }: {
     dataIngredients: Array<DataProps>;
 }): JSX.Element => {
-    const [current, setCurrent] = useState<ingtidientType>('bun');
+    const [current, setCurrent] = useState<ingredientType>('bun');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [propsModal, SetPropsModal] = useState({});
     const ModalWindow = (props: any): JSX.Element => {
@@ -22,17 +29,10 @@ export const BurgerIngredients = ({
         );
     };
 
-    const onenWindows = (elem: any) => {
+    const onenWindows = (elem: any): void => {
         SetPropsModal({ ...elem });
         setIsModalOpen(true);
     };
-
-    enum titleIngridient {
-        bun = 'Булки',
-        sauce = 'Соусы',
-        main = 'Начинки',
-    }
-    const arrType: ('bun' | 'sauce' | 'main')[] = ['bun', 'sauce', 'main'];
 
     return (
         <section className={`${styles.ingredients} ml-10`}>
@@ -63,7 +63,7 @@ export const BurgerIngredients = ({
                 </Tab>
             </div>
             <div className={styles.wrapper}>
-                {arrType.map((item, index) => (
+                {ARR_TYPE_INGREDIENT.map((item, index) => (
                     <section key={index} id={item}>
                         <h3 className='text text_type_main-medium mt-5 mb-4'>
                             {titleIngridient[item]}
