@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import {
     ConstructorElement,
     Button,
@@ -10,12 +10,18 @@ import iconIngreidient from '../../images/burger-ingredients/icon-ingridients.pn
 import DataProps from '../../utils/types';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
+import { dataBurgerConstructor } from '../app/app';
+
+const CLASSNAME_TOP_BUN: string = `${styles.constructor__wrapper} ${styles.constructor__wrapper_align} mb-4 ml-4 mr-6`;
+const CLASSNAME_BOTTTOM_BUN: string = `${styles.constructor__wrapper} ${styles.constructor__wrapper_align} mt-4 ml-4 mr-6`;
 
 const BurgerConstructor = ({
     dataIngredients,
 }: {
     dataIngredients: Array<DataProps>;
 }): JSX.Element => {
+    const dataIngredients1 = useContext(dataBurgerConstructor);
+    console.log(dataIngredients1)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const ModalWindow = (): JSX.Element => {
         return (
@@ -25,55 +31,49 @@ const BurgerConstructor = ({
         );
     };
 
+    const TOP_BUN: any = dataIngredients[0];
+
     return (
         <section className={`${styles.constructor} pt-25 ml-4 mr-4`}>
-            <div
-                className={`${styles.constructor__wrapper} ${styles.constructor__wrapper_align} mb-4 ml-4 mr-6`}
-            >
+            <div className={CLASSNAME_TOP_BUN}>
                 <ConstructorElement
                     type={'top'}
                     handleClose={() => false}
-                    price={dataIngredients[0].price}
-                    text={`${dataIngredients[0].name}(верх)`}
-                    thumbnail={dataIngredients[0].image_mobile}
+                    price={TOP_BUN.price}
+                    text={`${TOP_BUN.name}(верх)`}
+                    thumbnail={TOP_BUN.image_mobile}
                     isLocked={true}
                 />
             </div>
             <div className={styles.wrapper}>
-                {dataIngredients.slice(1, -1).map((item) => (
+                {dataIngredients.slice(2).map((ingredients) => (
                     <div
-                        key={item._id}
+                        key={ingredients._id}
                         className={`${styles.constructor__wrapper} mb-4 ml-4 mr-4`}
                     >
                         <img
                             src={iconIngreidient}
-                            alt={item.name}
+                            alt={ingredients.name}
                             className={styles.constructor__img}
                         />
                         <ConstructorElement
                             type={undefined}
                             handleClose={() => false}
-                            price={item.price}
-                            text={item.name}
-                            thumbnail={item.image_mobile}
+                            price={ingredients.price}
+                            text={ingredients.name}
+                            thumbnail={ingredients.image_mobile}
                             isLocked={false}
                         />
                     </div>
                 ))}
             </div>
-            <div
-                className={`${styles.constructor__wrapper} ${styles.constructor__wrapper_align} mt-4 ml-4 mr-6`}
-            >
+            <div className={CLASSNAME_BOTTTOM_BUN}>
                 <ConstructorElement
                     type={'bottom'}
                     handleClose={() => false}
-                    price={dataIngredients[dataIngredients.length - 1].price}
-                    text={`${
-                        dataIngredients[dataIngredients.length - 1].name
-                    }(низ)`}
-                    thumbnail={
-                        dataIngredients[dataIngredients.length - 1].image_mobile
-                    }
+                    price={TOP_BUN.price}
+                    text={`${TOP_BUN.name}(низ)`}
+                    thumbnail={TOP_BUN.image_mobile}
                     isLocked={true}
                 />
             </div>

@@ -1,10 +1,12 @@
 import styles from './app.module.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createContext } from 'react';
 import AppHeader from '../app-header/app-header';
-import BurgerIngredients  from '../burger-ingredients/burger-ingredients';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
 const INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients';
+
+export const dataBurgerConstructor = createContext([]);
 
 export default function App() {
     const [dataIngredients, setDataIngredients] = useState([]);
@@ -23,14 +25,14 @@ export default function App() {
     }, []);
 
     return (
-        <>
+        <dataBurgerConstructor.Provider value={dataIngredients}>
             <AppHeader />
             {isLoding && (
                 <main className={styles.container}>
                     <BurgerIngredients dataIngredients={dataIngredients} />
-                    <BurgerConstructor dataIngredients ={dataIngredients} />
+                    <BurgerConstructor dataIngredients={dataIngredients} />
                 </main>
             )}
-        </>
+        </dataBurgerConstructor.Provider>
     );
 }

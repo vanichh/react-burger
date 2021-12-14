@@ -13,6 +13,7 @@ enum titleIngridient {
 }
 const ARR_TYPE_INGREDIENT: ingredientType[] = ['bun', 'sauce', 'main'];
 
+
 export const BurgerIngredients = ({
     dataIngredients,
 }: {
@@ -21,6 +22,7 @@ export const BurgerIngredients = ({
     const [current, setCurrent] = useState<ingredientType>('bun');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [propsModal, SetPropsModal] = useState({});
+    
     const ModalWindow = (props: any): JSX.Element => {
         return (
             <Modal setIsModalOpen={setIsModalOpen}>
