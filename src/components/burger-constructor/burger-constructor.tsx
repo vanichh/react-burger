@@ -125,14 +125,17 @@ const BurgerConstructor = (): JSX.Element => {
                     <CurrencyIcon type='primary' />
                 </div>
                 <Button
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => {
+                        setIsModalOpen(true);
+                        setNumberder({ number: 0 });
+                    }}
                     type='primary'
                     size='large'
                 >
                     Оформить заказ
                 </Button>
             </div>
-            {isModalOpen && numberOred.number && <ModalWindow />}
+            {isModalOpen && numberOred.number !== 0 ? <ModalWindow /> : false}
         </section>
     );
 };
