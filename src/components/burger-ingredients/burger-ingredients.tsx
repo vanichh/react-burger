@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import ElemBurgerIngredients from './elem-burger-ingredients';
-import DataProps from '../../utils/types';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import { dataBurgerConstructor } from '../app/app';
 type ingredientType = 'bun' | 'sauce' | 'main';
 enum titleIngridient {
     bun = 'Булки',
@@ -14,14 +14,12 @@ enum titleIngridient {
 const ARR_TYPE_INGREDIENT: ingredientType[] = ['bun', 'sauce', 'main'];
 
 
-export const BurgerIngredients = ({
-    dataIngredients,
-}: {
-    dataIngredients: Array<DataProps>;
-}): JSX.Element => {
+export const BurgerIngredients = (): JSX.Element => {
+    const dataIngredients = useContext(dataBurgerConstructor);
     const [current, setCurrent] = useState<ingredientType>('bun');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [propsModal, SetPropsModal] = useState({});
+
     
     const ModalWindow = (props: any): JSX.Element => {
         return (

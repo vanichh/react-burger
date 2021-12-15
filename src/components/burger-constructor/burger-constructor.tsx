@@ -11,7 +11,7 @@ import iconIngreidient from '../../images/burger-ingredients/icon-ingridients.pn
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { dataBurgerConstructor } from '../app/app';
-import bunBurger from './bun-burger'; // компонент для отображения верхний и нижний булки
+import BunBurger from './bun-burger'; // компонент для отображения верхний и нижний булки
 
 const URL_BOOKING = 'https://norma.nomoreparties.space/api/orders';
 
@@ -84,10 +84,10 @@ const BurgerConstructor = (): JSX.Element => {
                 });
         }
     }, [isModalOpen]);
-
+    console.log(dataIngredients[0])
     return (
         <section className={`${styles.constructor} pt-25 ml-4 mr-4`}>
-            {bunBurger(dataIngredients[0], 'top')}
+            <BunBurger ingredientsBun={dataIngredients[0]} type='top' />
             <div className={styles.wrapper}>
                 {/* {Используем slice чтоб убрать булки} */}
                 {dataIngredients.slice(2).map((ingredients) => (
@@ -116,7 +116,7 @@ const BurgerConstructor = (): JSX.Element => {
                     </div>
                 ))}
             </div>
-            {bunBurger(dataIngredients[0], 'bottom')}
+            <BunBurger ingredientsBun={dataIngredients[0]} type='bottom' />
             <div className={`${styles.constructor__buy} mt-10`}>
                 <div className={`${styles.constructor__wrapper} mr-10`}>
                     <p className='text text_type_digits-medium mr-2'>

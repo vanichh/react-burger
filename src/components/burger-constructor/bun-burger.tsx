@@ -1,10 +1,8 @@
 import styles from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import DataProps from '../../utils/types';
-const bunBurger = (
-    IngredientsBun: DataProps,
-    type: 'top' | 'bottom'
-): JSX.Element => {
+
+const BunBurger = ({ ingredientsBun, type }: any): JSX.Element => {
     const CLASSNAME_BUN: string = `
     ${styles.constructor__wrapper}
     ${styles.constructor__wrapper_align} 
@@ -15,15 +13,15 @@ const bunBurger = (
             <ConstructorElement
                 type={type}
                 handleClose={() => false}
-                price={IngredientsBun.price}
-                text={`${IngredientsBun.name}${
+                price={ingredientsBun.price}
+                text={`${ingredientsBun.name}${
                     type === 'top' ? '(верх)' : '(низ)'
                 }`}
-                thumbnail={IngredientsBun.image_mobile}
+                thumbnail={ingredientsBun.image_mobile}
                 isLocked={true}
             />
         </div>
     );
 };
 
-export default bunBurger;
+export default BunBurger;
