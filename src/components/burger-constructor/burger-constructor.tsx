@@ -1,4 +1,5 @@
-import { useState, useContext } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useContext, useReducer, useEffect } from 'react';
 import {
     ConstructorElement,
     Button,
@@ -7,45 +8,88 @@ import {
 
 import styles from './burger-constructor.module.css';
 import iconIngreidient from '../../images/burger-ingredients/icon-ingridients.png';
-import DataProps from '../../utils/types';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { dataBurgerConstructor } from '../app/app';
+import bunBurger from './bun-burger'; // компонент для отображения верхний и нижний булки
 
-const CLASSNAME_TOP_BUN: string = `${styles.constructor__wrapper} ${styles.constructor__wrapper_align} mb-4 ml-4 mr-6`;
-const CLASSNAME_BOTTTOM_BUN: string = `${styles.constructor__wrapper} ${styles.constructor__wrapper_align} mt-4 ml-4 mr-6`;
+const URL_BOOKING = 'https://norma.nomoreparties.space/api/orders';
 
-const BurgerConstructor = ({
-    dataIngredients,
-}: {
-    dataIngredients: Array<DataProps>;
-}): JSX.Element => {
-    const dataIngredients1 = useContext(dataBurgerConstructor);
-    console.log(dataIngredients1)
-    const [isModalOpen, setIsModalOpen] = useState(false);
+const initSumPrice = (initialCount: any) => {
+    return { count: initialCount };
+};
+const reducerSumPrice = (state: any, action: any) => {
+    switch (action.type) {
+        case 'plus':
+            return { count: state.count + action.payload };
+        case 'minus':
+            return { count: state.count - action.payload };
+        case 'reset':
+            return initSumPrice(0);
+        default:
+            return state;
+    }
+};
+const BurgerConstructor = (): JSX.Element => {
+    const dataIngredients = useContext(dataBurgerConstructor);
+    // подсчитываем по хардкору сумму всех компонентов
+    const initialCount = dataIngredients.reduce(
+        (sum, current) => sum + current.price,
+        0
+    );
+
+    // подсчет общей суммы
+    const [totalAmount, dispatchTotalAmount] = useReducer(
+        reducerSumPrice,
+        initialCount,
+        initSumPrice
+    );
+
+    const [numberOred, setNumberder] = useState<{ number: number }>({
+        number: 0,
+    });
+
+    // состояние модального окна
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+    // Модалка дял оформления заказа
     const ModalWindow = (): JSX.Element => {
         return (
             <Modal title='no' setIsModalOpen={setIsModalOpen}>
-                <OrderDetails />
+                <OrderDetails order={numberOred} />
             </Modal>
         );
     };
 
-    const TOP_BUN: any = dataIngredients[0];
+    useEffect(() => {
+        if (isModalOpen) {
+            fetch(URL_BOOKING, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                },
+                body: JSON.stringify({
+                    ingredients: dataIngredients.map((elem) => elem._id),
+                }),
+            })
+                .then((response) => response.json())
+                .then((response) => {
+                    if (response.success) {
+                        setNumberder(response.order);
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    setIsModalOpen(false);
+                });
+        }
+    }, [isModalOpen]);
 
     return (
         <section className={`${styles.constructor} pt-25 ml-4 mr-4`}>
-            <div className={CLASSNAME_TOP_BUN}>
-                <ConstructorElement
-                    type={'top'}
-                    handleClose={() => false}
-                    price={TOP_BUN.price}
-                    text={`${TOP_BUN.name}(верх)`}
-                    thumbnail={TOP_BUN.image_mobile}
-                    isLocked={true}
-                />
-            </div>
+            {bunBurger(dataIngredients[0], 'top')}
             <div className={styles.wrapper}>
+                {/* {Используем slice чтоб убрать булки} */}
                 {dataIngredients.slice(2).map((ingredients) => (
                     <div
                         key={ingredients._id}
@@ -58,7 +102,12 @@ const BurgerConstructor = ({
                         />
                         <ConstructorElement
                             type={undefined}
-                            handleClose={() => false}
+                            handleClose={() =>
+                                dispatchTotalAmount({
+                                    type: 'minus',
+                                    payload: ingredients.price,
+                                })
+                            }
                             price={ingredients.price}
                             text={ingredients.name}
                             thumbnail={ingredients.image_mobile}
@@ -67,19 +116,12 @@ const BurgerConstructor = ({
                     </div>
                 ))}
             </div>
-            <div className={CLASSNAME_BOTTTOM_BUN}>
-                <ConstructorElement
-                    type={'bottom'}
-                    handleClose={() => false}
-                    price={TOP_BUN.price}
-                    text={`${TOP_BUN.name}(низ)`}
-                    thumbnail={TOP_BUN.image_mobile}
-                    isLocked={true}
-                />
-            </div>
+            {bunBurger(dataIngredients[0], 'bottom')}
             <div className={`${styles.constructor__buy} mt-10`}>
                 <div className={`${styles.constructor__wrapper} mr-10`}>
-                    <p className='text text_type_digits-medium mr-2'>640</p>
+                    <p className='text text_type_digits-medium mr-2'>
+                        {totalAmount.count}
+                    </p>
                     <CurrencyIcon type='primary' />
                 </div>
                 <Button
@@ -90,7 +132,7 @@ const BurgerConstructor = ({
                     Оформить заказ
                 </Button>
             </div>
-            {isModalOpen && <ModalWindow />}
+            {isModalOpen && numberOred.number && <ModalWindow />}
         </section>
     );
 };
