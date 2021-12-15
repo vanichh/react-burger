@@ -10,13 +10,13 @@ const modalElement = document.getElementById('modal-root') as HTMLElement;
 interface PropsModal {
     children: React.ReactNode;
     setIsModalOpen: (arg0: boolean) => void;
-    title?: 'yes' | 'no';
+    title: string | null;
 }
 
 const Modal = ({
     children,
     setIsModalOpen,
-    title = 'yes',
+    title,
 }: PropsModal): JSX.Element => {
     const closeWindowsToPress = ({ key }: KeyboardEvent) => {
         if (key === 'Escape') {
@@ -36,7 +36,7 @@ const Modal = ({
                     <h2
                         className={`${styles.modal__title} text text_type_main-large`}
                     >
-                        {title === 'yes' && 'Детали Ингридиента'}
+                        {title}
                     </h2>
                     <div
                         className={styles.modal__close}

@@ -1,10 +1,10 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useRef, useEffect } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import ElemBurgerIngredients from './elem-burger-ingredients';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { dataBurgerConstructor } from '../app/app';
+import { BurgerContext } from '../contexts/burger-context';
 type ingredientType = 'bun' | 'sauce' | 'main';
 enum titleIngridient {
     bun = 'Булки',
@@ -13,26 +13,36 @@ enum titleIngridient {
 }
 const ARR_TYPE_INGREDIENT: ingredientType[] = ['bun', 'sauce', 'main'];
 
-
 export const BurgerIngredients = (): JSX.Element => {
-    const dataIngredients = useContext(dataBurgerConstructor);
+    const refIngredients = useRef(null);
+    const dataIngredients = useContext(BurgerContext);
     const [current, setCurrent] = useState<ingredientType>('bun');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [propsModal, SetPropsModal] = useState({});
 
-    
     const ModalWindow = (props: any): JSX.Element => {
         return (
-            <Modal setIsModalOpen={setIsModalOpen}>
+            <Modal title={'Детали Ингридиента'} setIsModalOpen={setIsModalOpen}>
                 <IngredientDetails {...props} />
             </Modal>
         );
     };
-
-    const onenWindows = (elem: any): void => {
+    const openWindows = (elem: any): void => {
         SetPropsModal({ ...elem });
         setIsModalOpen(true);
     };
+
+    useEffect(() => {
+
+        window.addEventListener('keydown', ({ key }) => {
+            if (key === 'Tab') {
+                console.log(1)
+            }
+        });    
+    const elem = refIngredients.current;
+    elem.querySelector(`#${current}`).scrollIntoView(true);
+
+    }, [current]);
 
     return (
         <section className={`${styles.ingredients} ml-10`}>
@@ -43,26 +53,23 @@ export const BurgerIngredients = (): JSX.Element => {
                 <Tab
                     value='bun'
                     active={current === 'bun'}
-                    onClick={() => setCurrent('bun')}
-                >
+                    onClick={() => setCurrent('bun')}>
                     {titleIngridient['bun']}
                 </Tab>
                 <Tab
                     value='sauce'
                     active={current === 'sauce'}
-                    onClick={() => setCurrent('sauce')}
-                >
+                    onClick={() => setCurrent('sauce')}>
                     {titleIngridient['sauce']}
                 </Tab>
                 <Tab
                     value='main'
                     active={current === 'main'}
-                    onClick={() => setCurrent('main')}
-                >
+                    onClick={() => setCurrent('main')}>
                     {titleIngridient['main']}
                 </Tab>
             </div>
-            <div className={styles.wrapper}>
+            <div ref={refIngredients} className={styles.wrapper}>
                 {ARR_TYPE_INGREDIENT.map((item, index) => (
                     <section key={index} id={item}>
                         <h3 className='text text_type_main-medium mt-5 mb-4'>
@@ -73,7 +80,7 @@ export const BurgerIngredients = (): JSX.Element => {
                                 .filter((elem: any) => elem.type === item)
                                 .map((elem: any) => (
                                     <ElemBurgerIngredients
-                                        onenWindows={onenWindows.bind(
+                                        onenWindows={openWindows.bind(
                                             null,
                                             elem
                                         )}

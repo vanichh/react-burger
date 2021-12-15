@@ -10,7 +10,7 @@ import styles from './burger-constructor.module.css';
 import iconIngreidient from '../../images/burger-ingredients/icon-ingridients.png';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { dataBurgerConstructor } from '../app/app';
+import { BurgerContext } from '../contexts/burger-context';
 import BunBurger from './bun-burger'; // компонент для отображения верхний и нижний булки
 
 const URL_BOOKING = 'https://norma.nomoreparties.space/api/orders';
@@ -31,7 +31,7 @@ const reducerSumPrice = (state: any, action: any) => {
     }
 };
 const BurgerConstructor = (): JSX.Element => {
-    const dataIngredients = useContext(dataBurgerConstructor);
+    const dataIngredients = useContext(BurgerContext);
     // подсчитываем по хардкору сумму всех компонентов
     const initialCount = dataIngredients.reduce(
         (sum, current) => sum + current.price,
@@ -55,7 +55,7 @@ const BurgerConstructor = (): JSX.Element => {
     // Модалка дял оформления заказа
     const ModalWindow = (): JSX.Element => {
         return (
-            <Modal title='no' setIsModalOpen={setIsModalOpen}>
+            <Modal title={null} setIsModalOpen={setIsModalOpen}>
                 <OrderDetails order={numberOred} />
             </Modal>
         );
@@ -69,32 +69,30 @@ const BurgerConstructor = (): JSX.Element => {
                     'Content-Type': 'application/json;charset=utf-8',
                 },
                 body: JSON.stringify({
-                    ingredients: dataIngredients.map((elem) => elem._id),
+                    ingredients: dataIngredients.map(elem => elem._id),
                 }),
             })
-                .then((response) => response.json())
-                .then((response) => {
+                .then(response => response.json())
+                .then(response => {
                     if (response.success) {
                         setNumberder(response.order);
                     }
                 })
-                .catch((error) => {
+                .catch(error => {
                     console.log(error);
                     setIsModalOpen(false);
                 });
         }
     }, [isModalOpen]);
-    console.log(dataIngredients[0])
     return (
         <section className={`${styles.constructor} pt-25 ml-4 mr-4`}>
             <BunBurger ingredientsBun={dataIngredients[0]} type='top' />
             <div className={styles.wrapper}>
                 {/* {Используем slice чтоб убрать булки} */}
-                {dataIngredients.slice(2).map((ingredients) => (
+                {dataIngredients.slice(2).map(ingredients => (
                     <div
                         key={ingredients._id}
-                        className={`${styles.constructor__wrapper} mb-4 ml-4 mr-4`}
-                    >
+                        className={`${styles.constructor__wrapper} mb-4 ml-4 mr-4`}>
                         <img
                             src={iconIngreidient}
                             alt={ingredients.name}
@@ -130,8 +128,7 @@ const BurgerConstructor = (): JSX.Element => {
                         setNumberder({ number: 0 });
                     }}
                     type='primary'
-                    size='large'
-                >
+                    size='large'>
                     Оформить заказ
                 </Button>
             </div>
