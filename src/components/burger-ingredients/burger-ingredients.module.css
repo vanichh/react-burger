@@ -1,24 +1,12 @@
-.ingridients {
+.ingredients {
     display: flex;
     flex-direction: column;
     max-width: 600px;
-    justify-self: end;
     width: 100%;
     max-height: 912px;
-    box-sizing: border-box;
 }
-.ingridients__wrapper {
+.list {
     display: flex;
-    align-items: center;
-}
-.ingridients__buy {
-    display: flex;
-    align-items: center;
-    width: fit-content;
-    margin-left: auto;
-}
-.ingridients__img {
-    margin-right: auto;
 }
 
 .wrapper {
@@ -36,6 +24,24 @@
     background-color: #8585AD;;
     border-radius: 0;
 }
-.ingridients__wrapper_align{
-    justify-content: flex-end;
+
+
+.ingredients__list {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.ingredients__items {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.ingredients__items:hover {
+    cursor: pointer;
+}
+
+.ingredients__wrapper {
+    display: flex;
+    align-items: center;
 }
