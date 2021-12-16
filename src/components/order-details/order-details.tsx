@@ -1,9 +1,13 @@
 import icon from '../../images/order-details/done.svg';
-
-const OrderDetails = (): JSX.Element => {
+interface PropsOrderDetails {
+    order: {
+        number: number;
+    };
+}
+const OrderDetails = ({ order }: PropsOrderDetails): JSX.Element => {
     return (
         <>
-            <p className='text text_type_digits-large mb-8'>034536</p>
+            <p className='text text_type_digits-large mb-8'>{order.number}</p>
             <p className='text text_type_main-medium mb-15'>Индикатор заказа</p>
             <img className='mb-15' src={icon} alt='Готово' />
             <p className='text text_type_main-default mb-2'>

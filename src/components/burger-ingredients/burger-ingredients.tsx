@@ -1,38 +1,16 @@
-import { useState } from 'react';
+import { useState, useContext, useRef } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
-import ElemBurgerIngredients from './elem-burger-ingredients';
-import DataProps from '../../utils/types';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import { BurgerContext } from '../contexts/burger-context';
+import SectionIngredients from './section-ingredients';
 type ingredientType = 'bun' | 'sauce' | 'main';
-enum titleIngridient {
-    bun = 'Булки',
-    sauce = 'Соусы',
-    main = 'Начинки',
-}
-const ARR_TYPE_INGREDIENT: ingredientType[] = ['bun', 'sauce', 'main'];
 
-export const BurgerIngredients = ({
-    dataIngredients,
-}: {
-    dataIngredients: Array<DataProps>;
-}): JSX.Element => {
+export const BurgerIngredients = (): JSX.Element => {
+    const refBun = useRef<HTMLElement>(null);
+    const refSause = useRef<HTMLElement>(null);
+    const refMain = useRef<HTMLElement>(null);
+    const dataIngredients = useContext(BurgerContext);
     const [current, setCurrent] = useState<ingredientType>('bun');
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [propsModal, SetPropsModal] = useState({});
-    const ModalWindow = (props: any): JSX.Element => {
-        return (
-            <Modal setIsModalOpen={setIsModalOpen}>
-                <IngredientDetails {...props} />
-            </Modal>
-        );
-    };
-
-    const onenWindows = (elem: any): void => {
-        SetPropsModal({ ...elem });
-        setIsModalOpen(true);
-    };
 
     return (
         <section className={`${styles.ingredients} ml-10`}>
@@ -43,49 +21,57 @@ export const BurgerIngredients = ({
                 <Tab
                     value='bun'
                     active={current === 'bun'}
-                    onClick={() => setCurrent('bun')}
+                    onClick={() => {
+                        setCurrent('bun');
+                        refBun.current.scrollIntoView(true);
+                    }}
                 >
-                    {titleIngridient['bun']}
+                    Булки
                 </Tab>
                 <Tab
                     value='sauce'
                     active={current === 'sauce'}
-                    onClick={() => setCurrent('sauce')}
+                    onClick={() => {
+                        setCurrent('sauce');
+                        refSause.current.scrollIntoView(true);
+                    }}
                 >
-                    {titleIngridient['sauce']}
+                    Соусы
                 </Tab>
                 <Tab
                     value='main'
                     active={current === 'main'}
-                    onClick={() => setCurrent('main')}
+                    onClick={() => {
+                        setCurrent('main');
+                        refMain.current.scrollIntoView(true);
+                    }}
                 >
-                    {titleIngridient['main']}
+                    Начинки
                 </Tab>
             </div>
             <div className={styles.wrapper}>
-                {ARR_TYPE_INGREDIENT.map((item, index) => (
-                    <section key={index} id={item}>
-                        <h3 className='text text_type_main-medium mt-5 mb-4'>
-                            {titleIngridient[item]}
-                        </h3>
-                        <div className={styles.ingredients__list}>
-                            {dataIngredients
-                                .filter((elem: any) => elem.type === item)
-                                .map((elem: any) => (
-                                    <ElemBurgerIngredients
-                                        onenWindows={onenWindows.bind(
-                                            null,
-                                            elem
-                                        )}
-                                        key={elem._id}
-                                        {...elem}
-                                    />
-                                ))}
-                        </div>
-                    </section>
-                ))}
+                <SectionIngredients
+                    refElem={refBun}
+                    title='Булки'
+                    dataIngredients={dataIngredients.filter(
+                        (elem) => elem.type === 'bun'
+                    )}
+                />
+                <SectionIngredients
+                    refElem={refSause}
+                    title='Соусы'
+                    dataIngredients={dataIngredients.filter(
+                        (elem) => elem.type === 'sauce'
+                    )}
+                />
+                <SectionIngredients
+                    refElem={refMain}
+                    title='Начинки'
+                    dataIngredients={dataIngredients.filter(
+                        (elem) => elem.type === 'main'
+                    )}
+                />
             </div>
-            {isModalOpen && <ModalWindow {...propsModal} />}
         </section>
     );
 };

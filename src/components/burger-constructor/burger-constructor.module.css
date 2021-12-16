@@ -11,6 +11,10 @@
     display: flex;
     align-items: center;
 }
+.constructor__wrapper:last-child {
+    margin-bottom: 0;
+}
+
 .constructor__buy {
     display: flex;
     align-items: center;
@@ -23,7 +27,6 @@
 
 .wrapper {
     overflow-y: scroll;
-    max-height: auto;
 }
 
 .wrapper::-webkit-scrollbar {
