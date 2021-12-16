@@ -10,7 +10,7 @@ const modalElement = document.getElementById('modal-root') as HTMLElement;
 interface PropsModal {
     children: React.ReactNode;
     setIsModalOpen: (arg0: boolean) => void;
-    title: string | null;
+    title?: string;
 }
 
 const Modal = ({

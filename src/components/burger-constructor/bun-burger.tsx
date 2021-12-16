@@ -2,7 +2,12 @@ import styles from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import DataProps from '../../utils/types';
 
-const BunBurger = ({ ingredientsBun, type }: any): JSX.Element => {
+interface PropsBunBurger {
+    ingredientsBun: DataProps;
+    type: 'top' | 'bottom';
+}
+
+const BunBurger = ({ ingredientsBun, type }: PropsBunBurger): JSX.Element => {
     const CLASSNAME_BUN: string = `
     ${styles.constructor__wrapper}
     ${styles.constructor__wrapper_align} 

@@ -55,7 +55,7 @@ const BurgerConstructor = (): JSX.Element => {
     // Модалка дял оформления заказа
     const ModalWindow = (): JSX.Element => {
         return (
-            <Modal title={null} setIsModalOpen={setIsModalOpen}>
+            <Modal setIsModalOpen={setIsModalOpen}>
                 <OrderDetails order={numberOred} />
             </Modal>
         );

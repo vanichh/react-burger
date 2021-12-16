@@ -18,7 +18,6 @@ export default function App() {
                 if (response.success) {
                     setDataIngredients(response.data);
                     setIsLoding(true);
-                    console.log(response.data);
                 }
             })
             .catch(e => console.log(e));
