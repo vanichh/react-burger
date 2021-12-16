@@ -49,7 +49,7 @@ export const BurgerIngredients = (): JSX.Element => {
                     Начинки
                 </Tab>
             </div>
-            <div className={styles.wrapper}>
+            <div className={`${styles.wrapper} mb-5`}>
                 <SectionIngredients
                     refElem={refBun}
                     title='Булки'

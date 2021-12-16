@@ -115,7 +115,7 @@ const BurgerConstructor = (): JSX.Element => {
                 ))}
             </div>
             <BunBurger ingredientsBun={dataIngredients[0]} type='bottom' />
-            <div className={`${styles.constructor__buy} mt-10`}>
+            <div className={`${styles.constructor__buy} mt-10 mb-10`}>
                 <div className={`${styles.constructor__wrapper} mr-10`}>
                     <p className='text text_type_digits-medium mr-2'>
                         {totalAmount.count}
