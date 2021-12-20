@@ -1,9 +1,11 @@
 import {
-    GET_INGRIDIENT_BURGER,
-    GET_INGRIDIENT_CONSTRUCTOR,
-    GET_INGRIDIENT_MODAL,
+    SET_INGRIDIENT_BURGER,
+    SET_INGRIDIENT_CONSTRUCTOR,
+    SET_INGRIDIENT_MODAL,
     DELETE_DATA_MODAL,
     GET_NUMBER_OREDER_MODAL,
+    STATE_MODAL_WINDOWS_INGRIDIENTS,
+    STATE_MODAL_WINDOWS_ORDER,
 } from '../actions';
 
 import IdataIgridients from 'utils/types';
@@ -14,7 +16,8 @@ interface IinitialState {
     ingredientDetails: IdataIgridients | [];
     order: any;
     isLoding: boolean;
-    isModalOpen: boolean;
+    isModalOpenIngridients: boolean;
+    isModalOpenOrder: boolean;
 }
 
 const initialState: IinitialState = {
@@ -23,28 +26,29 @@ const initialState: IinitialState = {
     ingredientDetails: [],
     order: {},
     isLoding: false,
-    isModalOpen: false,
+    isModalOpenIngridients: false,
+    isModalOpenOrder: false,
 };
 
 export const cartReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case GET_INGRIDIENT_BURGER: {
+        case SET_INGRIDIENT_BURGER: {
             return {
                 ...state,
                 listIgridients: action.items,
                 isLoding: true,
             };
         }
-        case GET_INGRIDIENT_CONSTRUCTOR: {
+        case SET_INGRIDIENT_CONSTRUCTOR: {
             return {
                 ...state,
             };
         }
-        case GET_INGRIDIENT_MODAL: {
+        case SET_INGRIDIENT_MODAL: {
             return {
                 ...state,
                 ingredientDetails: action.item,
-                isModalOpen: !state.isModalOpen,
+                isModalOpenIngridients: true,
             };
         }
         case DELETE_DATA_MODAL: {
@@ -55,6 +59,18 @@ export const cartReducer = (state = initialState, action: any) => {
         case GET_NUMBER_OREDER_MODAL: {
             return {
                 ...state,
+            };
+        }
+        case STATE_MODAL_WINDOWS_INGRIDIENTS: {
+            return {
+                ...state,
+                isModalOpenIngridients: action.state,
+            };
+        }
+        case STATE_MODAL_WINDOWS_ORDER: {
+            return {
+                ...state,
+                isModalOpenOrder: action.state,
             };
         }
 

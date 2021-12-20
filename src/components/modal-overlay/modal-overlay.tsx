@@ -1,17 +1,21 @@
 import styles from './modal-overlay.module.css';
 import { SyntheticEvent } from 'react';
-
+import { useDispatch } from 'react-redux';
+import { isModalWindowsIngridient } from 'services/actions/cart';
 interface PropsModalOverlay {
     children: React.ReactNode;
-    setIsModalOpen: (arg0: boolean) => void;
 }
 
-const ModalOverlay = ({ children, setIsModalOpen }: PropsModalOverlay): JSX.Element => {
+const ModalOverlay = ({ children }: PropsModalOverlay): JSX.Element => {
+
+    const despetch = useDispatch();
+    
     const handleCloseWindows = ({ currentTarget, target }: SyntheticEvent) => {
         if (currentTarget === target) {
-            setIsModalOpen(false);
+            despetch(isModalWindowsIngridient(false));
         }
     };
+
     return (
         <div onClick={handleCloseWindows} className={styles.modal}>
             {children}

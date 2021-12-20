@@ -13,7 +13,7 @@ import OrderDetails from '../order-details/order-details';
 import { RootState } from 'services/reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import BunBurger from './bun-burger'; // компонент для отображения верхний и нижний булки
-
+import { isModalWindowsOrder } from 'services/actions/cart';
 const URL_BOOKING = 'https://norma.nomoreparties.space/api/orders';
 
 const initSumPrice = (initialCount: any) => {
@@ -32,10 +32,16 @@ const reducerSumPrice = (state: any, action: any) => {
     }
 };
 const BurgerConstructor = (): JSX.Element => {
-    const dataIngredients = useSelector((store: RootState) => store.cart.listIgridients);
+    const dispatch = useDispatch();
+    const isModalOpen = useSelector(
+        (store: RootState) => store.cart.isModalOpenOrder
+    );
+    const dataIngredients = useSelector(
+        (store: RootState) => store.cart.listIgridients
+    );
     // подсчитываем по хардкору сумму всех компонентов
     const initialCount = dataIngredients.reduce(
-        (sum:any, current:any) => sum + current.price,
+        (sum: any, current: any) => sum + current.price,
         0
     );
 
@@ -50,17 +56,15 @@ const BurgerConstructor = (): JSX.Element => {
         number: 0,
     });
 
-    // состояние модального окна
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
     // Модалка дял оформления заказа
     const ModalWindow = (): JSX.Element => {
         return (
-            <Modal setIsModalOpen={setIsModalOpen}>
+            <Modal>
                 <OrderDetails order={numberOred} />
             </Modal>
         );
     };
+
 
     useEffect(() => {
         if (isModalOpen) {
@@ -70,7 +74,9 @@ const BurgerConstructor = (): JSX.Element => {
                     'Content-Type': 'application/json;charset=utf-8',
                 },
                 body: JSON.stringify({
-                    ingredients: dataIngredients.map((elem: { _id: any; }) => elem._id),
+                    ingredients: dataIngredients.map(
+                        (elem: { _id: any }) => elem._id
+                    ),
                 }),
             })
                 .then(response => response.json())
@@ -81,39 +87,49 @@ const BurgerConstructor = (): JSX.Element => {
                 })
                 .catch(error => {
                     console.log(error);
-                    setIsModalOpen(false);
+                    dispatch(isModalWindowsOrder(false));
                 });
         }
     }, [isModalOpen]);
+
     return (
         <section className={`${styles.constructor} pt-25 ml-4 mr-4`}>
             <BunBurger ingredientsBun={dataIngredients[0]} type='top' />
             <div className={styles.wrapper}>
                 {/* {Используем slice чтоб убрать булки} */}
-                {dataIngredients.slice(2).map((ingredients: { _id: Key; name: string; price: number; image_mobile: string; }) => (
-                    <div
-                        key={ingredients._id}
-                        className={`${styles.constructor__wrapper} mb-4 ml-4 mr-4`}>
-                        <img
-                            src={iconIngreidient}
-                            alt={ingredients.name}
-                            className={styles.constructor__img}
-                        />
-                        <ConstructorElement
-                            type={undefined}
-                            handleClose={() =>
-                                dispatchTotalAmount({
-                                    type: 'minus',
-                                    payload: ingredients.price,
-                                })
-                            }
-                            price={ingredients.price}
-                            text={ingredients.name}
-                            thumbnail={ingredients.image_mobile}
-                            isLocked={false}
-                        />
-                    </div>
-                ))}
+                {dataIngredients
+                    .slice(2)
+                    .map(
+                        (ingredients: {
+                            _id: Key;
+                            name: string;
+                            price: number;
+                            image_mobile: string;
+                        }) => (
+                            <div
+                                key={ingredients._id}
+                                className={`${styles.constructor__wrapper} mb-4 ml-4 mr-4`}>
+                                <img
+                                    src={iconIngreidient}
+                                    alt={ingredients.name}
+                                    className={styles.constructor__img}
+                                />
+                                <ConstructorElement
+                                    type={undefined}
+                                    handleClose={() =>
+                                        dispatchTotalAmount({
+                                            type: 'minus',
+                                            payload: ingredients.price,
+                                        })
+                                    }
+                                    price={ingredients.price}
+                                    text={ingredients.name}
+                                    thumbnail={ingredients.image_mobile}
+                                    isLocked={false}
+                                />
+                            </div>
+                        )
+                    )}
             </div>
             <BunBurger ingredientsBun={dataIngredients[0]} type='bottom' />
             <div className={`${styles.constructor__buy} mt-10 mb-10`}>
@@ -125,7 +141,7 @@ const BurgerConstructor = (): JSX.Element => {
                 </div>
                 <Button
                     onClick={() => {
-                        setIsModalOpen(true);
+                        dispatch(isModalWindowsOrder(true));
                         setNumberder({ number: 0 });
                     }}
                     type='primary'
