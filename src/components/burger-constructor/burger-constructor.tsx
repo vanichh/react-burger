@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useContext, useReducer, useEffect } from 'react';
+import { useState, useReducer, useEffect, Key } from 'react';
 import {
     ConstructorElement,
     Button,
@@ -10,7 +10,8 @@ import styles from './burger-constructor.module.css';
 import iconIngreidient from '../../images/burger-ingredients/icon-ingridients.png';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { BurgerContext } from '../contexts/burger-context';
+import { RootState } from 'services/reducers';
+import { useDispatch, useSelector } from 'react-redux';
 import BunBurger from './bun-burger'; // компонент для отображения верхний и нижний булки
 
 const URL_BOOKING = 'https://norma.nomoreparties.space/api/orders';
@@ -31,10 +32,10 @@ const reducerSumPrice = (state: any, action: any) => {
     }
 };
 const BurgerConstructor = (): JSX.Element => {
-    const dataIngredients = useContext(BurgerContext);
+    const dataIngredients = useSelector((store: RootState) => store.cart.listIgridients);
     // подсчитываем по хардкору сумму всех компонентов
     const initialCount = dataIngredients.reduce(
-        (sum, current) => sum + current.price,
+        (sum:any, current:any) => sum + current.price,
         0
     );
 
@@ -69,7 +70,7 @@ const BurgerConstructor = (): JSX.Element => {
                     'Content-Type': 'application/json;charset=utf-8',
                 },
                 body: JSON.stringify({
-                    ingredients: dataIngredients.map(elem => elem._id),
+                    ingredients: dataIngredients.map((elem: { _id: any; }) => elem._id),
                 }),
             })
                 .then(response => response.json())
@@ -89,7 +90,7 @@ const BurgerConstructor = (): JSX.Element => {
             <BunBurger ingredientsBun={dataIngredients[0]} type='top' />
             <div className={styles.wrapper}>
                 {/* {Используем slice чтоб убрать булки} */}
-                {dataIngredients.slice(2).map(ingredients => (
+                {dataIngredients.slice(2).map((ingredients: { _id: Key; name: string; price: number; image_mobile: string; }) => (
                     <div
                         key={ingredients._id}
                         className={`${styles.constructor__wrapper} mb-4 ml-4 mr-4`}>

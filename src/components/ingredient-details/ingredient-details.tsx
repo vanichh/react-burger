@@ -1,40 +1,35 @@
 import styles from './ingredient-details.module.css';
+import { useSelector } from 'react-redux';
+import { RootState } from 'services/reducers';
 
-interface PropsIngredientDetails {
-    image_large: string;
-    name: string;
-    calories: number;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-}
-
-const IngredientDetails: React.FC<PropsIngredientDetails> = (props) => {
-    const styleText = `${styles.details__text} text text_type_main-default text_color_inactive`;
+const IngredientDetails: React.FC = () => {
+    const { name, image_large, calories, proteins, fat, carbohydrates } =
+        useSelector((state: RootState) => state.cart.ingredientDetails);
+    const CLASSNAME_TEXT = `${styles.details__text} text text_type_main-default text_color_inactive`;
     return (
         <>
-            <img className='mb-4' src={props.image_large} alt={props.name} />
-            <p className='text text_type_main-medium mb-8'>{props.name}</p>
+            <img className='mb-4' src={image_large} alt={name} />
+            <p className='text text_type_main-medium mb-8'>{name}</p>
             <div className={styles.wpapper}>
-                <p className={styleText}>
+                <p className={CLASSNAME_TEXT}>
                     Калории, ккал
                     <br />
-                    {props.calories}
+                    {calories}
                 </p>
-                <p className={styleText}>
+                <p className={CLASSNAME_TEXT}>
                     Белки, г
                     <br />
-                    {props.proteins}
+                    {proteins}
                 </p>
-                <p className={styleText}>
+                <p className={CLASSNAME_TEXT}>
                     Жиры, г
                     <br />
-                    {props.fat}
+                    {fat}
                 </p>
-                <p className={styleText}>
+                <p className={CLASSNAME_TEXT}>
                     Углеводы, г
                     <br />
-                    {props.carbohydrates}
+                    {carbohydrates}
                 </p>
             </div>
         </>

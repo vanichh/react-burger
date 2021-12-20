@@ -1,15 +1,16 @@
-import { useState, useContext, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
-import { BurgerContext } from '../contexts/burger-context';
 import SectionIngredients from './section-ingredients';
+import { useSelector } from 'react-redux';
+import { RootState } from 'services/reducers';
 type ingredientType = 'bun' | 'sauce' | 'main';
 
 export const BurgerIngredients = (): JSX.Element => {
     const refBun = useRef<HTMLElement>(null);
     const refSause = useRef<HTMLElement>(null);
     const refMain = useRef<HTMLElement>(null);
-    const dataIngredients = useContext(BurgerContext);
+    const dataIngredients = useSelector((store: RootState) => store.cart.listIgridients);
     const [current, setCurrent] = useState<ingredientType>('bun');
 
     return (
@@ -54,21 +55,21 @@ export const BurgerIngredients = (): JSX.Element => {
                     refElem={refBun}
                     title='Булки'
                     dataIngredients={dataIngredients.filter(
-                        (elem) => elem.type === 'bun'
+                        (elem: { type: string; }) => elem.type === 'bun'
                     )}
                 />
                 <SectionIngredients
                     refElem={refSause}
                     title='Соусы'
                     dataIngredients={dataIngredients.filter(
-                        (elem) => elem.type === 'sauce'
+                        (elem: { type: string; }) => elem.type === 'sauce'
                     )}
                 />
                 <SectionIngredients
                     refElem={refMain}
                     title='Начинки'
                     dataIngredients={dataIngredients.filter(
-                        (elem) => elem.type === 'main'
+                        (elem: { type: string; }) => elem.type === 'main'
                     )}
                 />
             </div>

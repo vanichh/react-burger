@@ -4,20 +4,12 @@ import {
     CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
+import { useDispatch } from 'react-redux';
+import { GET_INGRIDIENT_MODAL } from '../../services/actions';
 
-interface ElemBurgerIngredientsProps {
-    name: string;
-    image: string;
-    fat: string;
-    onenWindows: () => void;
-}
 
-const ElemBurgerIngredients = ({
-    name,
-    image,
-    fat,
-    onenWindows,
-}: ElemBurgerIngredientsProps): JSX.Element => {
+const ElemBurgerIngredients = (props: any): JSX.Element => {
+    const dispatch = useDispatch();
     const [current, setCurrent] = React.useState<number>(0);
 
     const cuppentPlus = () => setCurrent((prev) => ++prev);
@@ -26,17 +18,18 @@ const ElemBurgerIngredients = ({
         <div
             className={`${styles.ingredients__items} mt-6 ml-4 mb-10 mr-4`}
             onClick={() => {
-                onenWindows();
+                props.onenWindows();
                 cuppentPlus();
+                dispatch({ type: GET_INGRIDIENT_MODAL, item: props });
             }}
         >
             {current ? <Counter count={current} size='default' /> : null}
-            <img className='ml-4 mr-4' src={image} alt={name} />
+            <img className='ml-4 mr-4' src={props.image} alt={props.name} />
             <div className={`${styles.ingredients__wrapper} mt-4 mb-4`}>
-                <p className='text text_type_main-medium mr-2'>{fat}</p>
+                <p className='text text_type_main-medium mr-2'>{props.fat}</p>
                 <CurrencyIcon type='primary' />
             </div>
-            <p className='text text_type_main-default'>{name}</p>
+            <p className='text text_type_main-default'>{props.name}</p>
         </div>
     );
 };

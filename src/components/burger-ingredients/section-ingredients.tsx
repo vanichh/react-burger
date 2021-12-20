@@ -11,7 +11,7 @@ interface PropsSectionIngredients {
     refElem: React.RefObject<HTMLElement>;
 }
 
-const CLASSNAME_TITLE = 'text text_type_main-medium mb-4'
+const CLASSNAME_TITLE = 'text text_type_main-medium mb-4';
 
 const SectionIngredients = ({
     title,
@@ -19,16 +19,14 @@ const SectionIngredients = ({
     refElem,
 }: PropsSectionIngredients) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [propsModal, SetPropsModal] = useState({});
-    const openWindows = (elem: any): void => {
-        SetPropsModal({ ...elem });
+    const openWindows = (): void => {
         setIsModalOpen(true);
     };
 
-    const ModalWindow = (props: any): JSX.Element => {
+    const ModalWindow = (): JSX.Element => {
         return (
             <Modal title='Детали Ингридиента' setIsModalOpen={setIsModalOpen}>
-                <IngredientDetails {...props} />
+                <IngredientDetails />
             </Modal>
         );
     };
@@ -39,13 +37,13 @@ const SectionIngredients = ({
             <div className={styles.ingredients__list}>
                 {dataIngredients.map((elem: any) => (
                     <ElemBurgerIngredients
-                        onenWindows={openWindows.bind(null, elem)}
+                        onenWindows={openWindows}
                         key={elem._id}
                         {...elem}
                     />
                 ))}
             </div>
-            {isModalOpen && <ModalWindow {...propsModal} />}
+            {isModalOpen && <ModalWindow />}
         </section>
     );
 };

@@ -4,6 +4,8 @@ interface PropsOrderDetails {
         number: number;
     };
 }
+
+
 const OrderDetails = ({ order }: PropsOrderDetails): JSX.Element => {
     return (
         <>
