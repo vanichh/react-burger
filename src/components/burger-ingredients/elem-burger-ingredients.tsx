@@ -5,7 +5,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import { useDispatch } from 'react-redux';
-import { SET_INGRIDIENT_MODAL } from '../../services/actions';
+import { SET_INGRIDIENT_MODAL } from '../../services/actions/ingredients';
 
 const CLASSNAMEDIV = `${styles.ingredients__items} mt-6 ml-4 mb-10 mr-4`;
 

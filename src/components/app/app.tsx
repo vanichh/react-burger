@@ -11,7 +11,7 @@ const INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients';
 
 export default function App() {
     const dispatch = useDispatch();
-    const isLoding = useSelector((store: RootState) => store.cart.isLoding);
+    const isLoding = useSelector((store: RootState) => store.igridients.isLoding);
 
     useEffect(() => {
         dispatch(getDataIngridietn(INGREDIENTS_URL));

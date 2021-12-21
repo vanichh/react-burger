@@ -4,7 +4,7 @@ import { RootState } from 'services/reducers';
 
 const IngredientDetails: React.FC = () => {
     const { name, image_large, calories, proteins, fat, carbohydrates } =
-        useSelector((state: RootState) => state.cart.ingredientDetails);
+        useSelector((state: RootState) => state.igridients.ingredientDetails);
     const CLASSNAME_TEXT = `${styles.details__text} text text_type_main-default text_color_inactive`;
     return (
         <>

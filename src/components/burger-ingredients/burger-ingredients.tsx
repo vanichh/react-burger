@@ -11,7 +11,7 @@ type ingredientType = 'bun' | 'sauce' | 'main';
 
 export const BurgerIngredients = (): JSX.Element => {
     const isModalOpen = useSelector(
-        (store: RootState) => store.cart.isModalOpenIngridients
+        (store: RootState) => store.igridients.isModalOpenIngridients
     );
 
     const refBun = useRef<HTMLElement>(null);
@@ -19,7 +19,7 @@ export const BurgerIngredients = (): JSX.Element => {
     const refMain = useRef<HTMLElement>(null);
 
     const dataIngredients = useSelector(
-        (store: RootState) => store.cart.listIgridients
+        (store: RootState) => store.igridients.listIgridients
     );
     const [current, setCurrent] = useState<ingredientType>('bun');
 
