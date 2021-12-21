@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useReducer, useEffect, Key } from 'react';
+import { useReducer, Key } from 'react';
 import {
     ConstructorElement,
     Button,
@@ -13,7 +13,7 @@ import OrderDetails from '../order-details/order-details';
 import { RootState } from 'services/reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import BunBurger from './bun-burger'; // компонент для отображения верхний и нижний булки
-import { isModalWindowsOrder } from 'services/actions/cart';
+import { getNumberOrder, isModalWindowsOrder } from 'services/actions/ingredients';
 const URL_BOOKING = 'https://norma.nomoreparties.space/api/orders';
 
 const initSumPrice = (initialCount: any) => {
@@ -31,13 +31,13 @@ const reducerSumPrice = (state: any, action: any) => {
             return state;
     }
 };
-const BurgerConstructor = (): JSX.Element => {
+const BurgerConstructor: React.FC = () => {
     const dispatch = useDispatch();
     const isModalOpen = useSelector(
         (store: RootState) => store.cart.isModalOpenOrder
     );
     const dataIngredients = useSelector(
-        (store: RootState) => store.cart.listIgridients
+        (store: RootState) => store.cart.listIgridientsConstructor
     );
     // подсчитываем по хардкору сумму всех компонентов
     const initialCount = dataIngredients.reduce(
@@ -52,45 +52,16 @@ const BurgerConstructor = (): JSX.Element => {
         initSumPrice
     );
 
-    const [numberOred, setNumberder] = useState<{ number: number }>({
-        number: 0,
-    });
+    const numberOred = useSelector((store: RootState) => store.cart.order);
 
     // Модалка дял оформления заказа
-    const ModalWindow = (): JSX.Element => {
+    const ModalWindow: React.FC = () => {
         return (
-            <Modal>
+            <Modal isModalWindows={isModalWindowsOrder}>
                 <OrderDetails order={numberOred} />
             </Modal>
         );
     };
-
-
-    useEffect(() => {
-        if (isModalOpen) {
-            fetch(URL_BOOKING, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8',
-                },
-                body: JSON.stringify({
-                    ingredients: dataIngredients.map(
-                        (elem: { _id: any }) => elem._id
-                    ),
-                }),
-            })
-                .then(response => response.json())
-                .then(response => {
-                    if (response.success) {
-                        setNumberder(response.order);
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                    dispatch(isModalWindowsOrder(false));
-                });
-        }
-    }, [isModalOpen]);
 
     return (
         <section className={`${styles.constructor} pt-25 ml-4 mr-4`}>
@@ -108,7 +79,8 @@ const BurgerConstructor = (): JSX.Element => {
                         }) => (
                             <div
                                 key={ingredients._id}
-                                className={`${styles.constructor__wrapper} mb-4 ml-4 mr-4`}>
+                                className={`${styles.constructor__wrapper} mb-4 ml-4 mr-4`}
+                            >
                                 <img
                                     src={iconIngreidient}
                                     alt={ingredients.name}
@@ -141,15 +113,15 @@ const BurgerConstructor = (): JSX.Element => {
                 </div>
                 <Button
                     onClick={() => {
-                        dispatch(isModalWindowsOrder(true));
-                        setNumberder({ number: 0 });
+                        dispatch(getNumberOrder(URL_BOOKING));
                     }}
                     type='primary'
-                    size='large'>
+                    size='large'
+                >
                     Оформить заказ
                 </Button>
             </div>
-            {isModalOpen && numberOred.number !== 0 ? <ModalWindow /> : false}
+            {isModalOpen && <ModalWindow />}
         </section>
     );
 };

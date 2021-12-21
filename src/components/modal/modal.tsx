@@ -5,19 +5,19 @@ import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { useDispatch } from 'react-redux';
-import { isModalWindowsIngridient } from 'services/actions/cart';
 const modalElement = document.getElementById('modal-root') as HTMLElement;
 
 interface PropsModal {
     children: React.ReactNode;
     title?: string;
+    isModalWindows: (arg0: boolean) => void;
 }
 
-const Modal = ({ children, title }: PropsModal): JSX.Element => {
+const Modal = ({ children, title, isModalWindows }: PropsModal): JSX.Element => {
     const despetch = useDispatch();
     const closeWindowsToPress = ({ key }: KeyboardEvent) => {
         if (key === 'Escape') {
-            despetch(isModalWindowsIngridient(false));
+            despetch(isModalWindows(false));
         }
     };
 
@@ -27,16 +27,20 @@ const Modal = ({ children, title }: PropsModal): JSX.Element => {
     }, [closeWindowsToPress]);
 
     return ReactDOM.createPortal(
-        <ModalOverlay>
+        <ModalOverlay isModalWindows={isModalWindows}>
             <div className={`${styles.modal} p-10`}>
                 <div className={`${styles.wrapper}`}>
                     <h2
-                        className={`${styles.modal__title} text text_type_main-large`}>
+                        className={`${styles.modal__title} text text_type_main-large`}
+                    >
                         {title}
                     </h2>
                     <div
                         className={styles.modal__close}
-                        onClick={() => despetch(isModalWindowsIngridient(false))}>
+                        onClick={() =>
+                            despetch(isModalWindows(false))
+                        }
+                    >
                         <CloseIcon type='primary' />
                     </div>
                 </div>

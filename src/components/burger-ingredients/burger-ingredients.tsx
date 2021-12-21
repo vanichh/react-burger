@@ -6,10 +6,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'services/reducers';
 import IngredientDetails from 'components/ingredient-details/ingredient-details';
 import Modal from 'components/modal/modal';
+import { isModalWindowsIngridient } from 'services/actions/ingredients';
 type ingredientType = 'bun' | 'sauce' | 'main';
 
 export const BurgerIngredients = (): JSX.Element => {
-   
     const isModalOpen = useSelector(
         (store: RootState) => store.cart.isModalOpenIngridients
     );
@@ -23,9 +23,12 @@ export const BurgerIngredients = (): JSX.Element => {
     );
     const [current, setCurrent] = useState<ingredientType>('bun');
 
-    const ModalWindow = (): JSX.Element => {
+    const ModalWindow: React.FC = () => {
         return (
-            <Modal title='Детали Ингридиента'>
+            <Modal
+                isModalWindows={isModalWindowsIngridient}
+                title='Детали Ингридиента'
+            >
                 <IngredientDetails />
             </Modal>
         );
@@ -44,7 +47,8 @@ export const BurgerIngredients = (): JSX.Element => {
                         onClick={() => {
                             setCurrent('bun');
                             refBun.current.scrollIntoView(true);
-                        }}>
+                        }}
+                    >
                         Булки
                     </Tab>
                     <Tab
@@ -53,7 +57,8 @@ export const BurgerIngredients = (): JSX.Element => {
                         onClick={() => {
                             setCurrent('sauce');
                             refSause.current.scrollIntoView(true);
-                        }}>
+                        }}
+                    >
                         Соусы
                     </Tab>
                     <Tab
@@ -62,7 +67,8 @@ export const BurgerIngredients = (): JSX.Element => {
                         onClick={() => {
                             setCurrent('main');
                             refMain.current.scrollIntoView(true);
-                        }}>
+                        }}
+                    >
                         Начинки
                     </Tab>
                 </div>

@@ -3,7 +3,7 @@ import {
     SET_INGRIDIENT_CONSTRUCTOR,
     SET_INGRIDIENT_MODAL,
     DELETE_DATA_MODAL,
-    GET_NUMBER_OREDER_MODAL,
+    REQUEST_NUMBER_OREDER,
     STATE_MODAL_WINDOWS_INGRIDIENTS,
     STATE_MODAL_WINDOWS_ORDER,
 } from '../actions';
@@ -36,6 +36,7 @@ export const cartReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 listIgridients: action.items,
+                listIgridientsConstructor: action.items,
                 isLoding: true,
             };
         }
@@ -56,15 +57,16 @@ export const cartReducer = (state = initialState, action: any) => {
                 ...state,
             };
         }
-        case GET_NUMBER_OREDER_MODAL: {
+        case REQUEST_NUMBER_OREDER: {
             return {
-                ...state,
+                ...state, 
+                order: action.item, isModalOpenOrder: true,
             };
         }
         case STATE_MODAL_WINDOWS_INGRIDIENTS: {
             return {
                 ...state,
-                isModalOpenIngridients: action.state,
+                isModalOpenIngridients: action.state, 
             };
         }
         case STATE_MODAL_WINDOWS_ORDER: {
@@ -73,7 +75,6 @@ export const cartReducer = (state = initialState, action: any) => {
                 isModalOpenOrder: action.state,
             };
         }
-
         default: {
             return state;
         }
