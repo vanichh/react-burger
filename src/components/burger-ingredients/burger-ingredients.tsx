@@ -7,6 +7,7 @@ import { RootState } from 'services/reducers';
 import IngredientDetails from 'components/ingredient-details/ingredient-details';
 import Modal from 'components/modal/modal';
 import { isModalWindowsIngridient } from 'services/actions/ingredients';
+
 type ingredientType = 'bun' | 'sauce' | 'main';
 
 export const BurgerIngredients = (): JSX.Element => {
@@ -35,6 +36,7 @@ export const BurgerIngredients = (): JSX.Element => {
     };
 
     return (
+
         <>
             <section className={`${styles.ingredients} ml-10`}>
                 <h2 className='text text_type_main-large mt-10 mb-5'>
@@ -73,27 +75,28 @@ export const BurgerIngredients = (): JSX.Element => {
                     </Tab>
                 </div>
                 <div className={`${styles.wrapper} mb-5`}>
-                    <SectionIngredients
-                        refElem={refBun}
-                        title='Булки'
-                        dataIngredients={dataIngredients.filter(
-                            (elem: { type: string }) => elem.type === 'bun'
-                        )}
-                    />
-                    <SectionIngredients
-                        refElem={refSause}
-                        title='Соусы'
-                        dataIngredients={dataIngredients.filter(
-                            (elem: { type: string }) => elem.type === 'sauce'
-                        )}
-                    />
-                    <SectionIngredients
-                        refElem={refMain}
-                        title='Начинки'
-                        dataIngredients={dataIngredients.filter(
-                            (elem: { type: string }) => elem.type === 'main'
-                        )}
-                    />
+                        <SectionIngredients
+                            refElem={refBun}
+                            title='Булки'
+                            dataIngredients={dataIngredients.filter(
+                                (elem: { type: string }) => elem.type === 'bun'
+                            )}
+                        />
+                        <SectionIngredients
+                            refElem={refSause}
+                            title='Соусы'
+                            dataIngredients={dataIngredients.filter(
+                                (elem: { type: string }) =>
+                                    elem.type === 'sauce'
+                            )}
+                        />
+                        <SectionIngredients
+                            refElem={refMain}
+                            title='Начинки'
+                            dataIngredients={dataIngredients.filter(
+                                (elem: { type: string }) => elem.type === 'main'
+                            )}
+                        />
                 </div>
             </section>
             {isModalOpen && <ModalWindow />}

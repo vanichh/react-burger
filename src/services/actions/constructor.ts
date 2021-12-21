@@ -3,6 +3,8 @@ export const REQUEST_NUMBER_ORDER = 'REQUEST_NUMBER_OREDER';
 export const SET_INGRIDIENT_CONSTRUCTOR = 'SET_INGRIDIENT_CONSTRUCTOR';
 export const PLUS_ORDER_SUM = 'PLUS_ORDER_SUM';
 export const MINUS_ORDER_SUM = 'MINUS_ORDER_SUM';
+export const ADD_INGRIDIENT = 'ADD_INGRIDIENT';
+export const DELETE_INGRIDIENT = 'DELETE_INGRIDIENT';
 
 export const isModalWindowsOrder = (state: boolean) => (dispatch: any) => {
     dispatch({
@@ -29,14 +31,13 @@ export const countOrderSum =
 export const getNumberOrder =
     (url: string) => (dispatch: any, getState: any) => {
         const { constructor } = getState();
-
         fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
             },
             body: JSON.stringify({
-                ingredients: constructor.listIgridientsConstructor.map(
+                ingredients: constructor.igridientsConstructor.map(
                     (elem: { _id: string }) => elem._id
                 ),
             }),

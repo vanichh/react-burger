@@ -1,7 +1,3 @@
-import {
-    SET_INGRIDIENT_CONSTRUCTOR,
-} from './constructor';
-
 export const SET_INGRIDIENT_BURGER = 'SET_INGRIDIENT_BURGER';
 export const STATE_MODAL_WINDOWS_INGRIDIENTS = 'STATE_MODAL_WINDOWS';
 export const DELETE_DATA_MODAL = 'DELETE_DATA_MODAL';
@@ -12,10 +8,6 @@ export const getDataIngridietn = (url: string) => (dispatch: any) => {
         .then((res) => res.json())
         .then((response) => {
             if (response.success) {
-                dispatch({
-                    type: SET_INGRIDIENT_CONSTRUCTOR,
-                    items: response.data,
-                });
                 dispatch({
                     type: SET_INGRIDIENT_BURGER,
                     items: response.data,

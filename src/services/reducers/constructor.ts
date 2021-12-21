@@ -4,30 +4,32 @@ import {
     STATE_MODAL_WINDOWS_ORDER,
     PLUS_ORDER_SUM,
     MINUS_ORDER_SUM,
+    ADD_INGRIDIENT,
+    DELETE_INGRIDIENT,
 } from '../actions/constructor';
 
 import IdataIgridients from 'utils/types';
 
 interface IinitialState {
-    listIgridientsConstructor: IdataIgridients[] | [];
+    igridientsConstructor: IdataIgridients[] | [];
     order: any;
     isModalOpen: boolean;
     orderSum: number;
 }
 
 const initialState: IinitialState = {
-    listIgridientsConstructor: [],
+    igridientsConstructor: [],
     order: {},
     isModalOpen: false,
     orderSum: 0,
 };
 
-export const constructorReducer = (state = initialState, action: any) => {
+export const constructorReducer = (state = initialState, action: any) => {  
     switch (action.type) {
         case SET_INGRIDIENT_CONSTRUCTOR: {
             return {
                 ...state,
-                listIgridientsConstructor: action.items,
+                igridientsConstructor: action.items,
             };
         }
         case REQUEST_NUMBER_ORDER: {
@@ -53,6 +55,24 @@ export const constructorReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 orderSum: state.orderSum - action.price,
+            };
+        }
+        case ADD_INGRIDIENT: {
+            return {
+                ...state,
+                igridientsConstructor: [
+                    ...state.igridientsConstructor,
+                    action.item,
+                ],
+            };
+        }
+        case DELETE_INGRIDIENT: {
+            return {
+                ...state,
+                igridientsConstructor: [
+                    ...state.igridientsConstructor,
+                    action.item,
+                ]
             };
         }
         default: {
