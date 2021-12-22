@@ -35,7 +35,7 @@ const ElemBurgerIngredients = (props: any): JSX.Element => {
             {current ? <Counter count={current} size='default' /> : null}
             <img className='ml-4 mr-4' src={props.image} alt={props.name} />
             <div className={`${styles.ingredients__wrapper} mt-4 mb-4`}>
-                <p className='text text_type_main-medium mr-2'>{props.fat}</p>
+                <p className='text text_type_main-medium mr-2'>{props.price}</p>
                 <CurrencyIcon type='primary' />
             </div>
             <p className='text text_type_main-default'>{props.name}</p>

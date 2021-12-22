@@ -22,8 +22,6 @@ export default function App() {
         dispatch(getDataIngridietn(INGREDIENTS_URL));
     }, []);
 
-    console.log(useSelector((store: RootState) => store));
-
     return (
         <>
             <AppHeader />
