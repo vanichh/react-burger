@@ -5,6 +5,7 @@ export const PLUS_ORDER_SUM = 'PLUS_ORDER_SUM';
 export const MINUS_ORDER_SUM = 'MINUS_ORDER_SUM';
 export const ADD_INGRIDIENT = 'ADD_INGRIDIENT';
 export const DELETE_INGRIDIENT = 'DELETE_INGRIDIENT';
+export const SET_BUN_CONSTRUCTOR = 'SET_BUN_CONSTRUCTOR';
 
 export const isModalWindowsOrder = (state: boolean) => (dispatch: any) => {
     dispatch({
@@ -14,16 +15,17 @@ export const isModalWindowsOrder = (state: boolean) => (dispatch: any) => {
 };
 
 export const countOrderSum =
-    (type: 'minus' | 'plus', prise: number) => (dispatch: any) => {
+    (type: 'minus' | 'plus', item: any) => (dispatch: any) => {
         if (type === 'minus') {
             dispatch({
-                type: MINUS_ORDER_SUM,
-                prise: prise,
+                type: DELETE_INGRIDIENT,
+                item: item,
+                ADD_INGRIDIENT,
             });
         } else {
             dispatch({
-                type: PLUS_ORDER_SUM,
-                prise: prise,
+                type: ADD_INGRIDIENT,
+                item: item,
             });
         }
     };

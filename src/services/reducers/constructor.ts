@@ -2,29 +2,30 @@ import {
     SET_INGRIDIENT_CONSTRUCTOR,
     REQUEST_NUMBER_ORDER,
     STATE_MODAL_WINDOWS_ORDER,
-    PLUS_ORDER_SUM,
-    MINUS_ORDER_SUM,
     ADD_INGRIDIENT,
     DELETE_INGRIDIENT,
+    SET_BUN_CONSTRUCTOR,
 } from '../actions/constructor';
 
 import IdataIgridients from 'utils/types';
 
 interface IinitialState {
-    igridientsConstructor: IdataIgridients[] | [];
+    ingridientsConstructor: IdataIgridients[] | [];
     order: any;
     isModalOpen: boolean;
     orderSum: number;
+    bunConstConstructor: IdataIgridients | [];
 }
 
 const initialState: IinitialState = {
-    igridientsConstructor: [],
+    ingridientsConstructor: [],
     order: {},
     isModalOpen: false,
     orderSum: 0,
+    bunConstConstructor: [],
 };
 
-export const constructorReducer = (state = initialState, action: any) => {  
+export const constructorReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case SET_INGRIDIENT_CONSTRUCTOR: {
             return {
@@ -45,34 +46,30 @@ export const constructorReducer = (state = initialState, action: any) => {
                 isModalOpen: action.state,
             };
         }
-        case PLUS_ORDER_SUM: {
-            return {
-                ...state,
-                orderSum: state.orderSum + action.price,
-            };
-        }
-        case MINUS_ORDER_SUM: {
-            return {
-                ...state,
-                orderSum: state.orderSum - action.price,
-            };
-        }
         case ADD_INGRIDIENT: {
             return {
                 ...state,
-                igridientsConstructor: [
-                    ...state.igridientsConstructor,
+                ingridientsConstructor: [
+                    ...state.ingridientsConstructor,
                     action.item,
                 ],
+                orderSum: state.orderSum + action.item.price,
             };
         }
         case DELETE_INGRIDIENT: {
             return {
                 ...state,
-                igridientsConstructor: [
-                    ...state.igridientsConstructor,
+                ingridientsConstructor: [
+                    ...state.ingridientsConstructor,
                     action.item,
-                ]
+                ],
+                orderSum: state.orderSum - action.item.price,
+            };
+        }
+        case SET_BUN_CONSTRUCTOR: {
+            return {
+                ...state,
+                bunConstConstructor: action.item,
             };
         }
         default: {

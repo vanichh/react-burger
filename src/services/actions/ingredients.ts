@@ -1,3 +1,5 @@
+import { SET_BUN_CONSTRUCTOR } from './constructor';
+
 export const SET_INGRIDIENT_BURGER = 'SET_INGRIDIENT_BURGER';
 export const STATE_MODAL_WINDOWS_INGRIDIENTS = 'STATE_MODAL_WINDOWS';
 export const DELETE_DATA_MODAL = 'DELETE_DATA_MODAL';
@@ -8,9 +10,16 @@ export const getDataIngridietn = (url: string) => (dispatch: any) => {
         .then((res) => res.json())
         .then((response) => {
             if (response.success) {
+                console.log(response.data);
                 dispatch({
                     type: SET_INGRIDIENT_BURGER,
                     items: response.data,
+                });
+                dispatch({
+                    type: SET_BUN_CONSTRUCTOR,
+                    item: response.data.find(
+                        (elem: any) => elem.type === 'bun'
+                    ),
                 });
             }
         })
