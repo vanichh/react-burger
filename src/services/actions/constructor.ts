@@ -1,8 +1,3 @@
-import {
-  DECREMENT_ID_INGRIDIENT,
-  INCREMENT_ID_INGRIDIENT,
-} from './ingredients';
-
 export const STATE_MODAL_WINDOWS_ORDER = 'STATE_MODAL_WINDOWS_ORDER';
 export const REQUEST_NUMBER_ORDER = 'REQUEST_NUMBER_OREDER';
 export const SET_INGRIDIENT_CONSTRUCTOR = 'SET_INGRIDIENT_CONSTRUCTOR';
@@ -10,7 +5,8 @@ export const PLUS_ORDER_SUM = 'PLUS_ORDER_SUM';
 export const MINUS_ORDER_SUM = 'MINUS_ORDER_SUM';
 export const ADD_INGRIDIENT = 'ADD_INGRIDIENT';
 export const DELETE_INGRIDIENT = 'DELETE_INGRIDIENT';
-export const SET_BUN_CONSTRUCTOR = 'SET_BUN_CONSTRUCTOR';
+export const ADD_BUN_CONSTRUCTOR = 'ADD_BUN_CONSTRUCTOR';
+export const UPDATE_BUN_CONSTRUCTOR = 'DELETE_BUN_CONSTRUCTOR';
 
 export const isModalWindowsOrder = (state: boolean) => (dispatch: any) => {
   dispatch({
@@ -19,41 +15,37 @@ export const isModalWindowsOrder = (state: boolean) => (dispatch: any) => {
   });
 };
 
-export const countOrderSum =
-  (type: 'minus' | 'plus', item: any) => (dispatch: any) => {
-    if (type === 'minus') {
-      dispatch({
-        type: DELETE_INGRIDIENT,
-        item: item,
-      });
-      dispatch({
-        type: DECREMENT_ID_INGRIDIENT,
-        key: item._id,
-      });
-    } else {
+export const changeStateElem =
+  (type: 'delete' | 'add', item: any) => (dispatch: any) => {
+    if (type === 'add') {
       dispatch({
         type: ADD_INGRIDIENT,
         item: item,
       });
+    } else if (type === 'delete') {
       dispatch({
-        type: INCREMENT_ID_INGRIDIENT,
-        key: item._id,
+        type: DELETE_INGRIDIENT,
+        item: item,
       });
     }
   };
 
 export const getNumberOrder =
   (url: string) => (dispatch: any, getState: any) => {
-    const { constructor } = getState();
+    const { burgerConstructor } = getState();
     fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
       },
       body: JSON.stringify({
-        ingredients: constructor.igridientsConstructor.map(
-          (elem: { _id: string }) => elem._id
-        ),
+        ingredients: [
+          burgerConstructor.bunConstructor._id,
+          ...burgerConstructor.ingridientsConstructor.map(
+            (elem: { _id: string }) => elem._id
+          ),
+          burgerConstructor.bunConstructor._id,
+        ],
       }),
     })
       .then((response) => response.json())
@@ -69,7 +61,7 @@ export const getNumberOrder =
         console.log(error);
         dispatch({
           type: REQUEST_NUMBER_ORDER,
-          item: constructor.order,
+          item: burgerConstructor.order,
         });
       });
   };

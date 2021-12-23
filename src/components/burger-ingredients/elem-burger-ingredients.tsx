@@ -13,18 +13,18 @@ const CLASSNAMEDIV = `${styles.ingredients__items} mt-6 ml-4 mb-10 mr-4`;
 
 const ElemBurgerIngredients = (props: any): JSX.Element => {
   const dispatch = useDispatch();
+
   const current = useSelector(
-    (store: RootState) => store.igridients.countSelectedIngredients[props._id]
+    (store: RootState) =>
+      store.burgerConstructor.countIngridientsConstructor[props._id]
   );
   const [{ isDragging }, drag] = useDrag({
-    type: 'ingridient',
+    type: props.type !== 'bun' ? 'ingridient' : 'bun',
     item: props,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
-
-  console.log(isDragging);
 
   return (
     <div
@@ -32,10 +32,14 @@ const ElemBurgerIngredients = (props: any): JSX.Element => {
       onClick={() => {
         dispatch({ type: SET_INGRIDIENT_MODAL, item: props });
       }}
-      ref={drag}
     >
       {current ? <Counter count={current} size='default' /> : null}
-      <img className='ml-4 mr-4' src={props.image} alt={props.name} />
+      <img
+        ref={drag}
+        className={`${styles.ingredients__icon} ml-4 mr-4`}
+        src={props.image}
+        alt={props.name}
+      />
       <div className={`${styles.ingredients__wrapper} mt-4 mb-4`}>
         <p className='text text_type_main-medium mr-2'>{props.price}</p>
         <CurrencyIcon type='primary' />

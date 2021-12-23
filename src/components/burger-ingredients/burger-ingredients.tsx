@@ -15,10 +15,6 @@ export const BurgerIngredients = (): JSX.Element => {
     (store: RootState) => store.igridients.isModalOpenIngridients
   );
 
-  console.log(
-    useSelector((store: RootState) => store.igridients.countSelectedIngredients)
-  );
-
   const refBun = useRef<HTMLElement>(null);
   const refSause = useRef<HTMLElement>(null);
   const refMain = useRef<HTMLElement>(null);

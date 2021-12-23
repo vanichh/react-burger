@@ -3,8 +3,6 @@ import {
   SET_INGRIDIENT_BURGER,
   DELETE_DATA_MODAL,
   SET_INGRIDIENT_MODAL,
-  INCREMENT_ID_INGRIDIENT,
-  DECREMENT_ID_INGRIDIENT,
 } from 'services/actions/ingredients';
 import IdataIgridients from 'utils/types';
 
@@ -13,7 +11,6 @@ interface IinitialState {
   ingredientDetails: IdataIgridients | [];
   isLoding: boolean;
   isModalOpenIngridients: boolean;
-  countSelectedIngredients: any;
 }
 
 const initialState: IinitialState = {
@@ -21,7 +18,6 @@ const initialState: IinitialState = {
   ingredientDetails: [],
   isLoding: false,
   isModalOpenIngridients: false,
-  countSelectedIngredients: {},
 };
 
 // action.items.forEach(
@@ -54,24 +50,6 @@ export const igridientsReducer = (state = initialState, action: any) => {
       return {
         ...state,
         isModalOpenIngridients: action.state,
-      };
-    }
-    case INCREMENT_ID_INGRIDIENT: {
-      return {
-        ...state,
-        countSelectedIngredients: {
-          ...state.countSelectedIngredients,
-          [action.key]: ++state.countSelectedIngredients[action.key],
-        },
-      };
-    }
-    case DECREMENT_ID_INGRIDIENT: {
-      return {
-        ...state,
-        countSelectedIngredients: {
-          ...state.countSelectedIngredients,
-          [action.key]: --state.countSelectedIngredients[action.key],
-        },
       };
     }
     default: {

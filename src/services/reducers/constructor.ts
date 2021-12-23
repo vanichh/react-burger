@@ -4,7 +4,8 @@ import {
   STATE_MODAL_WINDOWS_ORDER,
   ADD_INGRIDIENT,
   DELETE_INGRIDIENT,
-  SET_BUN_CONSTRUCTOR,
+  ADD_BUN_CONSTRUCTOR,
+  UPDATE_BUN_CONSTRUCTOR,
 } from '../actions/constructor';
 
 import IdataIgridients from 'utils/types';
@@ -14,8 +15,8 @@ interface IinitialState {
   order: any;
   isModalOpen: boolean;
   orderSum: number;
-  bunConstructor: IdataIgridients | [];
-
+  bunConstructor: IdataIgridients | any;
+  countIngridientsConstructor: any;
 }
 
 const initialState: IinitialState = {
@@ -24,6 +25,7 @@ const initialState: IinitialState = {
   isModalOpen: false,
   orderSum: 0,
   bunConstructor: [],
+  countIngridientsConstructor: {},
 };
 
 export const constructorReducer = (state = initialState, action: any) => {
@@ -52,19 +54,56 @@ export const constructorReducer = (state = initialState, action: any) => {
         ...state,
         ingridientsConstructor: [...state.ingridientsConstructor, action.item],
         orderSum: state.orderSum + action.item.price,
+        countIngridientsConstructor: {
+          ...state.countIngridientsConstructor,
+          [action.item._id]:
+            state.countIngridientsConstructor[action.item._id] === undefined
+              ? 1
+              : ++state.countIngridientsConstructor[action.item._id],
+        },
       };
     }
     case DELETE_INGRIDIENT: {
       return {
         ...state,
-        ingridientsConstructor: [...state.ingridientsConstructor, action.item],
+        ingridientsConstructor: [
+          ...state.ingridientsConstructor.filter(
+            (elem) => elem.idList !== action.item.idList
+          ),
+        ],
         orderSum: state.orderSum - action.item.price,
+        countIngridientsConstructor: {
+          ...state.countIngridientsConstructor,
+          [action.item._id]: --state.countIngridientsConstructor[
+            action.item._id
+          ],
+        },
       };
     }
-    case SET_BUN_CONSTRUCTOR: {
+    case ADD_BUN_CONSTRUCTOR: {
       return {
         ...state,
         bunConstructor: action.item,
+        orderSum: state.orderSum + action.item.price * 2,
+        countIngridientsConstructor: {
+          ...state.countIngridientsConstructor,
+          [action.item._id]: 1,
+        },
+      };
+    }
+    case UPDATE_BUN_CONSTRUCTOR: {
+      return {
+        ...state,
+        bunConstructor: action.item,
+        orderSum:
+          state.orderSum +
+          action.item.price * 2 -
+          state.bunConstructor.price * 2,
+        countIngridientsConstructor: {
+          ...state.countIngridientsConstructor,
+          [action.item._id]: 1,
+          [state.bunConstructor._id]: 0,
+        },
       };
     }
     default: {

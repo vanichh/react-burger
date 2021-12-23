@@ -11,6 +11,7 @@ interface DataProps {
     image_mobile: string;
     image_large: string;
     __v: number;
+    idList?: number;
 }
 
 export default DataProps;

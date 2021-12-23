@@ -3,7 +3,7 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { RootState } from 'services/reducers';
 import { useSelector } from 'react-redux';
-import BunBurger from './bun-burger'; // компонент для отображения верхний и нижний булки
+import BunBurger from './bun-ingredient-constructor'; // компонент для отображения верхний и нижний булки
 import ListIngridientBurger from './list-ingredients-constructor';
 import { isModalWindowsOrder } from 'services/actions/constructor';
 import Payment from './payment-constructor';

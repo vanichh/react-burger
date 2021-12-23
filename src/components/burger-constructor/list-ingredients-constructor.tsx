@@ -1,19 +1,24 @@
 import styles from './burger-constructor.module.css';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
-import { countOrderSum } from 'services/actions/constructor';
+import { changeStateElem } from 'services/actions/constructor';
 import Ingredient from './ingredient-constructor';
 import { RootState } from 'services/reducers';
 
 export const ListIngridientBurger = () => {
   const dispatch = useDispatch();
-  const [, dropTarget] = useDrop({
+  const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingridient',
-    drop(item) {
-      // console.log(item);
-      dispatch(countOrderSum('plus', item));
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(item: any) {
+      const newItem = { ...item };
+      newItem.idList = Math.random();
+      dispatch(changeStateElem('add', newItem));
     },
   });
+  console.log(isHover);
 
   const ingridients = useSelector(
     (store: RootState) => store.burgerConstructor.ingridientsConstructor
@@ -22,16 +27,20 @@ export const ListIngridientBurger = () => {
   const DefaultIngridient = () => {
     return (
       <p
-        style={{ textAlign: 'center' }}
-        className='text text_type_main-default mt-20 mb-20'
+        className={`${styles.constructor__text_default} text text_type_main-default`}
       >
-        Перенесите сюда нужные ингридиенты из левого столбца
+        Перенесите сюда нужные ингридиенты из левого меню
       </p>
     );
   };
-  console.log(ingridients);
+
   return (
-    <div ref={dropTarget} className={styles.wrapper}>
+    <div
+      ref={dropTarget}
+      className={`${styles.wrapper} ${
+        isHover ? styles.hover_dnd : ''
+      }`}
+    >
       {ingridients.length === 0 ? (
         <DefaultIngridient />
       ) : (
