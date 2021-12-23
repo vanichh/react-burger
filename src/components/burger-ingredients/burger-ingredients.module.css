@@ -4,6 +4,7 @@
   max-width: 600px;
   width: 100%;
   max-height: calc(100vh - 88px);
+  position: relative;
 }
 .list {
   display: flex;

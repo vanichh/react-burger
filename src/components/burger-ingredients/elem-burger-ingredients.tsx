@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Counter,
   CurrencyIcon,
@@ -14,10 +13,12 @@ const CLASSNAMEDIV = `${styles.ingredients__items} mt-6 ml-4 mb-10 mr-4`;
 const ElemBurgerIngredients = (props: any): JSX.Element => {
   const dispatch = useDispatch();
 
+  // счетчик количества добавленного ингридиента
   const current = useSelector(
     (store: RootState) =>
       store.burgerConstructor.countIngridientsConstructor[props._id]
   );
+
   const [{ isDragging }, drag] = useDrag({
     type: props.type !== 'bun' ? 'ingridient' : 'bun',
     item: props,

@@ -5,9 +5,11 @@ import iconIngreidient from '../../images/burger-ingredients/icon-ingridients.pn
 import styles from './burger-constructor.module.css';
 
 export const IngredientConstructor = ({ ingredient }: any) => {
-  const dispatch = useDispatch();
+  
+    const dispatch = useDispatch();
 
-  const deleteElem = () => {
+    // удаление ингридиента
+  const deleteIngredient = () => {
     dispatch(changeStateElem('delete', ingredient))
   };
 
@@ -23,7 +25,7 @@ export const IngredientConstructor = ({ ingredient }: any) => {
       />
       <ConstructorElement
         type={undefined}
-        handleClose={() => deleteElem()}
+        handleClose={() => deleteIngredient()}
         price={ingredient.price}
         text={ingredient.name}
         thumbnail={ingredient.image_mobile}

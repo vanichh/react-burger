@@ -6,7 +6,9 @@ import Ingredient from './ingredient-constructor';
 import { RootState } from 'services/reducers';
 
 export const ListIngridientBurger = () => {
+  
   const dispatch = useDispatch();
+  
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingridient',
     collect: (monitor) => ({
@@ -18,12 +20,12 @@ export const ListIngridientBurger = () => {
       dispatch(changeStateElem('add', newItem));
     },
   });
-  console.log(isHover);
 
   const ingridients = useSelector(
     (store: RootState) => store.burgerConstructor.ingridientsConstructor
   );
 
+  // дефолтное состояние без ингридиентов
   const DefaultIngridient = () => {
     return (
       <p

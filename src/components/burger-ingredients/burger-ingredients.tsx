@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import SectionIngredients from './section-ingredients';
@@ -18,10 +18,29 @@ export const BurgerIngredients = (): JSX.Element => {
   const refBun = useRef<HTMLElement>(null);
   const refSause = useRef<HTMLElement>(null);
   const refMain = useRef<HTMLElement>(null);
+  const refSectionIngredients = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    refSectionIngredients.current.addEventListener('scroll', () => {
+      const bunTop = refBun.current.getBoundingClientRect().top;
+      const sauseTop = refSause.current.getBoundingClientRect().top;
+      const mainTop = refMain.current.getBoundingClientRect().top;
+      if (bunTop > 200 && bunTop < 230) {
+        setCurrent('bun');
+      } else if (sauseTop > 200 && sauseTop < 230) {
+        setCurrent('sauce');
+      } else if (mainTop > 200 && mainTop < 230) {
+        setCurrent('main');
+      }
+    });
+  }, []);
+
+  // данные для отрисовки ингридиентов
   const dataIngredients = useSelector(
     (store: RootState) => store.igridients.listIgridients
   );
+
+  // переключение табов
   const [current, setCurrent] = useState<ingredientType>('bun');
 
   const ModalWindow: React.FC = () => {
@@ -47,7 +66,7 @@ export const BurgerIngredients = (): JSX.Element => {
             active={current === 'bun'}
             onClick={() => {
               setCurrent('bun');
-              refBun.current.scrollIntoView(true);
+              refBun.current.scrollIntoView({ behavior: 'smooth' });
             }}
           >
             Булки
@@ -57,7 +76,7 @@ export const BurgerIngredients = (): JSX.Element => {
             active={current === 'sauce'}
             onClick={() => {
               setCurrent('sauce');
-              refSause.current.scrollIntoView(true);
+              refSause.current.scrollIntoView({ behavior: 'smooth' });
             }}
           >
             Соусы
@@ -67,13 +86,13 @@ export const BurgerIngredients = (): JSX.Element => {
             active={current === 'main'}
             onClick={() => {
               setCurrent('main');
-              refMain.current.scrollIntoView(true);
+              refMain.current.scrollIntoView({ behavior: 'smooth' });
             }}
           >
             Начинки
           </Tab>
         </div>
-        <div className={`${styles.wrapper} mb-5`}>
+        <div className={`${styles.wrapper} mb-5`} ref={refSectionIngredients}>
           <SectionIngredients
             refElem={refBun}
             title='Булки'
