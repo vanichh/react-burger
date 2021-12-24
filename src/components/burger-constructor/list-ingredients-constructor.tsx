@@ -43,11 +43,11 @@ export const ListIngridientBurger = () => {
         isHover ? styles.hover_dnd : ''
       }`}
     >
-      {ingridients.length === 0 ? (
+      {!ingridients.length ? (
         <DefaultIngridient />
       ) : (
         ingridients.map((ingredient: any, i: number) => (
-          <Ingredient key={ingredient._id + i} ingredient={ingredient} />
+          <Ingredient  key={ingredient._id + i} index={i} ingredient={ingredient} />
         ))
       )}
     </div>

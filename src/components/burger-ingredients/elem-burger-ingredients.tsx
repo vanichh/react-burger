@@ -19,7 +19,7 @@ const ElemBurgerIngredients = (props: any): JSX.Element => {
       store.burgerConstructor.countIngridientsConstructor[props._id]
   );
 
-  const [{ isDragging }, drag] = useDrag({
+  const [, drag] = useDrag({
     type: props.type !== 'bun' ? 'ingridient' : 'bun',
     item: props,
     collect: (monitor) => ({

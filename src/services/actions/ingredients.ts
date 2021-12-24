@@ -10,12 +10,9 @@ export const getDataIngridietn = (url: string) => (dispatch: any) => {
     .then((res) => res.json())
     .then((response) => {
       if (response.success) {
-        const objKeyIngridients: any = {};
-        response.data.forEach(({ _id }: any) => (objKeyIngridients[_id] = 0));
         dispatch({
           type: SET_INGRIDIENT_BURGER,
           items: response.data,
-          objKey: objKeyIngridients,
         });
         dispatch({
           type: ADD_BUN_CONSTRUCTOR,

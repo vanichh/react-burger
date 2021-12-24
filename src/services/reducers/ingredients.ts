@@ -20,10 +20,6 @@ const initialState: IinitialState = {
   isModalOpenIngridients: false,
 };
 
-// action.items.forEach(
-//     ({ _id }: any) => (state.countSelectedIngredients[_id] = 0)
-//   ),
-
 export const igridientsReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case SET_INGRIDIENT_BURGER: {
@@ -31,7 +27,6 @@ export const igridientsReducer = (state = initialState, action: any) => {
         ...state,
         listIgridients: action.items,
         isLoding: true,
-        countSelectedIngredients: action.objKey,
       };
     }
     case SET_INGRIDIENT_MODAL: {

@@ -6,6 +6,7 @@ import {
   DELETE_INGRIDIENT,
   ADD_BUN_CONSTRUCTOR,
   UPDATE_BUN_CONSTRUCTOR,
+  MOVING_INGRIDIENT_CONSTRUCTOR,
 } from '../actions/constructor';
 
 import IdataIgridients from 'utils/types';
@@ -106,6 +107,22 @@ export const constructorReducer = (state = initialState, action: any) => {
         },
       };
     }
+
+    case MOVING_INGRIDIENT_CONSTRUCTOR: {
+      const item = { ...action.item.variable };
+      item.idList = Math.random();
+      const ingridientsConstructor = state.ingridientsConstructor;
+      ingridientsConstructor.splice(action.item.variableIndex, 0, item);
+      return {
+        ...state,
+        ingridientsConstructor: [
+          ...ingridientsConstructor.filter(
+            (elem) => elem.idList !== action.item.variable.idList
+          ),
+        ],
+      };
+    }
+
     default: {
       return state;
     }

@@ -7,6 +7,7 @@ export const ADD_INGRIDIENT = 'ADD_INGRIDIENT';
 export const DELETE_INGRIDIENT = 'DELETE_INGRIDIENT';
 export const ADD_BUN_CONSTRUCTOR = 'ADD_BUN_CONSTRUCTOR';
 export const UPDATE_BUN_CONSTRUCTOR = 'DELETE_BUN_CONSTRUCTOR';
+export const MOVING_INGRIDIENT_CONSTRUCTOR = 'MOVING_INGRIDIENT_CONSTRUCTOR'
 
 export const isModalWindowsOrder = (state: boolean) => (dispatch: any) => {
   dispatch({
