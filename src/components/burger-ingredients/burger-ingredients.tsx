@@ -3,7 +3,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import SectionIngredients from './section-ingredients';
 import { useSelector } from 'react-redux';
-import { RootState } from 'services/reducers';
+import { RootState } from 'services/store';
 import IngredientDetails from 'components/ingredient-details/ingredient-details';
 import Modal from 'components/modal/modal';
 import { isModalWindowsIngridient } from 'services/actions/ingredients';
@@ -25,11 +25,11 @@ export const BurgerIngredients = (): JSX.Element => {
       const bunTop = refBun.current.getBoundingClientRect().top;
       const sauseTop = refSause.current.getBoundingClientRect().top;
       const mainTop = refMain.current.getBoundingClientRect().top;
-      if (bunTop > 200 && bunTop < 230) {
+      if (bunTop > 200 && bunTop < 260) {
         setCurrent('bun');
-      } else if (sauseTop > 200 && sauseTop < 230) {
+      } else if (sauseTop > 200 && sauseTop < 260) {
         setCurrent('sauce');
-      } else if (mainTop > 200 && mainTop < 230) {
+      } else if (mainTop > 200 && mainTop < 260) {
         setCurrent('main');
       }
     });

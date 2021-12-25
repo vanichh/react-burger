@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { RootState } from 'services/reducers';
+import { RootState } from 'services/store';
 
 export const ErrorRequest: React.FC = () => {
   const textError = useSelector(

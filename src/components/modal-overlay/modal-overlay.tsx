@@ -10,11 +10,11 @@ const ModalOverlay = ({
     children,
     isModalWindows,
 }: PropsModalOverlay): JSX.Element => {
-    const despetch = useDispatch();
+    const dispetch = useDispatch();
 
     const handleCloseWindows = ({ currentTarget, target }: SyntheticEvent) => {
         if (currentTarget === target) {
-            despetch(isModalWindows(false));
+            dispetch(isModalWindows(false));
         }
     };
 

@@ -6,7 +6,7 @@ import styles from './burger-ingredients.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_INGRIDIENT_MODAL } from '../../services/actions/ingredients';
 import { useDrag } from 'react-dnd';
-import { RootState } from 'services/reducers';
+import { RootState } from 'services/store';
 
 const CLASSNAMEDIV = `${styles.ingredients__items} mt-6 ml-4 mb-10 mr-4`;
 

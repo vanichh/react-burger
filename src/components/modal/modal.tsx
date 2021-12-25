@@ -14,10 +14,10 @@ interface PropsModal {
 }
 
 const Modal = ({ children, title, isModalWindows }: PropsModal): JSX.Element => {
-    const despetch = useDispatch();
+    const dispatch = useDispatch();
     const closeWindowsToPress = ({ key }: KeyboardEvent) => {
         if (key === 'Escape') {
-            despetch(isModalWindows(false));
+            dispatch(isModalWindows(false));
         }
     };
 
@@ -38,7 +38,7 @@ const Modal = ({ children, title, isModalWindows }: PropsModal): JSX.Element => 
                     <div
                         className={styles.modal__close}
                         onClick={() =>
-                            despetch(isModalWindows(false))
+                            dispatch(isModalWindows(false))
                         }
                     >
                         <CloseIcon type='primary' />

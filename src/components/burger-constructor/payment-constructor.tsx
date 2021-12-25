@@ -1,38 +1,49 @@
 import {
-    Button,
-    CurrencyIcon,
+  Button,
+  CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getNumberOrder } from 'services/actions/constructor';
-import { RootState } from 'services/reducers';
+import { RootState } from 'services/store';
 import styles from './burger-constructor.module.css';
+import { URL_API } from 'utils/url-api';
 
-const URL_BOOKING = 'https://norma.nomoreparties.space/api/orders';
+const URL_REQUEST_ORDER = URL_API + 'orders';
 
 export const PaymentConstructor: React.FC = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const orderSum = useSelector(
-        (store: RootState) => store.burgerConstructor.orderSum
-    );
+  const orderSum = useSelector(
+    (store: RootState) => store.burgerConstructor.orderSum
+  );
 
-    return (
-        <div className={`${styles.constructor__buy} mt-10 mb-10 mr-6`}>
-            <div className={`${styles.constructor__wrapper} mr-10`}>
-                <p className='text text_type_digits-medium mr-2'>{orderSum}</p>
-                <CurrencyIcon type='primary' />
-            </div>
-            <Button
-                onClick={() => {
-                    dispatch(getNumberOrder(URL_BOOKING));
-                }}
-                type='primary'
-                size='large'
-            >
-                Оформить заказ
-            </Button>
-        </div>
-    );
+  const { bunConstructor, ingridientsConstructor } = useSelector(
+    (store: RootState) => store.burgerConstructor
+  );
+
+  const isThereIngridients =
+    bunConstructor.length === 0 && ingridientsConstructor.length === 0
+      ? false
+      : true;
+
+  return (
+    <div className={`${styles.constructor__buy} mt-10 mb-10 mr-6`}>
+      <div className={`${styles.constructor__wrapper} mr-10`}>
+        <p className='text text_type_digits-medium mr-2'>{orderSum}</p>
+        <CurrencyIcon type='primary' />
+      </div>
+      <Button
+        onClick={() => {
+          if (isThereIngridients) {
+            dispatch(getNumberOrder(URL_REQUEST_ORDER));
+          }
+        }}
+        type='primary'
+        size='large'>
+        Оформить заказ
+      </Button>
+    </div>
+  );
 };
 
 export default PaymentConstructor;

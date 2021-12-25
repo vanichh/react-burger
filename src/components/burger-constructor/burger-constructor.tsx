@@ -1,15 +1,14 @@
 import styles from './burger-constructor.module.css';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { RootState } from 'services/reducers';
+import { RootState } from 'services/store';
 import { useSelector } from 'react-redux';
-import BunBurger from './bun-ingredient-constructor'; // компонент для отображения верхний и нижний булки
 import ListIngridientBurger from './list-ingredients-constructor';
 import { isModalWindowsOrder } from 'services/actions/constructor';
 import Payment from './payment-constructor';
 
 const BurgerConstructor: React.FC = () => {
-  const { isModalOpen, order, bunConstructor } = useSelector(
+  const { isModalOpen, order } = useSelector(
     (store: RootState) => store.burgerConstructor
   );
 
@@ -24,9 +23,7 @@ const BurgerConstructor: React.FC = () => {
 
   return (
     <section className={`${styles.constructor} pt-25 ml-4 mr-4`}>
-      <BunBurger ingredientsBun={bunConstructor} type='top' />
       <ListIngridientBurger />
-      <BunBurger ingredientsBun={bunConstructor} type='bottom' />
       <Payment />
       {isModalOpen && <ModalWindow />}
     </section>

@@ -3,10 +3,12 @@ import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   changeStateElem,
-  UPDATE_BUN_CONSTRUCTOR,
+  ADD_BUN_CONSTRUCTOR,
 } from 'services/actions/constructor';
 import Ingredient from './ingredient-constructor';
-import { RootState } from 'services/reducers';
+import { RootState } from 'services/store';
+import BunBurger from './bun-ingredient-constructor';
+import { v4 as uuidv4 } from 'uuid';
 
 export const ListIngridientBurger = () => {
   const dispatch = useDispatch();
@@ -19,44 +21,54 @@ export const ListIngridientBurger = () => {
     drop(item: any) {
       if (item.type !== 'bun') {
         const newItem = { ...item };
-        newItem.idList = Math.random();
+        newItem.idList = uuidv4();
         dispatch(changeStateElem('add', newItem));
       } else {
-        dispatch({ type: UPDATE_BUN_CONSTRUCTOR, item: item });
+        dispatch({ type: ADD_BUN_CONSTRUCTOR, item: item });
       }
     },
   });
 
-  const ingridients = useSelector(
-    (store: RootState) => store.burgerConstructor.ingridientsConstructor
+  const { ingridientsConstructor, bunConstructor } = useSelector(
+    (store: RootState) => store.burgerConstructor
   );
 
+  // проверяем наличие ингридиентов в конструкторе чтоб выводить дефолтное состояние
+  const isHaveIngridient =
+    bunConstructor.length !== 0 || ingridientsConstructor.length !== 0
+      ? false
+      : true;
+
+  // проверяем наличие булок
+
+  const isHaveBun = bunConstructor.length === 0 ? false : true;
   // дефолтное состояние без ингридиентов
+
   const DefaultIngridient = () => {
     return (
       <p
         className={`${styles.constructor__text_default} text text_type_main-default`}>
-        Перенесите сюда нужные ингридиенты из левого меню
+        Пожалуйста, перенесите сюда булку и ингредиенты для создания заказа
       </p>
     );
   };
 
   return (
-    <div
-      ref={dropTarget}
-      className={`${styles.wrapper} ${isHover ? styles.hover_dnd : ''}`}>
-      {!ingridients.length ? (
-        <DefaultIngridient />
-      ) : (
-        ingridients.map((ingredient: any, i: number) => (
-          <Ingredient
-            key={ingredient._id + i}
-            index={i}
-            ingredient={ingredient}
-          />
-        ))
-      )}
-    </div>
+    <>
+      {isHaveBun && <BunBurger ingredientsBun={bunConstructor} type='top' />}
+      <div
+        ref={dropTarget}
+        className={`${styles.wrapper} ${isHover ? styles.hover_dnd : ''}`}>
+        {isHaveIngridient ? (
+          <DefaultIngridient />
+        ) : (
+          ingridientsConstructor.map((ingredient: any, i: number) => (
+            <Ingredient key={uuidv4()} index={i} ingredient={ingredient} />
+          ))
+        )}
+      </div>
+      {isHaveBun && <BunBurger ingredientsBun={bunConstructor} type='bottom' />}
+    </>
   );
 };
 

@@ -5,10 +5,10 @@ import {
   ADD_INGRIDIENT,
   DELETE_INGRIDIENT,
   ADD_BUN_CONSTRUCTOR,
-  UPDATE_BUN_CONSTRUCTOR,
   MOVING_INGRIDIENT_CONSTRUCTOR,
+  RESET_STATE_INGRIDIENT,
 } from '../actions/constructor';
-
+import { v4 as uuidv4 } from 'uuid';
 import IdataIgridients from 'utils/types';
 
 interface IinitialState {
@@ -82,27 +82,17 @@ export const constructorReducer = (state = initialState, action: any) => {
       };
     }
     case ADD_BUN_CONSTRUCTOR: {
-      return {
-        ...state,
-        bunConstructor: action.item,
-        orderSum: state.orderSum + action.item.price * 2,
-        countIngridientsConstructor: {
-          ...state.countIngridientsConstructor,
-          [action.item._id]: 1,
-        },
-      };
-    }
-    case UPDATE_BUN_CONSTRUCTOR: {
       if (action.item._id === state.bunConstructor._id) {
         return { ...state };
       } else {
+        const pricePrevBun =
+          state.bunConstructor.price !== undefined
+            ? state.bunConstructor.price * 2
+            : 0;
         return {
           ...state,
           bunConstructor: action.item,
-          orderSum:
-            state.orderSum +
-            action.item.price * 2 -
-            state.bunConstructor.price * 2,
+          orderSum: state.orderSum + action.item.price * 2 - pricePrevBun,
           countIngridientsConstructor: {
             ...state.countIngridientsConstructor,
             [action.item._id]: 1,
@@ -114,7 +104,7 @@ export const constructorReducer = (state = initialState, action: any) => {
 
     case MOVING_INGRIDIENT_CONSTRUCTOR: {
       const item = { ...action.item.variable };
-      item.idList = Math.random();
+      item.idList = uuidv4();
       const ingridientsConstructor = state.ingridientsConstructor;
       ingridientsConstructor.splice(action.item.variableIndex, 0, item);
       return {
@@ -124,6 +114,17 @@ export const constructorReducer = (state = initialState, action: any) => {
             elem => elem.idList !== action.item.variable.idList
           ),
         ],
+      };
+    }
+    case RESET_STATE_INGRIDIENT: {
+      return {
+        ...state,
+        orderSum: 0,
+        ingridientsConstructor: [],
+        bunConstructor: [],
+        order: {},
+        countIngridientsConstructor: {},
+        isModalOpen: false,
       };
     }
 

@@ -6,17 +6,18 @@ import {
   changeStateElem,
   MOVING_INGRIDIENT_CONSTRUCTOR,
 } from 'services/actions/constructor';
-import { RootState } from 'services/reducers';
+import { RootState } from 'services/store';
 import iconIngreidient from '../../images/burger-ingredients/icon-ingridients.png';
 import styles from './burger-constructor.module.css';
 
 export const IngredientConstructor = ({ ingredient, index }: any) => {
+  
+  const dispatch = useDispatch();
+  const ref = useRef(null);
+
   const ingridients = useSelector(
     (store: RootState) => store.burgerConstructor.ingridientsConstructor
   );
-  const dispatch = useDispatch();     
-        
-  const ref = useRef(null);
 
   const [{ isDragging }, dragRef] = useDrag({
     type: 'locationIngridient',
@@ -31,9 +32,6 @@ export const IngredientConstructor = ({ ingredient, index }: any) => {
     collect: monitor => ({
       isHover: monitor.isOver(),
     }),
-    hover(item) {
-      // console.log(ref.current.getBoundingClientRect());
-    },
     drop(item: any) {
       dispatch({
         type: MOVING_INGRIDIENT_CONSTRUCTOR,

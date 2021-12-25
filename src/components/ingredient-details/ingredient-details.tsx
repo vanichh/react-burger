@@ -1,6 +1,6 @@
 import styles from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
-import { RootState } from 'services/reducers';
+import { RootState } from 'services/store';
 
 const IngredientDetails: React.FC = () => {
     const { name, image_large, calories, proteins, fat, carbohydrates } =
