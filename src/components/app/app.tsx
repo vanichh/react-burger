@@ -9,30 +9,34 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getDataIngridietn } from '../../services/actions/ingredients';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import ErrorComponent from './error-request';
 
 const INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients';
 
 export default function App() {
-    const dispatch = useDispatch();
-    const isLoding = useSelector(
-        (store: RootState) => store.igridients.isLoding
-    );
+  const dispatch = useDispatch();
+  const isLoding: boolean = useSelector(
+    (store: RootState) => store.igridients.isLoding
+  );
+  const IsError: boolean = useSelector(
+    (store: RootState) => store.igridients.errorRequest
+  );
+  useEffect(() => {
+    dispatch(getDataIngridietn(INGREDIENTS_URL));
+  }, []);
 
-    useEffect(() => {
-        dispatch(getDataIngridietn(INGREDIENTS_URL));
-    }, []);
-
-    return (
-        <>
-            <AppHeader />
-            {isLoding && (
-                <main className={styles.container}>
-                    <DndProvider backend={HTML5Backend}>
-                        <BurgerIngredients />
-                        <BurgerConstructor />
-                    </DndProvider>
-                </main>
-            )}
-        </>
-    );
+  return (
+    <>
+      <AppHeader />
+      {isLoding && (
+        <main className={styles.container}>
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </DndProvider>
+        </main>
+      )}
+      {IsError && <ErrorComponent />}
+    </>
+  );
 }

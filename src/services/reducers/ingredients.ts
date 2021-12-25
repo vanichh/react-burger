@@ -1,6 +1,7 @@
 import {
   STATE_MODAL_WINDOWS_INGRIDIENTS,
-  SET_INGRIDIENT_BURGER,
+  ERROR_REQUEST_INGRIDIENT_BURGER,
+  REQUEST_INGRIDIENT_BURGER,
   DELETE_DATA_MODAL,
   SET_INGRIDIENT_MODAL,
 } from 'services/actions/ingredients';
@@ -11,6 +12,8 @@ interface IinitialState {
   ingredientDetails: IdataIgridients | [];
   isLoding: boolean;
   isModalOpenIngridients: boolean;
+  errorRequest: boolean;
+  errorRequestText: string;
 }
 
 const initialState: IinitialState = {
@@ -18,15 +21,24 @@ const initialState: IinitialState = {
   ingredientDetails: [],
   isLoding: false,
   isModalOpenIngridients: false,
+  errorRequest: false,
+  errorRequestText: '',
 };
 
 export const igridientsReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case SET_INGRIDIENT_BURGER: {
+    case REQUEST_INGRIDIENT_BURGER: {
       return {
         ...state,
         listIgridients: action.items,
         isLoding: true,
+      };
+    }
+    case ERROR_REQUEST_INGRIDIENT_BURGER: {
+      return {
+        ...state,
+        errorRequest: true,
+        errorRequestText: action.text,
       };
     }
     case SET_INGRIDIENT_MODAL: {

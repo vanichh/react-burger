@@ -69,7 +69,7 @@ export const constructorReducer = (state = initialState, action: any) => {
         ...state,
         ingridientsConstructor: [
           ...state.ingridientsConstructor.filter(
-            (elem) => elem.idList !== action.item.idList
+            elem => elem.idList !== action.item.idList
           ),
         ],
         orderSum: state.orderSum - action.item.price,
@@ -93,19 +93,23 @@ export const constructorReducer = (state = initialState, action: any) => {
       };
     }
     case UPDATE_BUN_CONSTRUCTOR: {
-      return {
-        ...state,
-        bunConstructor: action.item,
-        orderSum:
-          state.orderSum +
-          action.item.price * 2 -
-          state.bunConstructor.price * 2,
-        countIngridientsConstructor: {
-          ...state.countIngridientsConstructor,
-          [action.item._id]: 1,
-          [state.bunConstructor._id]: 0,
-        },
-      };
+      if (action.item._id === state.bunConstructor._id) {
+        return { ...state };
+      } else {
+        return {
+          ...state,
+          bunConstructor: action.item,
+          orderSum:
+            state.orderSum +
+            action.item.price * 2 -
+            state.bunConstructor.price * 2,
+          countIngridientsConstructor: {
+            ...state.countIngridientsConstructor,
+            [action.item._id]: 1,
+            [state.bunConstructor._id]: 0,
+          },
+        };
+      }
     }
 
     case MOVING_INGRIDIENT_CONSTRUCTOR: {
@@ -117,7 +121,7 @@ export const constructorReducer = (state = initialState, action: any) => {
         ...state,
         ingridientsConstructor: [
           ...ingridientsConstructor.filter(
-            (elem) => elem.idList !== action.item.variable.idList
+            elem => elem.idList !== action.item.variable.idList
           ),
         ],
       };

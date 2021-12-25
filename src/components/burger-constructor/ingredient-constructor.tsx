@@ -14,24 +14,27 @@ export const IngredientConstructor = ({ ingredient, index }: any) => {
   const ingridients = useSelector(
     (store: RootState) => store.burgerConstructor.ingridientsConstructor
   );
-  const dispatch = useDispatch();
+  const dispatch = useDispatch();     
+        
   const ref = useRef(null);
 
   const [{ isDragging }, dragRef] = useDrag({
     type: 'locationIngridient',
     item: ingredient,
-    collect: (monitor) => ({
+    collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
   });
 
   const [{ isHover }, dropRef] = useDrop({
     accept: 'locationIngridient',
-    collect: (monitor) => ({
+    collect: monitor => ({
       isHover: monitor.isOver(),
     }),
+    hover(item) {
+      // console.log(ref.current.getBoundingClientRect());
+    },
     drop(item: any) {
-        console.log(margin)
       dispatch({
         type: MOVING_INGRIDIENT_CONSTRUCTOR,
         item: {
@@ -50,6 +53,7 @@ export const IngredientConstructor = ({ ingredient, index }: any) => {
   dragRef(dropRef(ref));
 
   const margin = index === ingridients.length - 1 ? 'pb-25' : 'pt-25';
+
   const CLASSNAME_WRAPPER = `
   ${styles.constructor__wrapper} 
   mb-4 ml-4 mr-4 

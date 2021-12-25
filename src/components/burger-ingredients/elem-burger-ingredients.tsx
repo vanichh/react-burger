@@ -20,7 +20,7 @@ const ElemBurgerIngredients = (props: any): JSX.Element => {
   );
 
   const [, drag] = useDrag({
-    type: props.type !== 'bun' ? 'ingridient' : 'bun',
+    type: 'ingridient',
     item: props,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
