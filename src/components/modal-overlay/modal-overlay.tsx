@@ -1,17 +1,23 @@
 import styles from './modal-overlay.module.css';
 import { SyntheticEvent } from 'react';
-
+import { useDispatch } from 'react-redux';
 interface PropsModalOverlay {
     children: React.ReactNode;
-    setIsModalOpen: (arg0: boolean) => void;
+    isModalWindows: (args: false) => void;
 }
 
-const ModalOverlay = ({ children, setIsModalOpen }: PropsModalOverlay): JSX.Element => {
+const ModalOverlay = ({
+    children,
+    isModalWindows,
+}: PropsModalOverlay): JSX.Element => {
+    const dispetch = useDispatch();
+
     const handleCloseWindows = ({ currentTarget, target }: SyntheticEvent) => {
         if (currentTarget === target) {
-            setIsModalOpen(false);
+            dispetch(isModalWindows(false));
         }
     };
+
     return (
         <div onClick={handleCloseWindows} className={styles.modal}>
             {children}

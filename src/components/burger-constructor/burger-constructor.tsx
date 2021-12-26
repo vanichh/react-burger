@@ -1,140 +1,33 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useContext, useReducer, useEffect } from 'react';
-import {
-    ConstructorElement,
-    Button,
-    CurrencyIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
-
 import styles from './burger-constructor.module.css';
-import iconIngreidient from '../../images/burger-ingredients/icon-ingridients.png';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { BurgerContext } from '../contexts/burger-context';
-import BunBurger from './bun-burger'; // компонент для отображения верхний и нижний булки
+import { RootState } from 'services/store';
+import { useSelector } from 'react-redux';
+import ListIngridientBurger from './list-ingredients-constructor';
+import { isModalWindowsOrder } from 'services/actions/constructor';
+import Payment from './payment-constructor';
 
-const URL_BOOKING = 'https://norma.nomoreparties.space/api/orders';
+const BurgerConstructor: React.FC = () => {
+  const { isModalOpen, order } = useSelector(
+    (store: RootState) => store.burgerConstructor
+  );
 
-const initSumPrice = (initialCount: any) => {
-    return { count: initialCount };
-};
-const reducerSumPrice = (state: any, action: any) => {
-    switch (action.type) {
-        case 'plus':
-            return { count: state.count + action.payload };
-        case 'minus':
-            return { count: state.count - action.payload };
-        case 'reset':
-            return initSumPrice(0);
-        default:
-            return state;
-    }
-};
-const BurgerConstructor = (): JSX.Element => {
-    const dataIngredients = useContext(BurgerContext);
-    // подсчитываем по хардкору сумму всех компонентов
-    const initialCount = dataIngredients.reduce(
-        (sum, current) => sum + current.price,
-        0
-    );
-
-    // подсчет общей суммы
-    const [totalAmount, dispatchTotalAmount] = useReducer(
-        reducerSumPrice,
-        initialCount,
-        initSumPrice
-    );
-
-    const [numberOred, setNumberder] = useState<{ number: number }>({
-        number: 0,
-    });
-
-    // состояние модального окна
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-    // Модалка дял оформления заказа
-    const ModalWindow = (): JSX.Element => {
-        return (
-            <Modal setIsModalOpen={setIsModalOpen}>
-                <OrderDetails order={numberOred} />
-            </Modal>
-        );
-    };
-
-    useEffect(() => {
-        if (isModalOpen) {
-            fetch(URL_BOOKING, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8',
-                },
-                body: JSON.stringify({
-                    ingredients: dataIngredients.map(elem => elem._id),
-                }),
-            })
-                .then(response => response.json())
-                .then(response => {
-                    if (response.success) {
-                        setNumberder(response.order);
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                    setIsModalOpen(false);
-                });
-        }
-    }, [isModalOpen]);
+  // Модалка дял оформления заказа
+  const ModalWindow: React.FC = () => {
     return (
-        <section className={`${styles.constructor} pt-25 ml-4 mr-4`}>
-            <BunBurger ingredientsBun={dataIngredients[0]} type='top' />
-            <div className={styles.wrapper}>
-                {/* {Используем slice чтоб убрать булки} */}
-                {dataIngredients.slice(2).map(ingredients => (
-                    <div
-                        key={ingredients._id}
-                        className={`${styles.constructor__wrapper} mb-4 ml-4 mr-4`}>
-                        <img
-                            src={iconIngreidient}
-                            alt={ingredients.name}
-                            className={styles.constructor__img}
-                        />
-                        <ConstructorElement
-                            type={undefined}
-                            handleClose={() =>
-                                dispatchTotalAmount({
-                                    type: 'minus',
-                                    payload: ingredients.price,
-                                })
-                            }
-                            price={ingredients.price}
-                            text={ingredients.name}
-                            thumbnail={ingredients.image_mobile}
-                            isLocked={false}
-                        />
-                    </div>
-                ))}
-            </div>
-            <BunBurger ingredientsBun={dataIngredients[0]} type='bottom' />
-            <div className={`${styles.constructor__buy} mt-10`}>
-                <div className={`${styles.constructor__wrapper} mr-10`}>
-                    <p className='text text_type_digits-medium mr-2'>
-                        {totalAmount.count}
-                    </p>
-                    <CurrencyIcon type='primary' />
-                </div>
-                <Button
-                    onClick={() => {
-                        setIsModalOpen(true);
-                        setNumberder({ number: 0 });
-                    }}
-                    type='primary'
-                    size='large'>
-                    Оформить заказ
-                </Button>
-            </div>
-            {isModalOpen && numberOred.number !== 0 ? <ModalWindow /> : false}
-        </section>
+      <Modal isModalWindows={isModalWindowsOrder}>
+        <OrderDetails order={order} />
+      </Modal>
     );
+  };
+
+  return (
+    <section className={`${styles.constructor} pt-25 ml-4 mr-4`}>
+      <ListIngridientBurger />
+      <Payment />
+      {isModalOpen && <ModalWindow />}
+    </section>
+  );
 };
 
 export default BurgerConstructor;

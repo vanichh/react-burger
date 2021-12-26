@@ -4,23 +4,20 @@ import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-
+import { useDispatch } from 'react-redux';
 const modalElement = document.getElementById('modal-root') as HTMLElement;
 
 interface PropsModal {
     children: React.ReactNode;
-    setIsModalOpen: (arg0: boolean) => void;
     title?: string;
+    isModalWindows: (arg0: boolean) => void;
 }
 
-const Modal = ({
-    children,
-    setIsModalOpen,
-    title,
-}: PropsModal): JSX.Element => {
+const Modal = ({ children, title, isModalWindows }: PropsModal): JSX.Element => {
+    const dispatch = useDispatch();
     const closeWindowsToPress = ({ key }: KeyboardEvent) => {
         if (key === 'Escape') {
-            setIsModalOpen(false);
+            dispatch(isModalWindows(false));
         }
     };
 
@@ -30,7 +27,7 @@ const Modal = ({
     }, [closeWindowsToPress]);
 
     return ReactDOM.createPortal(
-        <ModalOverlay setIsModalOpen={setIsModalOpen}>
+        <ModalOverlay isModalWindows={isModalWindows}>
             <div className={`${styles.modal} p-10`}>
                 <div className={`${styles.wrapper}`}>
                     <h2
@@ -40,7 +37,9 @@ const Modal = ({
                     </h2>
                     <div
                         className={styles.modal__close}
-                        onClick={() => setIsModalOpen(false)}
+                        onClick={() =>
+                            dispatch(isModalWindows(false))
+                        }
                     >
                         <CloseIcon type='primary' />
                     </div>
