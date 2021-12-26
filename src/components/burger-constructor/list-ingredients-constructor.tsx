@@ -8,7 +8,6 @@ import {
 import Ingredient from './ingredient-constructor';
 import { RootState } from 'services/store';
 import BunBurger from './bun-ingredient-constructor';
-import { v4 as uuidv4 } from 'uuid';
 
 export const ListIngridientBurger = () => {
   const dispatch = useDispatch();
@@ -20,9 +19,7 @@ export const ListIngridientBurger = () => {
     }),
     drop(item: any) {
       if (item.type !== 'bun') {
-        const newItem = { ...item };
-        newItem.idList = uuidv4();
-        dispatch(changeStateElem('add', newItem));
+        dispatch(changeStateElem('add', item));
       } else {
         dispatch({ type: ADD_BUN_CONSTRUCTOR, item: item });
       }
@@ -63,7 +60,11 @@ export const ListIngridientBurger = () => {
           <DefaultIngridient />
         ) : (
           ingridientsConstructor.map((ingredient: any, i: number) => (
-            <Ingredient key={uuidv4()} index={i} ingredient={ingredient} />
+            <Ingredient
+              key={ingredient.uuid}
+              index={i}
+              ingredient={ingredient}
+            />
           ))
         )}
       </div>

@@ -8,7 +8,6 @@ import {
   MOVING_INGRIDIENT_CONSTRUCTOR,
   RESET_STATE_INGRIDIENT,
 } from '../actions/constructor';
-import { v4 as uuidv4 } from 'uuid';
 import IdataIgridients from 'utils/types';
 
 interface IinitialState {
@@ -69,7 +68,7 @@ export const constructorReducer = (state = initialState, action: any) => {
         ...state,
         ingridientsConstructor: [
           ...state.ingridientsConstructor.filter(
-            elem => elem.idList !== action.item.idList
+            elem => elem.uuid !== action.item.uuid
           ),
         ],
         orderSum: state.orderSum - action.item.price,
@@ -103,15 +102,11 @@ export const constructorReducer = (state = initialState, action: any) => {
     }
 
     case MOVING_INGRIDIENT_CONSTRUCTOR: {
-      const item = { ...action.item.variable };
-      item.idList = uuidv4();
-      const ingridientsConstructor = state.ingridientsConstructor;
-      ingridientsConstructor.splice(action.item.variableIndex, 0, item);
       return {
         ...state,
         ingridientsConstructor: [
-          ...ingridientsConstructor.filter(
-            elem => elem.idList !== action.item.variable.idList
+          ...action.item.ingridientsConstructor.filter(
+            (elem: any) => elem.uuid !== action.item.uuid
           ),
         ],
       };

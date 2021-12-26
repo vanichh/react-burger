@@ -4,14 +4,13 @@ import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   changeStateElem,
-  MOVING_INGRIDIENT_CONSTRUCTOR,
+  movingIngridient,
 } from 'services/actions/constructor';
 import { RootState } from 'services/store';
 import iconIngreidient from '../../images/burger-ingredients/icon-ingridients.png';
 import styles from './burger-constructor.module.css';
 
 export const IngredientConstructor = ({ ingredient, index }: any) => {
-  
   const dispatch = useDispatch();
   const ref = useRef(null);
 
@@ -33,13 +32,7 @@ export const IngredientConstructor = ({ ingredient, index }: any) => {
       isHover: monitor.isOver(),
     }),
     drop(item: any) {
-      dispatch({
-        type: MOVING_INGRIDIENT_CONSTRUCTOR,
-        item: {
-          variable: item,
-          variableIndex: index,
-        },
-      });
+      dispatch(movingIngridient(item, index));
     },
   });
 

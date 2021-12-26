@@ -1,4 +1,5 @@
 import { checkResponse } from 'utils/check-response';
+import { v4 as uuidv4 } from 'uuid';
 
 export const STATE_MODAL_WINDOWS_ORDER = 'STATE_MODAL_WINDOWS_ORDER';
 export const REQUEST_NUMBER_ORDER = 'REQUEST_NUMBER_OREDER';
@@ -25,11 +26,30 @@ export const isModalWindowsOrder = (state: boolean) => {
   }
 };
 
+export const movingIngridient =
+  (item: any, index: number) => (dispatch: any, getState: any) => {
+    const newItem = { ...item };
+    newItem.uuid = uuidv4();
+    const { burgerConstructor } = getState();
+    const ingridientsConstructor = burgerConstructor.ingridientsConstructor;
+    ingridientsConstructor.splice(index, 0, newItem);
+    dispatch({
+      type: MOVING_INGRIDIENT_CONSTRUCTOR,
+      item: {
+        uuid: item.uuid,
+        ingridientsConstructor,
+      },
+    });
+  };
+
 export const changeStateElem = (type: 'delete' | 'add', item: any) => {
   if (type === 'add') {
+    // создаем уникальный ключ
+    const newItem = { ...item };
+    newItem.uuid = uuidv4();
     return {
       type: ADD_INGRIDIENT,
-      item: item,
+      item: newItem,
     };
   } else if (type === 'delete') {
     return {
