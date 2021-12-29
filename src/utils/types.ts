@@ -1,7 +1,7 @@
 interface DataProps {
     _id: string;
     name: string;
-    type: string;
+    type: 'bun' | 'main' | 'sauce';
     proteins: number;
     fat: number;
     carbohydrates: number;

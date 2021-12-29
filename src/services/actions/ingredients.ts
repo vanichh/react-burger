@@ -8,22 +8,23 @@ export const DELETE_DATA_MODAL = 'DELETE_DATA_MODAL';
 export const SET_INGRIDIENT_MODAL = 'SET_INGRIDIENT_MODAL';
 
 export const getIngredients = (url: string) => (dispatch: any) => {
-  fetch(url)
-    .then(response => checkResponse(response))
-    .then(response => {
-      if (response.success) {
+  ;(async () => {
+    try {
+      const response = await fetch(url);
+      const res = await checkResponse(response);
+      if (res.success) {
         dispatch({
           type: REQUEST_INGRIDIENT_BURGER,
-          items: response.data,
+          items: res.data,
         });
       } else {
         dispatch({ type: ERROR_REQUEST_INGRIDIENT_BURGER, text: response });
       }
-    })
-    .catch(error => {
+    } catch (error) {
       console.log(error);
       dispatch({ type: ERROR_REQUEST_INGRIDIENT_BURGER, text: error });
-    });
+    }
+  })();
 };
 
 export const isModalWindowsIngridient = (state: boolean) => {

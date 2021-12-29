@@ -14,7 +14,7 @@ export const ListIngridientBurger = () => {
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingridient',
-    collect: monitor => ({
+    collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
     drop(item: any) {
@@ -41,21 +41,21 @@ export const ListIngridientBurger = () => {
   const isHaveBun = bunConstructor.length === 0 ? false : true;
   // дефолтное состояние без ингридиентов
 
-  const DefaultIngridient = () => {
-    return (
-      <p
-        className={`${styles.constructor__text_default} text text_type_main-default`}>
-        Пожалуйста, перенесите сюда булку и ингредиенты для создания заказа
-      </p>
-    );
-  };
+  const DefaultIngridient: React.FC = () => (
+    <p
+      className={`${styles.constructor__text_default} text text_type_main-default`}
+    >
+      Пожалуйста, перенесите сюда булку и ингредиенты для создания заказа
+    </p>
+  );
 
   return (
     <>
       {isHaveBun && <BunBurger ingredientsBun={bunConstructor} type='top' />}
       <div
         ref={dropTarget}
-        className={`${styles.wrapper} ${isHover ? styles.hover_dnd : ''}`}>
+        className={`${styles.wrapper} ${isHover ? styles.hover_dnd : ''}`}
+      >
         {isHaveIngridient ? (
           <DefaultIngridient />
         ) : (

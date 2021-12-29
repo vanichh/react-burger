@@ -12,6 +12,10 @@
   display: flex;
   align-items: center;
 }
+.constructor__wrapper_activ {
+  transition: padding .3s ease;
+}
+
 .constructor__wrapper:last-child {
   margin-bottom: 0;
 }
@@ -25,7 +29,9 @@
 .constructor__img {
   margin-right: auto;
 }
-.constructor
+.constructor__img:hover {
+  cursor: move;
+}
 
 .wrapper {
   position: relative;
@@ -33,7 +39,7 @@
   height: 100%;
 }
 .hover_dnd {
-    outline: 5px dashed #4c4cff;
+  outline: 5px dashed #4c4cff;
 }
 
 .wrapper::-webkit-scrollbar {

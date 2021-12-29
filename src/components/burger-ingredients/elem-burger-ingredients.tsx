@@ -7,10 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SET_INGRIDIENT_MODAL } from '../../services/actions/ingredients';
 import { useDrag } from 'react-dnd';
 import { RootState } from 'services/store';
+import DataProps from 'utils/types';
 
 const CLASSNAMEDIV = `${styles.ingredients__items} mt-6 ml-4 mb-10 mr-4`;
 
-const ElemBurgerIngredients = (props: any): JSX.Element => {
+const ElemBurgerIngredients: React.FC<DataProps> = (props) => {
   const dispatch = useDispatch();
 
   // счетчик количества добавленного ингридиента
@@ -27,13 +28,11 @@ const ElemBurgerIngredients = (props: any): JSX.Element => {
     }),
   });
 
+  const setIngridient = () =>
+    dispatch({ type: SET_INGRIDIENT_MODAL, item: props });
+
   return (
-    <div
-      className={CLASSNAMEDIV}
-      onClick={() => {
-        dispatch({ type: SET_INGRIDIENT_MODAL, item: props });
-      }}
-    >
+    <div className={CLASSNAMEDIV} onClick={() => setIngridient()}>
       {current ? <Counter count={current} size='default' /> : null}
       <img
         ref={drag}

@@ -10,16 +10,20 @@ import {
 } from '../actions/constructor';
 import IdataIgridients from 'utils/types';
 
-interface IinitialState {
+interface InitialState {
   ingridientsConstructor: IdataIgridients[] | [];
-  order: any;
+  order:
+    | {
+        number: string;
+      }
+    | {};
   isModalOpen: boolean;
   orderSum: number;
   bunConstructor: IdataIgridients | any;
   countIngridientsConstructor: any;
 }
 
-const initialState: IinitialState = {
+const initialState: InitialState = {
   ingridientsConstructor: [],
   order: {},
   isModalOpen: false,
@@ -68,7 +72,7 @@ export const constructorReducer = (state = initialState, action: any) => {
         ...state,
         ingridientsConstructor: [
           ...state.ingridientsConstructor.filter(
-            elem => elem.uuid !== action.item.uuid
+            (elem) => elem.uuid !== action.item.uuid
           ),
         ],
         orderSum: state.orderSum - action.item.price,
@@ -101,14 +105,18 @@ export const constructorReducer = (state = initialState, action: any) => {
       }
     }
 
+    // ...action.item.ingridientsConstructor.filter(
+    //   (elem: any) => elem.uuid !== action.item.uuid
+    // ),
+
     case MOVING_INGRIDIENT_CONSTRUCTOR: {
       return {
         ...state,
         ingridientsConstructor: [
-          ...action.item.ingridientsConstructor.filter(
-            (elem: any) => elem.uuid !== action.item.uuid
-          ),
-        ],
+          ...state.ingridientsConstructor.slice(0, action.item.index),
+          action.item.newItem,
+          ...state.ingridientsConstructor.slice(action.item.index),
+        ].filter((elem: any) => elem.uuid !== action.item.uuid),
       };
     }
     case RESET_STATE_INGRIDIENT: {

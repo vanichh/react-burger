@@ -13,13 +13,11 @@ const BurgerConstructor: React.FC = () => {
   );
 
   // Модалка дял оформления заказа
-  const ModalWindow: React.FC = () => {
-    return (
-      <Modal isModalWindows={isModalWindowsOrder}>
-        <OrderDetails order={order} />
-      </Modal>
-    );
-  };
+  const ModalWindow: React.FC = () => (
+    <Modal isModalWindows={isModalWindowsOrder}>
+      <OrderDetails order={order} />
+    </Modal>
+  );
 
   return (
     <section className={`${styles.constructor} pt-25 ml-4 mr-4`}>

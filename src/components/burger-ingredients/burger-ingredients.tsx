@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import SectionIngredients from './section-ingredients';
@@ -10,7 +10,7 @@ import { isModalWindowsIngridient } from 'services/actions/ingredients';
 
 type ingredientType = 'bun' | 'sauce' | 'main';
 
-export const BurgerIngredients = (): JSX.Element => {
+export const BurgerIngredients: FC = () => {
   const isModalOpen = useSelector(
     (store: RootState) => store.igridients.isModalOpenIngridients
   );
@@ -43,16 +43,11 @@ export const BurgerIngredients = (): JSX.Element => {
   // переключение табов
   const [current, setCurrent] = useState<ingredientType>('bun');
 
-  const ModalWindow: React.FC = () => {
-    return (
-      <Modal
-        isModalWindows={isModalWindowsIngridient}
-        title='Детали Ингридиента'
-      >
-        <IngredientDetails />
-      </Modal>
-    );
-  };
+  const ModalWindow: FC = () => (
+    <Modal isModalWindows={isModalWindowsIngridient} title='Детали Ингридиента'>
+      <IngredientDetails />
+    </Modal>
+  );
 
   return (
     <>

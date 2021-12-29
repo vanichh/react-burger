@@ -10,7 +10,7 @@ import { getIngredients } from '../../services/actions/ingredients';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import ErrorComponent from './error-request';
-import { URL_API } from 'utils/url-api'
+import { URL_API } from 'utils/url-api';
 const URL_REQUEST_INGREDIENTS = URL_API + 'ingredients';
 
 export default function App() {

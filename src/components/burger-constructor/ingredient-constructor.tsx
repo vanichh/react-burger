@@ -1,5 +1,5 @@
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useRef } from 'react';
+import { useRef, FC, useMemo } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -9,11 +9,21 @@ import {
 import { RootState } from 'services/store';
 import iconIngreidient from '../../images/burger-ingredients/icon-ingridients.png';
 import styles from './burger-constructor.module.css';
+import DataProps from 'utils/types';
 
-export const IngredientConstructor = ({ ingredient, index }: any) => {
+interface PropsIngredientConstructor {
+  ingredient: DataProps;
+  index: number;
+}
+
+const IngredientConstructor: FC<PropsIngredientConstructor> = ({
+  ingredient,
+  index,
+}) => {
   const dispatch = useDispatch();
+  
   const ref = useRef(null);
-
+  
   const ingridients = useSelector(
     (store: RootState) => store.burgerConstructor.ingridientsConstructor
   );
@@ -21,14 +31,14 @@ export const IngredientConstructor = ({ ingredient, index }: any) => {
   const [{ isDragging }, dragRef] = useDrag({
     type: 'locationIngridient',
     item: ingredient,
-    collect: monitor => ({
+    collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
 
   const [{ isHover }, dropRef] = useDrop({
     accept: 'locationIngridient',
-    collect: monitor => ({
+    collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
     drop(item: any) {
@@ -43,12 +53,18 @@ export const IngredientConstructor = ({ ingredient, index }: any) => {
 
   dragRef(dropRef(ref));
 
-  const margin = index === ingridients.length - 1 ? 'pb-25' : 'pt-25';
+  const margin = useMemo(
+    () => (index === ingridients.length - 1 ? 'pb-25' : 'pt-25'),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [index]
+  );
 
   const CLASSNAME_WRAPPER = `
   ${styles.constructor__wrapper} 
   mb-4 ml-4 mr-4 
-  ${isHover ? margin : ''}`;
+  ${isHover ? styles.constructor__wrapper_activ : ''}
+  ${isHover ? margin : ''}
+  `;
 
   return (
     <>
