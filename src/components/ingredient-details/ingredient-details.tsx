@@ -11,7 +11,21 @@ type stateingredient<T = string> = {
   carbohydrates: T;
 };
 
-const CLASSNAME_TEXT: string = `${styles.details__text} text text_type_main-default text_color_inactive`;
+interface PropsCarbohydrate {
+  name: string;
+  count: string;
+}
+
+const Carbohydrate: React.FC<PropsCarbohydrate> = ({ name, count }) => {
+  const CLASSNAME_TEXT: string = `${styles.details__text} text text_type_main-default text_color_inactive`;
+  return (
+    <p className={CLASSNAME_TEXT}>
+      {name}
+      <br />
+      {count}
+    </p>
+  );
+};
 
 const IngredientDetails: React.FC = () => {
   const {
@@ -24,32 +38,16 @@ const IngredientDetails: React.FC = () => {
   }: stateingredient = useSelector(
     (state: RootState) => state.igridients.ingredientDetails
   );
-  
+
   return (
     <>
       <img className='mb-4' src={image_large} alt={name} />
       <p className='text text_type_main-medium mb-8'>{name}</p>
       <div className={styles.wpapper}>
-        <p className={CLASSNAME_TEXT}>
-          Калории, ккал
-          <br />
-          {calories}
-        </p>
-        <p className={CLASSNAME_TEXT}>
-          Белки, г
-          <br />
-          {proteins}
-        </p>
-        <p className={CLASSNAME_TEXT}>
-          Жиры, г
-          <br />
-          {fat}
-        </p>
-        <p className={CLASSNAME_TEXT}>
-          Углеводы, г
-          <br />
-          {carbohydrates}
-        </p>
+        <Carbohydrate name='Калории, ккал' count={calories} />
+        <Carbohydrate name='Белки, г' count={proteins} />
+        <Carbohydrate name='Жиры, г' count={fat} />
+        <Carbohydrate name='Углеводы, г' count={carbohydrates} />
       </div>
     </>
   );

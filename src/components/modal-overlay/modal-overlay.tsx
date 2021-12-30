@@ -6,11 +6,10 @@ interface PropsModalOverlay {
   isModalWindows: (args: false) => void;
 }
 
-const ModalOverlay: React.FC<PropsModalOverlay> = ({
-  children,
-  isModalWindows,
-}) => {
-    
+const ModalOverlay: React.FC<PropsModalOverlay> = (props) => {
+  
+  const { children, isModalWindows } = props;
+
   const dispetch = useDispatch();
 
   const handleCloseWindows = ({ currentTarget, target }: SyntheticEvent) => {
