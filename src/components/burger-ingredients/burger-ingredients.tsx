@@ -7,47 +7,60 @@ import { RootState } from 'services/store';
 import IngredientDetails from 'components/ingredient-details/ingredient-details';
 import Modal from 'components/modal/modal';
 import { isModalWindowsIngridient } from 'services/actions/ingredients';
+import typeInfridients from 'utils/types';
+import { throttle } from 'utils/throttle';
+type typeBun = 'bun' | 'sauce' | 'main';
 
-type ingredientType = 'bun' | 'sauce' | 'main';
+const ModalWindow: FC = () => (
+  <Modal isModalWindows={isModalWindowsIngridient} title='Детали Ингридиента'>
+    <IngredientDetails />
+  </Modal>
+);
 
 export const BurgerIngredients: FC = () => {
   const isModalOpen = useSelector(
     (store: RootState) => store.igridients.isModalOpenIngridients
   );
 
+  // данные для отрисовки ингридиентов
+  const ingredients: typeInfridients[] = useSelector(
+    (store: RootState) => store.igridients.listIgridients
+  );
+
+  // переключение табов
+  const [current, setCurrent] = useState<typeBun>('bun');
+
   const refBun = useRef<HTMLElement>(null);
   const refSause = useRef<HTMLElement>(null);
   const refMain = useRef<HTMLElement>(null);
   const refSectionIngredients = useRef<HTMLDivElement>(null);
 
+  const switchTab = (ref: React.RefObject<HTMLElement>, bun: typeBun) => {
+    setCurrent(bun);
+    ref.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const activTab = () => {
+    const bunTop = refBun.current.getBoundingClientRect().top;
+    const sauseTop = refSause.current.getBoundingClientRect().top;
+    const mainTop = refMain.current.getBoundingClientRect().top;
+    if (bunTop > 200 && bunTop < 260) {
+      setCurrent('bun');
+    } else if (sauseTop > 200 && sauseTop < 260) {
+      setCurrent('sauce');
+    } else if (mainTop > 200 && mainTop < 260) {
+      setCurrent('main');
+    }
+  };
+
+  const getIngredient = (typeBun: typeBun) => {
+    return ingredients.filter(({ type }) => type === typeBun);
+  };
+
   useEffect(() => {
-    refSectionIngredients.current.addEventListener('scroll', () => {
-      const bunTop = refBun.current.getBoundingClientRect().top;
-      const sauseTop = refSause.current.getBoundingClientRect().top;
-      const mainTop = refMain.current.getBoundingClientRect().top;
-      if (bunTop > 200 && bunTop < 260) {
-        setCurrent('bun');
-      } else if (sauseTop > 200 && sauseTop < 260) {
-        setCurrent('sauce');
-      } else if (mainTop > 200 && mainTop < 260) {
-        setCurrent('main');
-      }
-    });
+    const optimizedActivTab = throttle(activTab, 50);
+    refSectionIngredients.current.addEventListener('scroll', optimizedActivTab);
   }, []);
-
-  // данные для отрисовки ингридиентов
-  const dataIngredients = useSelector(
-    (store: RootState) => store.igridients.listIgridients
-  );
-
-  // переключение табов
-  const [current, setCurrent] = useState<ingredientType>('bun');
-
-  const ModalWindow: FC = () => (
-    <Modal isModalWindows={isModalWindowsIngridient} title='Детали Ингридиента'>
-      <IngredientDetails />
-    </Modal>
-  );
 
   return (
     <>
@@ -59,30 +72,21 @@ export const BurgerIngredients: FC = () => {
           <Tab
             value='bun'
             active={current === 'bun'}
-            onClick={() => {
-              setCurrent('bun');
-              refBun.current.scrollIntoView({ behavior: 'smooth' });
-            }}
+            onClick={() => switchTab(refBun, 'bun')}
           >
             Булки
           </Tab>
           <Tab
             value='sauce'
             active={current === 'sauce'}
-            onClick={() => {
-              setCurrent('sauce');
-              refSause.current.scrollIntoView({ behavior: 'smooth' });
-            }}
+            onClick={() => switchTab(refSause, 'sauce')}
           >
             Соусы
           </Tab>
           <Tab
             value='main'
             active={current === 'main'}
-            onClick={() => {
-              setCurrent('main');
-              refMain.current.scrollIntoView({ behavior: 'smooth' });
-            }}
+            onClick={() => switchTab(refMain, 'main')}
           >
             Начинки
           </Tab>
@@ -91,23 +95,17 @@ export const BurgerIngredients: FC = () => {
           <SectionIngredients
             refElem={refBun}
             title='Булки'
-            dataIngredients={dataIngredients.filter(
-              (elem: { type: string }) => elem.type === 'bun'
-            )}
+            dataIngredients={getIngredient('bun')}
           />
           <SectionIngredients
             refElem={refSause}
             title='Соусы'
-            dataIngredients={dataIngredients.filter(
-              (elem: { type: string }) => elem.type === 'sauce'
-            )}
+            dataIngredients={getIngredient('sauce')}
           />
           <SectionIngredients
             refElem={refMain}
             title='Начинки'
-            dataIngredients={dataIngredients.filter(
-              (elem: { type: string }) => elem.type === 'main'
-            )}
+            dataIngredients={getIngredient('main')}
           />
         </div>
       </section>

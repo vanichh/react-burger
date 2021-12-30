@@ -11,6 +11,8 @@ type stateingredient<T = string> = {
   carbohydrates: T;
 };
 
+const CLASSNAME_TEXT: string = `${styles.details__text} text text_type_main-default text_color_inactive`;
+
 const IngredientDetails: React.FC = () => {
   const {
     name,
@@ -19,10 +21,10 @@ const IngredientDetails: React.FC = () => {
     proteins,
     fat,
     carbohydrates,
-  }: stateingredient= useSelector(
+  }: stateingredient = useSelector(
     (state: RootState) => state.igridients.ingredientDetails
   );
-  const CLASSNAME_TEXT: string = `${styles.details__text} text text_type_main-default text_color_inactive`;
+  
   return (
     <>
       <img className='mb-4' src={image_large} alt={name} />

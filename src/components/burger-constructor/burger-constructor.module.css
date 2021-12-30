@@ -13,11 +13,7 @@
   align-items: center;
 }
 .constructor__wrapper_activ {
-  transition: padding .3s ease;
-}
-
-.constructor__wrapper:last-child {
-  margin-bottom: 0;
+  transition: padding 0.3s ease;
 }
 
 .constructor__buy {
@@ -61,4 +57,9 @@
   top: 50%;
   transform: translateY(-50%);
   left: 10%;
+}
+@media(max-height: 700px){
+  .constructor {
+    max-height: 100%;
+  }
 }
