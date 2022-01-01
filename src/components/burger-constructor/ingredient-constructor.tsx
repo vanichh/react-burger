@@ -9,6 +9,7 @@ import {
 import iconIngreidient from '../../images/burger-ingredients/icon-ingridients.png';
 import styles from './burger-constructor.module.css';
 import DataProps from 'utils/types';
+import React from 'react';
 
 interface PropsIngredientConstructor {
   ingredient: DataProps;
@@ -30,14 +31,14 @@ const IngredientConstructor: FC<PropsIngredientConstructor> = ({
   const [{ isDragging }, dragRef] = useDrag({
     type: 'locationIngridient',
     item: ingredient,
-    collect: (monitor) => ({
+    collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
   });
 
   const [{ isHover }, dropRef] = useDrop({
     accept: 'locationIngridient',
-    collect: (monitor) => ({
+    collect: monitor => ({
       isHover: monitor.isOver(),
     }),
     drop(item: any) {
@@ -50,10 +51,10 @@ const IngredientConstructor: FC<PropsIngredientConstructor> = ({
       const cardDrop = ref.current.getBoundingClientRect();
       const cardDrag = monitor.getClientOffset();
       const marginHeightDnD = cardDrag.y - cardDrop.y;
-      
+
       // меняем паддинги сверху или снизу элемента на которого навели
       if (marginHeightDnD < 140 && newPadding !== PADDING_TOP) {
-       setNewPadding(PADDING_TOP);
+        setNewPadding(PADDING_TOP);
       } else if (marginHeightDnD > 140 && newPadding !== PADDING_BOTTOM) {
         setNewPadding(PADDING_BOTTOM);
       }
@@ -97,4 +98,4 @@ const IngredientConstructor: FC<PropsIngredientConstructor> = ({
   );
 };
 
-export default IngredientConstructor;
+export default React.memo(IngredientConstructor);

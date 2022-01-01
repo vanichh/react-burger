@@ -20,7 +20,9 @@ interface InitialState {
   isModalOpen: boolean;
   orderSum: number;
   bunConstructor: IdataIgridients | any;
-  countIngridientsConstructor: any;
+  countIngridientsConstructor?: {
+    [key: string]: number;
+  } | any;
 }
 
 const initialState: InitialState = {
@@ -72,7 +74,7 @@ export const constructorReducer = (state = initialState, action: any) => {
         ...state,
         ingridientsConstructor: [
           ...state.ingridientsConstructor.filter(
-            (elem) => elem.uuid !== action.item.uuid
+            elem => elem.uuid !== action.item.uuid
           ),
         ],
         orderSum: state.orderSum - action.item.price,
@@ -104,10 +106,6 @@ export const constructorReducer = (state = initialState, action: any) => {
         };
       }
     }
-
-    // ...action.item.ingridientsConstructor.filter(
-    //   (elem: any) => elem.uuid !== action.item.uuid
-    // ),
 
     case MOVING_INGRIDIENT_CONSTRUCTOR: {
       return {

@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect, FC } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useRef, useEffect, FC, useMemo } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import SectionIngredients from './section-ingredients';
@@ -35,7 +36,7 @@ export const BurgerIngredients: FC = () => {
   const refMain = useRef<HTMLElement>(null);
   const refSectionIngredients = useRef<HTMLDivElement>(null);
 
-  const switchTab = (ref: React.RefObject<HTMLElement>, bun: typeBun) => {
+  const toggleTab = (ref: React.RefObject<HTMLElement>, bun: typeBun) => {
     setCurrent(bun);
     ref.current.scrollIntoView({ behavior: 'smooth' });
   };
@@ -52,7 +53,6 @@ export const BurgerIngredients: FC = () => {
       setCurrent('main');
     }
   };
-
   const getIngredient = (typeBun: typeBun) => {
     return ingredients.filter(({ type }) => type === typeBun);
   };
@@ -72,42 +72,46 @@ export const BurgerIngredients: FC = () => {
           <Tab
             value='bun'
             active={current === 'bun'}
-            onClick={() => switchTab(refBun, 'bun')}
-          >
+            onClick={() => toggleTab(refBun, 'bun')}>
             Булки
           </Tab>
           <Tab
             value='sauce'
             active={current === 'sauce'}
-            onClick={() => switchTab(refSause, 'sauce')}
-          >
+            onClick={() => toggleTab(refSause, 'sauce')}>
             Соусы
           </Tab>
           <Tab
             value='main'
             active={current === 'main'}
-            onClick={() => switchTab(refMain, 'main')}
-          >
+            onClick={() => toggleTab(refMain, 'main')}>
             Начинки
           </Tab>
         </div>
-        <div className={`${styles.wrapper} mb-5`} ref={refSectionIngredients}>
-          <SectionIngredients
-            refElem={refBun}
-            title='Булки'
-            dataIngredients={getIngredient('bun')}
-          />
-          <SectionIngredients
-            refElem={refSause}
-            title='Соусы'
-            dataIngredients={getIngredient('sauce')}
-          />
-          <SectionIngredients
-            refElem={refMain}
-            title='Начинки'
-            dataIngredients={getIngredient('main')}
-          />
-        </div>
+        {useMemo(
+          () => (
+            <div
+              className={`${styles.wrapper} mb-5`}
+              ref={refSectionIngredients}>
+              <SectionIngredients
+                refElem={refBun}
+                title='Булки'
+                dataIngredients={getIngredient('bun')}
+              />
+              <SectionIngredients
+                refElem={refSause}
+                title='Соусы'
+                dataIngredients={getIngredient('sauce')}
+              />
+              <SectionIngredients
+                refElem={refMain}
+                title='Начинки'
+                dataIngredients={getIngredient('main')}
+              />
+            </div>
+          ),
+          []
+        )}
       </section>
       {isModalOpen && <ModalWindow />}
     </>
