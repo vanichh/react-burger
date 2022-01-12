@@ -6,14 +6,38 @@ import {
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './page.module.css';
+import { URL_API } from 'utils/url-api';
+
+const authorization = URL_API + 'auth/login';
 
 export const LoginPage = () => {
   const [value, setValue] = useState({
-    mail: '',
+    email: '',
     password: '',
   });
-  const handleValueInput = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+  const handleValueInput = ({
+    target,
+  }: React.ChangeEvent<HTMLInputElement>) => {
     setValue((prev) => ({ ...prev, [target.name]: target.value }));
+  };
+
+  const test = async () => {
+    const response = await fetch(authorization, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify({
+        email: value.email,
+        password: value.password,
+      }),
+    });
+    if (response.ok) {
+      let test = await response.json();
+      console.log(test);
+      localStorage.setItem('refreshToken', test.refreshToken);
+      localStorage.setItem('accessToken', test.accessToken);
+    }
   };
 
   return (
@@ -24,8 +48,8 @@ export const LoginPage = () => {
           type={'text'}
           placeholder={'E-mail'}
           onChange={handleValueInput}
-          value={value.mail}
-          name={'mail'}
+          value={value.email}
+          name={'email'}
           error={false}
           onIconClick={() => false}
           errorText={'Ошибка'}
@@ -40,7 +64,7 @@ export const LoginPage = () => {
         />
       </div>
       <div className='mb-20'>
-        <Button type='primary' size='medium'>
+        <Button onClick={test} type='primary' size='medium'>
           Войти
         </Button>
       </div>
