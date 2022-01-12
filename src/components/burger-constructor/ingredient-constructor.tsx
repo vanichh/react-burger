@@ -47,7 +47,7 @@ const IngredientConstructor: FC<PropsIngredientConstructor> = ({
       }
       dispatch(movingIngridient(item, index));
     },
-    hover(item, monitor) {
+    hover(i, monitor) {
       const cardDrop = ref.current.getBoundingClientRect();
       const cardDrag = monitor.getClientOffset();
       const marginHeightDnD = cardDrag.y - cardDrop.y;
