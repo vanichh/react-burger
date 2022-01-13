@@ -6,13 +6,14 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { URL_API } from 'utils/url-api';
-
-const API_REGISTER_USER = URL_API + 'auth/register';
+import { useDispatch } from 'react-redux';
+import { registrationAccount } from 'services/actions/user';
 
 type TEvent = React.ChangeEvent<HTMLInputElement>;
 
 export const RegisterPage = () => {
+  const dispatch = useDispatch();
+
   const [value, setValue] = useState({
     name: '',
     email: '',
@@ -23,22 +24,8 @@ export const RegisterPage = () => {
     setValue((prev) => ({ ...prev, [target.name]: target.value }));
   };
 
-  const handleRegisterUser = async () => {
-    const response = await fetch(API_REGISTER_USER, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-      body: JSON.stringify({
-        email: value.email,
-        password: value.password,
-        name: value.name,
-      }),
-    });
-    if(response.ok){
-      const res = await response.json();
-      console.log(res)
-    }
+  const handleRegisterUser = () => {
+    dispatch(registrationAccount(value));
   };
 
   return (

@@ -1,3 +1,4 @@
+import { ProfileEditing } from 'components/profile-editing/profile-editing';
 import { NavLink } from 'react-router-dom';
 import styles from './page.module.css';
 
@@ -11,19 +12,24 @@ const activLink = (isActive: boolean) => {
 
 export const ProfilePage = () => {
   return (
-    <>
-      <NavLink className={activLink} to='/profile'>
-        Профиль
-      </NavLink>
-      <NavLink className={activLink} to='/profile/orders'>
-        История заказов
-      </NavLink>
-      <NavLink className={activLink} to='/login'>
-        Выход
-      </NavLink>
-      <p className='text text_type_main-default text_color_inactive mt-20'>
-        В этом разделе вы сможите изменить персольнальные данные
-      </p>
-    </>
+    <div className={`${styles.aligin_text} mt-30`}>
+      <div className={`${styles.menu_link} mr-10`}>
+        <NavLink exact className={activLink} to='/profile'>
+          Профиль
+        </NavLink>
+        <NavLink exact className={activLink} to='/profile/orders'>
+          История заказов
+        </NavLink>
+        <NavLink exact className={activLink} to='/login'>
+          Выход
+        </NavLink>
+        <p className='text text_type_main-default text_color_inactive mt-20'>
+          В этом разделе вы сможите изменить персольнальные данные
+        </p>
+      </div>
+      <ProfileEditing />
+    </div>
   );
 };
+
+

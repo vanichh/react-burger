@@ -3,12 +3,18 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 10rem;
+  margin-top: calc(var(--offset-base-size)  * 30);
 }
 .aligin_text {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .link {
   display: block;
+}
+
+.menu_link {
+  max-width: 320px;
+  width: 100%;
 }

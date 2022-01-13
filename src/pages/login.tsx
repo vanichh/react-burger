@@ -3,42 +3,38 @@ import {
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './page.module.css';
-import { URL_API } from 'utils/url-api';
+import { useDispatch, useSelector } from 'react-redux';
+import { authorizationAccount } from 'services/actions/user';
+import { useHistory } from 'react-router-dom';
+import { RootState } from 'services/store';
 
-const authorization = URL_API + 'auth/login';
+type TEvent = React.ChangeEvent<HTMLInputElement>;
 
 export const LoginPage = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { isAuth } = useSelector((store: RootState) => store.user);
   const [value, setValue] = useState({
     email: '',
     password: '',
   });
-  const handleValueInput = ({
-    target,
-  }: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleValueInput = ({ target }: TEvent) => {
     setValue((prev) => ({ ...prev, [target.name]: target.value }));
   };
 
-  const test = async () => {
-    const response = await fetch(authorization, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-      body: JSON.stringify({
-        email: value.email,
-        password: value.password,
-      }),
-    });
-    if (response.ok) {
-      let test = await response.json();
-      console.log(test);
-      localStorage.setItem('refreshToken', test.refreshToken);
-      localStorage.setItem('accessToken', test.accessToken);
-    }
+  const hendlerRequestLogin = () => {
+    dispatch(authorizationAccount(value));
   };
+
+  useEffect(() => {
+    if (isAuth) {
+      history.replace({ pathname: '/' });
+    }
+  }, [history, isAuth]);
 
   return (
     <div className={styles.aligin_wrapper}>
@@ -64,7 +60,7 @@ export const LoginPage = () => {
         />
       </div>
       <div className='mb-20'>
-        <Button onClick={test} type='primary' size='medium'>
+        <Button onClick={hendlerRequestLogin} type='primary' size='medium'>
           Войти
         </Button>
       </div>
