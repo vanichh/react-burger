@@ -8,8 +8,16 @@ import {
   ResetPassword,
   ProfilePage,
 } from 'pages';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { getUser } from 'services/actions/user';
 
 export default function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+
   return (
     <>
       <AppHeader />
@@ -18,7 +26,7 @@ export default function App() {
           <Route path='/' exact={true}>
             <HomePage />
           </Route>
-          <Route path='/profile' >
+          <Route path='/profile'>
             <ProfilePage />
           </Route>
           <Route path='/login' exact={true}>

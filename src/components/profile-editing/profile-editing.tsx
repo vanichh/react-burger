@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState, useRef, useEffect } from 'react';
 
 type TEvent = React.ChangeEvent<HTMLInputElement>;
 type TthisHandle = 'name' | 'email' | 'password';
+type TisDisable = { [index: string]: boolean };
 
 export const ProfileEditing = () => {
   const refInputName = useRef(null);
@@ -22,20 +24,18 @@ export const ProfileEditing = () => {
     email: '',
     password: '',
   });
-  const [isDisable, setIsDisable] = useState<{
-    [index: string]: boolean;
-  }>({
+  const [isDisable, setIsDisable] = useState<TisDisable>({
     name: true,
     email: true,
     password: true,
   });
 
   const handleValueInput = ({ target }: TEvent) => {
-    setValue((prev) => ({ ...prev, [target.name]: target.value }));
+    setValue(prev => ({ ...prev, [target.name]: target.value }));
   };
 
   function handleIsDisableClick(this: TthisHandle) {
-    setIsDisable((prev) => ({
+    setIsDisable(prev => ({
       ...prev,
       [this]: false,
     }));
@@ -51,7 +51,7 @@ export const ProfileEditing = () => {
   }, [isDisable]);
 
   function handeisDisableBlur(this: TthisHandle) {
-    setIsDisable((prev) => ({
+    setIsDisable(prev => ({
       ...prev,
       [this]: true,
     }));

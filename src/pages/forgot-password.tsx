@@ -1,15 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Button,
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styles from './page.module.css';
-import { URL_API } from 'utils/url-api';
-import { useState } from 'react';
-
-const API_RESET_PASSWORD = URL_API + 'password-reset';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetPassword } from 'services/actions/user';
+import { RootState } from 'services/store';
 
 export const ForgotPasswordPage = () => {
+  const history = useHistory();
+  const { passwordReset } = useSelector((store: RootState) => store.user);
+  const dispatch = useDispatch();
   const [value, setValue] = useState<string>('');
   const handleValueInput = ({
     target,
@@ -17,21 +21,16 @@ export const ForgotPasswordPage = () => {
     setValue(target.value);
   };
 
-  const handleForgotPassword = async () => {
-    const response = await fetch(API_RESET_PASSWORD, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-      body: JSON.stringify({
-        email: value,
-      }),
-    });
-    if(response.ok){
-      let test =  await response.json()
-      console.log(test)
-    }
+  const handleForgotPassword = () => {
+    dispatch(resetPassword(value));
   };
+
+  useEffect(() => {
+    if (passwordReset) {
+      history.replace({ pathname: '/reset-password' });
+    }
+  }, [passwordReset]);
+
   return (
     <div className={styles.aligin_wrapper}>
       <p className='text text_type_main-medium mb-6'>Восстановление пароля</p>

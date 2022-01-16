@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: calc(var(--offset-base-size)  * 30);
+  margin-top: calc(var(--offset-base-size) * 30);
 }
 .aligin_text {
   display: flex;
@@ -17,4 +17,7 @@
 .menu_link {
   max-width: 320px;
   width: 100%;
+}
+.activ_link {
+  color: white;
 }

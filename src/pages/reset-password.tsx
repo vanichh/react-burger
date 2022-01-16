@@ -1,28 +1,35 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Button,
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { URL_API } from 'utils/url-api';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { newPassword } from 'services/actions/user';
 import styles from './page.module.css';
-
-const API_SET_NEW_PASSWORD = URL_API + 'password-reset/reset';
+import { RootState } from 'services/store';
 
 type TEvent = React.ChangeEvent<HTMLInputElement>;
+type TIcon = 'ShowIcon' | 'HideIcon';
+type TTypeInput = 'password' | 'text';
 
 export const ResetPassword = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { successNewPassword } = useSelector((store: RootState) => store.user);
+
   const [value, setValue] = useState({
     password: '',
     codeEmail: '',
   });
-  const [icon, setIcon] = useState<'ShowIcon' | 'HideIcon'>('ShowIcon');
-  const [typeInput, setTypeInput] = useState<'password' | 'text'>('password');
+  const [icon, setIcon] = useState<TIcon>('ShowIcon');
+  const [typeInput, setTypeInput] = useState<TTypeInput>('password');
 
   const handleValueInput = ({ target }: TEvent) => {
-    setValue((prev) => ({ ...prev, [target.name]: target.value }));
+    setValue(prev => ({ ...prev, [target.name]: target.value }));
   };
-  const handleClick = () => {
+  const handleShowPassword = () => {
     if (typeInput === 'password') {
       setIcon('HideIcon');
       setTypeInput('text');
@@ -32,21 +39,15 @@ export const ResetPassword = () => {
     }
   };
 
-  const handleResetPassword = async () => {
-    const response = await fetch(API_SET_NEW_PASSWORD, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-      body: JSON.stringify({
-        email: value,
-      }),
-    });
-    if (response.ok) {
-      let test = await response.json();
-      console.log(test);
-    }
+  const handleResetPassword = () => {
+    dispatch(newPassword(value));
   };
+
+  useEffect(() => {
+    if (successNewPassword) {
+      history.replace({ pathname: '/' });
+    }
+  }, [successNewPassword]);
 
   return (
     <div className={styles.aligin_wrapper}>
@@ -59,7 +60,7 @@ export const ResetPassword = () => {
           value={value.password}
           name={'password'}
           error={false}
-          onIconClick={handleClick}
+          onIconClick={handleShowPassword}
           errorText={'Ошибка'}
           size={'default'}
           icon={icon}

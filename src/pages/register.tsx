@@ -7,7 +7,7 @@ import {
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { registrationAccount } from 'services/actions/user';
+import { registrationUser } from 'services/actions/user';
 
 type TEvent = React.ChangeEvent<HTMLInputElement>;
 
@@ -25,7 +25,7 @@ export const RegisterPage = () => {
   };
 
   const handleRegisterUser = () => {
-    dispatch(registrationAccount(value));
+    dispatch(registrationUser(value));
   };
 
   return (

@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './page.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { authorizationAccount } from 'services/actions/user';
+import { authorizationUser } from 'services/actions/user';
 import { useHistory } from 'react-router-dom';
 import { RootState } from 'services/store';
 
@@ -27,7 +27,7 @@ export const LoginPage = () => {
   };
 
   const hendlerRequestLogin = () => {
-    dispatch(authorizationAccount(value));
+    dispatch(authorizationUser(value));
   };
 
   useEffect(() => {
