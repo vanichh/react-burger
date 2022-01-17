@@ -1,12 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from 'services/actions/user';
+import { RootState } from 'services/store';
 
 type TEvent = React.ChangeEvent<HTMLInputElement>;
 type TthisHandle = 'name' | 'email' | 'password';
 type TisDisable = { [index: string]: boolean };
 
 export const ProfileEditing = () => {
+  const { name, email } = useSelector((store: RootState) => store.user);
+  const dispatch = useDispatch();
   const refInputName = useRef(null);
   const refInputEmail = useRef(null);
   const refInputPassword = useRef(null);
@@ -31,15 +36,23 @@ export const ProfileEditing = () => {
   });
 
   const handleValueInput = ({ target }: TEvent) => {
-    setValue(prev => ({ ...prev, [target.name]: target.value }));
+    setValue((prev) => ({ ...prev, [target.name]: target.value }));
   };
 
   function handleIsDisableClick(this: TthisHandle) {
-    setIsDisable(prev => ({
+    setIsDisable((prev) => ({
       ...prev,
       [this]: false,
     }));
     refInputName.current.focus();
+  }
+
+  function handeisDisableBlur(this: TthisHandle) {
+    setIsDisable((prev) => ({
+      ...prev,
+      [this]: true,
+    }));
+    dispatch(updateUser(value));
   }
 
   useEffect(() => {
@@ -50,12 +63,9 @@ export const ProfileEditing = () => {
     }
   }, [isDisable]);
 
-  function handeisDisableBlur(this: TthisHandle) {
-    setIsDisable(prev => ({
-      ...prev,
-      [this]: true,
-    }));
-  }
+  useEffect(() => {
+    setValue((prev) => ({ ...prev, name: name, email: email }));
+  }, [name, email]);
 
   return (
     <div>

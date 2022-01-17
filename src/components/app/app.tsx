@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AppHeader } from 'components/app-header/app-header';
 import {
@@ -11,12 +12,13 @@ import {
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getUser } from 'services/actions/user';
+import { ProtectedRoute } from '../protected-route/protected-route';
 
 export default function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUser());
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
@@ -26,21 +28,21 @@ export default function App() {
           <Route path='/' exact={true}>
             <HomePage />
           </Route>
-          <Route path='/profile'>
+          <ProtectedRoute path='/profile'>
             <ProfilePage />
-          </Route>
-          <Route path='/login' exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute path='/login' exact={true}>
             <LoginPage />
-          </Route>
-          <Route path='/register' exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute path='/register' exact={true}>
             <RegisterPage />
-          </Route>
-          <Route path='/forgot-password' exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute path='/forgot-password' exact={true}>
             <ForgotPasswordPage />
-          </Route>
-          <Route path='/reset-password' exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute path='/reset-password' exact={true}>
             <ResetPassword />
-          </Route>
+          </ProtectedRoute>
         </Switch>
       </Router>
     </>

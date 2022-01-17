@@ -22,7 +22,7 @@ export const getCookie = (name: string) => {
           '=([^;]*)'
       )
     );
-    return matches ? decodeURIComponent(matches[1]) : undefined;
+    return matches ? decodeURIComponent(matches[1]) : false;
 };
 
 export const delCookie = (name: string) => {

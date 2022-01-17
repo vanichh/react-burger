@@ -1,12 +1,13 @@
 import {
   SET_USER,
-  EXIT_USER,
+  LOGOUT_USER,
   RESET_PASSWORD,
   NEW_PASSWORD,
+  UPDATE_USER,
 } from 'services/actions/user';
 
 interface IinitialState {
-  isAuth: boolean;
+  isAuth: boolean | null;
   name: string;
   email: string;
   passwordReset: boolean;
@@ -14,7 +15,7 @@ interface IinitialState {
 }
 
 const initialState: IinitialState = {
-  isAuth: false,
+  isAuth: null,
   name: '',
   email: '',
   passwordReset: false,
@@ -31,7 +32,7 @@ export const userReducer = (state = initialState, action: any) => {
         isAuth: true,
       };
     }
-    case EXIT_USER: {
+    case LOGOUT_USER: {
       return {
         ...state,
         name: '',
@@ -50,6 +51,13 @@ export const userReducer = (state = initialState, action: any) => {
         ...state,
         passwordReset: false,
         successNewPassword: true,
+      };
+    }
+    case UPDATE_USER: {
+      return {
+        ...state,
+        name: action.item.name,
+        email: action.item.email,
       };
     }
     default: {

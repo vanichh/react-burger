@@ -1,41 +1,42 @@
 interface IRequestPOST {
   method: string;
-  mode: string;
-  cache: string;
-  credentials: string;
   headers: {
     'Content-Type': string;
   };
-  redirect: string;
-  referrerPolicy: string;
   body: string;
 }
+interface IRequestGET {
+  method: string;
+  headers: {
+    'Content-Type': string;
+    Authorization: string;
+  };
+}
 
-export const RequestPOST = (body: any): any => {
+export const RequestPOST = (body: any): IRequestPOST => {
   return {
     method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
     },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
     body: JSON.stringify(body),
   };
 };
-export const RequestGET = (token: string): any => {
+export const RequestGET = (token: string): IRequestGET => {
   return {
     method: 'GET',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
       Authorization: token,
     },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
+  };
+};
+export const RequestPATCH = (body: string): IRequestPOST => {
+  return {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
   };
 };
