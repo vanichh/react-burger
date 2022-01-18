@@ -13,7 +13,7 @@ import { useMemo } from 'react';
 
 const CLASSNAMEDIV = `${styles.ingredients__items} mt-6 ml-4 mb-10 mr-4`;
 
-const ElemBurgerIngredients: React.FC<DataProps> = props => {
+const ElemBurgerIngredients: React.FC<DataProps> = (props) => {
   const dispatch = useDispatch();
 
   // счетчик количества добавленного ингридиента
@@ -25,18 +25,18 @@ const ElemBurgerIngredients: React.FC<DataProps> = props => {
   const [, drag] = useDrag({
     type: 'ingridient',
     item: props,
-    collect: monitor => ({
+    collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
 
   // для открытия модалки
-  const openModalIngridient = () =>
+  const openModalIngridient = () => {
     dispatch({ type: SET_INGRIDIENT_MODAL, item: props });
-
+  };
   return useMemo(
     () => (
-      <div className={CLASSNAMEDIV} onClick={() => openModalIngridient()}>
+      <div className={CLASSNAMEDIV} onClick={openModalIngridient}>
         {current ? <Counter count={current} size='default' /> : null}
         <img
           ref={drag}

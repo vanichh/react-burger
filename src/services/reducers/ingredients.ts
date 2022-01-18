@@ -4,12 +4,16 @@ import {
   REQUEST_INGRIDIENT_BURGER,
   DELETE_DATA_MODAL,
   SET_INGRIDIENT_MODAL,
+  SET_INGRIDIENT,
+  NO_INGRIDIENT,
 } from 'services/actions/ingredients';
 import IdataIgridients from 'utils/types';
 
 interface IinitialState {
   listIgridients: IdataIgridients[];
-  ingredientDetails: IdataIgridients | [];
+  ingredientDetails: IdataIgridients | {};
+  isLoadingIngredientDetails: boolean;
+  NoSerchIngredientDetails: boolean;
   isLoding: boolean;
   isModalOpenIngridients: boolean;
   errorRequest: boolean;
@@ -19,6 +23,8 @@ interface IinitialState {
 const initialState: IinitialState = {
   listIgridients: [],
   ingredientDetails: [],
+  isLoadingIngredientDetails: false,
+  NoSerchIngredientDetails: false,
   isLoding: false,
   isModalOpenIngridients: false,
   errorRequest: false,
@@ -48,6 +54,22 @@ export const igridientsReducer = (state = initialState, action: any) => {
         isModalOpenIngridients: true,
       };
     }
+    case SET_INGRIDIENT: {
+      return {
+        ...state,
+        isLoadingIngredientDetails: true,
+        ingredientDetails: action.item,
+        isHaveIngridientDetails: true,
+        NoSerchIngredientDetails: false,
+      };
+    }
+    case NO_INGRIDIENT: {
+      return {
+        ...state,
+        NoSerchIngredientDetails: true,
+      };
+    }
+
     case DELETE_DATA_MODAL: {
       return {
         ...state,

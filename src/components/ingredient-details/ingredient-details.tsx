@@ -26,7 +26,7 @@ const Carbohydrate: React.FC<PropsCarbohydrate> = ({ name, count }) => {
   );
 };
 
-const IngredientDetails: React.FC = () => {
+export const IngredientDetails: React.FC = () => {
   const {
     name,
     image_large,

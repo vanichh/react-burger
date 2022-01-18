@@ -15,23 +15,26 @@ export const ProfilePage = () => {
         <NavLink
           exact={true}
           className={classNameLink}
-          activeClassName={styles.activ_link}
-          to='/profile'>
+          activeClassName='activ-link'
+          to='/profile'
+        >
           Профиль
         </NavLink>
         <NavLink
           exact={true}
           className={classNameLink}
-          activeClassName={styles.activ_link}
-          to='/profile/orders'>
+          activeClassName='activ-link'
+          to='/profile/orders'
+        >
           История заказов
         </NavLink>
         <NavLink
           exact={true}
           className={classNameLink}
-          activeClassName={styles.activ_link}
+          activeClassName='activ-link'
           onClick={() => dispatch(logoutUser())}
-          to='/login'>
+          to='/login'
+        >
           Выход
         </NavLink>
         <p className='text text_type_main-default text_color_inactive mt-20'>

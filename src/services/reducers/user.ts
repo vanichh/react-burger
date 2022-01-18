@@ -4,10 +4,12 @@ import {
   RESET_PASSWORD,
   NEW_PASSWORD,
   UPDATE_USER,
+  ERROR_LODING_USER,
 } from 'services/actions/user';
 
 interface IinitialState {
   isAuth: boolean | null;
+  errorLodingUser: boolean;
   name: string;
   email: string;
   passwordReset: boolean;
@@ -16,6 +18,7 @@ interface IinitialState {
 
 const initialState: IinitialState = {
   isAuth: null,
+  errorLodingUser: false,
   name: '',
   email: '',
   passwordReset: false,
@@ -30,6 +33,13 @@ export const userReducer = (state = initialState, action: any) => {
         name: action.item.name,
         email: action.item.email,
         isAuth: true,
+      };
+    }
+    case ERROR_LODING_USER: {
+      return {
+        ...state,
+        errorLodingUser: true,
+        isAuth: false,
       };
     }
     case LOGOUT_USER: {
