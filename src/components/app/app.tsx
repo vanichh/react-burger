@@ -31,16 +31,18 @@ const ModalSwitch = () => {
   const location: { [index: string]: any } = useLocation();
   const background: any = location.state && location.state.background;
 
-  const isModalWindows = (e:Event) => {
+  const closeModalWindows = (e: Event) => {
     e.stopPropagation();
     history.goBack();
   };
 
   const ModalWidnows = () => {
     return (
-      <Modal isModalWindows={isModalWindows}><IngredientDetails/></Modal>
-    )
-  }
+      <Modal title='Детали ингредиента' closeModalWindows={closeModalWindows}>
+        <IngredientDetails />
+      </Modal>
+    );
+  };
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -63,9 +65,7 @@ const ModalSwitch = () => {
         <Route component={NotFound404} />
       </Switch>
 
-      {background && (
-        <Route path='/ingredients/:id' component={ModalWidnows} />
-      )}
+      {background && <Route path='/ingredients/:id' component={ModalWidnows} />}
     </>
   );
 };

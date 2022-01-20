@@ -4,8 +4,7 @@ import {
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { SET_INGRIDIENT_MODAL } from '../../services/actions/ingredients';
+import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { RootState } from 'services/store';
 import DataProps from 'utils/types';
@@ -14,7 +13,6 @@ import { Link, useLocation } from 'react-router-dom';
 const CLASSNAMEDIV = `${styles.ingredients__items} mt-6 ml-4 mb-10 mr-4`;
 
 const ElemBurgerIngredients: React.FC<DataProps> = (props) => {
-  const dispatch = useDispatch();
   let location = useLocation();
   const { _id } = props;
   // счетчик количества добавленного ингридиента
@@ -31,11 +29,7 @@ const ElemBurgerIngredients: React.FC<DataProps> = (props) => {
     }),
   });
 
-  // для открытия модалки
-  const openModalIngridient = () => {
-    console.log(location)
-    dispatch({ type: SET_INGRIDIENT_MODAL, item: _id });
-  };
+
   return useMemo(
     () => (
       <Link
@@ -44,7 +38,6 @@ const ElemBurgerIngredients: React.FC<DataProps> = (props) => {
           state: { background: location },
         }}
         className={CLASSNAMEDIV}
-        onClick={openModalIngridient}
       >
         {current ? <Counter count={current} size='default' /> : null}
         <img
@@ -65,3 +58,6 @@ const ElemBurgerIngredients: React.FC<DataProps> = (props) => {
 };
 
 export default ElemBurgerIngredients;
+
+
+

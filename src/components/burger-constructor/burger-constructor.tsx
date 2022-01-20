@@ -18,7 +18,7 @@ const BurgerConstructor: React.FC = () => {
   };
   // Модалка дял оформления заказа
   const ModalWindow: React.FC = () => (
-    <Modal isModalWindows={isModalWindows}>
+    <Modal closeModalWindows={isModalWindows}>
       <OrderDetails order={order} />
     </Modal>
   );

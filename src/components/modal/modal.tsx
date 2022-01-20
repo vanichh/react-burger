@@ -10,18 +10,18 @@ const modalElement = document.getElementById('modal-root') as HTMLElement;
 interface PropsModal {
   children: React.ReactNode;
   title?: string;
-  isModalWindows?: (arg0?: any) => void;
+  closeModalWindows: (arg0?: any) => void;
 }
 
 const Modal = (props: PropsModal): JSX.Element => {
   const { id }: { id: string } = useParams();
   console.log(id);
 
-  const { children, title, isModalWindows } = props;
+  const { children, title, closeModalWindows } = props;
 
   const closeWindowsToPress = ({ key }: KeyboardEvent) => {
     if (key === 'Escape') {
-      isModalWindows();
+      closeModalWindows();
     }
   };
 
@@ -31,13 +31,13 @@ const Modal = (props: PropsModal): JSX.Element => {
   }, [closeWindowsToPress]);
 
   return ReactDOM.createPortal(
-    <ModalOverlay isModalWindows={isModalWindows}>
+    <ModalOverlay closeModalWindows={closeModalWindows}>
       <div className={`${styles.modal} p-10`}>
         <div className={`${styles.wrapper}`}>
           <h2 className={`${styles.modal__title} text text_type_main-large`}>
             {title}
           </h2>
-          <div className={styles.modal__close} onClick={isModalWindows}>
+          <div className={styles.modal__close} onClick={closeModalWindows}>
             <CloseIcon type='primary' />
           </div>
         </div>
