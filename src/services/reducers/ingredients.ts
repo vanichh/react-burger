@@ -50,7 +50,9 @@ export const igridientsReducer = (state = initialState, action: any) => {
     case SET_INGRIDIENT_MODAL: {
       return {
         ...state,
-        ingredientDetails: action.item,
+        ingredientDetails: state.listIgridients.find(
+          ({ _id }) => _id === action.item
+        ),
         isModalOpenIngridients: true,
       };
     }

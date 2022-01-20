@@ -3,7 +3,7 @@ import { SyntheticEvent } from 'react';
 import { useDispatch } from 'react-redux';
 interface PropsModalOverlay {
   children: React.ReactNode;
-  isModalWindows: (args: false) => void;
+  isModalWindows?: (args?: false) => void;
 }
 
 const ModalOverlay: React.FC<PropsModalOverlay> = (props) => {
@@ -14,7 +14,7 @@ const ModalOverlay: React.FC<PropsModalOverlay> = (props) => {
 
   const handleCloseWindows = ({ currentTarget, target }: SyntheticEvent) => {
     if (currentTarget === target) {
-      dispetch(isModalWindows(false));
+      isModalWindows();
     }
   };
 

@@ -5,25 +5,12 @@ import styles from './burger-ingredients.module.css';
 import SectionIngredients from './section-ingredients';
 import { useSelector } from 'react-redux';
 import { RootState } from 'services/store';
-import IngredientDetails from 'components/ingredient-details/ingredient-details';
-import Modal from 'components/modal/modal';
-import { isModalWindowsIngridient } from 'services/actions/ingredients';
 import typeInfridients from 'utils/types';
 import { throttle } from 'utils/throttle';
 type typeBun = 'bun' | 'sauce' | 'main';
 
-const ModalWindow: FC = () => (
-  <Modal isModalWindows={isModalWindowsIngridient} title='Детали Ингридиента'>
-    <IngredientDetails />
-  </Modal>
-);
-
 export const BurgerIngredients: FC = () => {
-  const isModalOpen = useSelector(
-    (store: RootState) => store.igridients.isModalOpenIngridients
-  );
-
-  // данные для отрисовки ингридиентов
+ // данные для отрисовки ингридиентов
   const ingredients: typeInfridients[] = useSelector(
     (store: RootState) => store.igridients.listIgridients
   );
@@ -113,7 +100,6 @@ export const BurgerIngredients: FC = () => {
           []
         )}
       </section>
-      {isModalOpen && <ModalWindow />}
     </>
   );
 };

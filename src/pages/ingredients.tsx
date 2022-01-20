@@ -12,6 +12,8 @@ export const IngredientPage = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
 
+  console.log('start')
+
   const { isLoadingIngredientDetails, isLoding, NoSerchIngredientDetails } =
     useSelector((state: RootState) => state.igridients);
 

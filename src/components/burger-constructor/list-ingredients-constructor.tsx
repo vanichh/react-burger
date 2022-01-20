@@ -9,6 +9,8 @@ import Ingredient from './ingredient-constructor';
 import { RootState } from 'services/store';
 import BunBurger from './bun-ingredient-constructor';
 
+const CLASS_NAME_TEXT_CONSTRUCTOR = `${styles.constructor__text_default} text text_type_main-default`;
+
 export const ListIngridientBurger = () => {
   const dispatch = useDispatch();
 
@@ -42,20 +44,19 @@ export const ListIngridientBurger = () => {
   // дефолтное состояние без ингридиентов
 
   const DefaultIngridient: React.FC = () => (
-    <p
-      className={`${styles.constructor__text_default} text text_type_main-default`}
-    >
+    <p className={CLASS_NAME_TEXT_CONSTRUCTOR}>
       Пожалуйста, перенесите сюда булку и ингредиенты для создания заказа
     </p>
   );
 
+  const CLASS_NAME_WRAPPER = `${styles.wrapper} ${
+    isHover ? styles.hover_dnd : ''
+  }`;
+
   return (
     <>
       {isHaveBun && <BunBurger ingredientsBun={bunConstructor} type='top' />}
-      <div
-        ref={dropTarget}
-        className={`${styles.wrapper} ${isHover ? styles.hover_dnd : ''}`}
-      >
+      <div ref={dropTarget} className={CLASS_NAME_WRAPPER}>
         {isHaveIngridient ? (
           <DefaultIngridient />
         ) : (

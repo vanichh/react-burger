@@ -10,12 +10,13 @@ import { useDrag } from 'react-dnd';
 import { RootState } from 'services/store';
 import DataProps from 'utils/types';
 import { useMemo } from 'react';
-
+import { Link, useLocation } from 'react-router-dom';
 const CLASSNAMEDIV = `${styles.ingredients__items} mt-6 ml-4 mb-10 mr-4`;
 
 const ElemBurgerIngredients: React.FC<DataProps> = (props) => {
   const dispatch = useDispatch();
-
+  let location = useLocation();
+  const { _id } = props;
   // счетчик количества добавленного ингридиента
   const current = useSelector(
     (store: RootState) =>
@@ -32,11 +33,19 @@ const ElemBurgerIngredients: React.FC<DataProps> = (props) => {
 
   // для открытия модалки
   const openModalIngridient = () => {
-    dispatch({ type: SET_INGRIDIENT_MODAL, item: props });
+    console.log(location)
+    dispatch({ type: SET_INGRIDIENT_MODAL, item: _id });
   };
   return useMemo(
     () => (
-      <div className={CLASSNAMEDIV} onClick={openModalIngridient}>
+      <Link
+        to={{
+          pathname: `/ingredients/${_id}`,
+          state: { background: location },
+        }}
+        className={CLASSNAMEDIV}
+        onClick={openModalIngridient}
+      >
         {current ? <Counter count={current} size='default' /> : null}
         <img
           ref={drag}
@@ -49,7 +58,7 @@ const ElemBurgerIngredients: React.FC<DataProps> = (props) => {
           <CurrencyIcon type='primary' />
         </div>
         <p className='text text_type_main-default'>{props.name}</p>
-      </div>
+      </Link>
     ),
     [current]
   );

@@ -1,5 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useLocation,
+  useHistory,
+} from 'react-router-dom';
 import { AppHeader } from 'components/app-header/app-header';
 import {
   HomePage,
@@ -16,43 +22,58 @@ import { useEffect } from 'react';
 import { getUser } from 'services/actions/user';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { getIngredients } from 'services/actions/ingredients';
+import IngredientDetails from 'components/ingredient-details/ingredient-details';
+import Modal from 'components/modal/modal';
 
-export default function App() {
+const ModalSwitch = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location: { [index: string]: any } = useLocation();
+  const background: any = location.state && location.state.background;
+
+  const isModalWindows = (e:Event) => {
+    e.stopPropagation();
+    history.goBack();
+  };
+
+  const ModalWidnows = () => {
+    return (
+      <Modal isModalWindows={isModalWindows}><IngredientDetails/></Modal>
+    )
+  }
+
   useEffect(() => {
     dispatch(getIngredients());
     dispatch(getUser());
   }, []);
 
   return (
-    <Router>
+    <>
       <AppHeader />
-      <Switch>
-        <Route path='/' exact={true}>
-          <HomePage />
-        </Route>
-        <Route path='/ingredients/:id' exact={true}>
-          <IngredientPage />
-        </Route>
+      <Switch location={background || location}>
+        <Route path='/' exact component={HomePage} />
+        <Route path='/ingredients/:id' exact component={IngredientPage} />
         <ProtectedRoute path='/profile'>
           <ProfilePage />
         </ProtectedRoute>
-        <Route path='/login'>
-          <LoginPage />
-        </Route>
-        <Route path='/register' exact={true}>
-          <RegisterPage />
-        </Route>
-        <Route path='/forgot-password' exact={true}>
-          <ForgotPasswordPage />
-        </Route>
-        <Route path='/reset-password' exact={true}>
-          <ResetPassword />
-        </Route>
-        <Route>
-          <NotFound404 />
-        </Route>
+        <Route path='/login' component={LoginPage} />
+        <Route path='/register' exact component={RegisterPage} />
+        <Route path='/forgot-password' exact component={ForgotPasswordPage} />
+        <Route path='/reset-password' exact component={ResetPassword} />
+        <Route component={NotFound404} />
       </Switch>
+
+      {background && (
+        <Route path='/ingredients/:id' component={ModalWidnows} />
+      )}
+    </>
+  );
+};
+
+export const App = () => {
+  return (
+    <Router>
+      <ModalSwitch />
     </Router>
   );
-}
+};

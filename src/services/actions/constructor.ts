@@ -12,7 +12,7 @@ export const RESET_STATE_INGRIDIENT = 'RESET_STATE_INGRIDIENT';
 export const ADD_BUN_CONSTRUCTOR = 'ADD_BUN_CONSTRUCTOR';
 export const MOVING_INGRIDIENT_CONSTRUCTOR = 'MOVING_INGRIDIENT_CONSTRUCTOR';
 
-export const isModalWindowsOrder = (state: boolean) => {
+export const isModalWindowsOrder = (state: boolean = false) => {
   if (state) {
     return {
       type: STATE_MODAL_WINDOWS_ORDER,

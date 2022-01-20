@@ -1,6 +1,7 @@
 import styles from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
 import { RootState } from 'services/store';
+import { useLocation } from 'react-router-dom';
 
 type stateingredient<T = string> = {
   name: T;
@@ -27,6 +28,8 @@ const Carbohydrate: React.FC<PropsCarbohydrate> = ({ name, count }) => {
 };
 
 export const IngredientDetails: React.FC = () => {
+  let location = useLocation();
+  console.log(location)
   const {
     name,
     image_large,
