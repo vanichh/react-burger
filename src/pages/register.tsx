@@ -32,7 +32,7 @@ export const RegisterPage = () => {
   };
 
   return (
-    <Wrapper className={styles.aligin_form}>
+    <Wrapper className={styles.flex_column}>
       <p className='text text_type_main-medium mb-6'>Регистрация</p>
       <Form onSubmit={handleRegisterUser}>
         <div className='mb-6'>

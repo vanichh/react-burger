@@ -5,7 +5,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import { newPassword } from 'services/actions/user';
 import styles from './page.module.css';
 import { RootState } from 'services/store';
@@ -19,6 +19,8 @@ type TTypeInput = 'password' | 'text';
 export const ResetPassword = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
+
   const { successNewPassword, isAuth, passwordReset } = useSelector(
     (store: RootState) => store.user
   );
@@ -54,11 +56,18 @@ export const ResetPassword = () => {
   }, [successNewPassword]);
 
   if (isAuth && !passwordReset) {
-    return <Redirect to='/' />;
+    return (
+      <Redirect
+        to={{
+          pathname: '/',
+          state: { from: location },
+        }}
+      />
+    );
   }
 
   return (
-    <Wrapper className={styles.aligin_form}>
+    <Wrapper className={styles.flex_column}>
       <p className='text text_type_main-medium mb-6'>Восстановление пароля</p>
       <Form onSubmit={handleResetPassword}>
         <div className='mb-6'>

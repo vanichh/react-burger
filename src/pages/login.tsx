@@ -4,7 +4,7 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FormEvent, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import styles from './page.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { authorizationUser } from 'services/actions/user';
@@ -16,6 +16,7 @@ type TEvent = React.ChangeEvent<HTMLInputElement>;
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const { isAuth } = useSelector((store: RootState) => store.user);
 
   const [value, setValue] = useState({
@@ -33,11 +34,18 @@ export const LoginPage = () => {
   };
 
   if (isAuth) {
-    return <Redirect to='/' />;
+    return (
+      <Redirect
+        to={{
+          pathname: '/',
+          state: { from: location },
+        }}
+      />
+    );
   }
 
   return (
-    <Wrapper className={styles.aligin_form}>
+    <Wrapper className={styles.flex_column}>
       <p className='text text_type_main-medium mb-6'>Вход</p>
       <Form onSubmit={hendlerRequestLogin}>
         <div className='mb-6'>

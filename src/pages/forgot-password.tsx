@@ -3,7 +3,7 @@ import {
   Button,
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import styles from './page.module.css';
 import { FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ import { Wrapper } from 'components/wrapper/wrapper';
 import { Form } from 'components/form';
 
 export const ForgotPasswordPage = () => {
+  const location = useLocation();
   const history = useHistory();
   const { passwordReset, isAuth } = useSelector(
     (store: RootState) => store.user
@@ -37,11 +38,18 @@ export const ForgotPasswordPage = () => {
   }, [passwordReset]);
 
   if (isAuth) {
-    return <Redirect to='/' />;
+    return (
+      <Redirect
+        to={{
+          pathname: '/',
+          state: { from: location },
+        }}
+      />
+    );
   }
 
   return (
-    <Wrapper className={styles.aligin_form}>
+    <Wrapper className={styles.flex_column}>
       <p className='text text_type_main-medium mb-6'>Восстановление пароля</p>
       <Form onSubmit={handleForgotPassword}>
         <div className='mb-6'>
