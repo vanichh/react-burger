@@ -16,7 +16,8 @@ type TEvent = React.ChangeEvent<HTMLInputElement>;
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
+  const { state }: any = useLocation();
+  
   const { isAuth } = useSelector((store: RootState) => store.user);
 
   const [value, setValue] = useState({
@@ -32,16 +33,8 @@ export const LoginPage = () => {
     e.preventDefault();
     dispatch(authorizationUser(value));
   };
-
   if (isAuth) {
-    return (
-      <Redirect
-        to={{
-          pathname: '/',
-          state: { from: location },
-        }}
-      />
-    );
+    return <Redirect to={state?.from || '/'} />;
   }
 
   return (

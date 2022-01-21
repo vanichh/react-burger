@@ -13,7 +13,7 @@ import { Wrapper } from 'components/wrapper/wrapper';
 import { Form } from 'components/form';
 
 export const ForgotPasswordPage = () => {
-  const location = useLocation();
+  const { state }:any = useLocation();
   const history = useHistory();
   const { passwordReset, isAuth } = useSelector(
     (store: RootState) => store.user
@@ -38,14 +38,7 @@ export const ForgotPasswordPage = () => {
   }, [passwordReset]);
 
   if (isAuth) {
-    return (
-      <Redirect
-        to={{
-          pathname: '/',
-          state: { from: location },
-        }}
-      />
-    );
+    return <Redirect to={state?.from || '/'} />;
   }
 
   return (

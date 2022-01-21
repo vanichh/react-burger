@@ -19,7 +19,7 @@ type TTypeInput = 'password' | 'text';
 export const ResetPassword = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
+  const { state }: any = useLocation();
 
   const { successNewPassword, isAuth, passwordReset } = useSelector(
     (store: RootState) => store.user
@@ -56,14 +56,7 @@ export const ResetPassword = () => {
   }, [successNewPassword]);
 
   if (isAuth && !passwordReset) {
-    return (
-      <Redirect
-        to={{
-          pathname: '/',
-          state: { from: location },
-        }}
-      />
-    );
+    return <Redirect to={state?.from || '/'} />;
   }
 
   return (
