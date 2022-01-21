@@ -6,7 +6,6 @@ import {
   useLocation,
   useHistory,
 } from 'react-router-dom';
-import { AppHeader } from 'components/app-header/app-header';
 import {
   HomePage,
   LoginPage,
@@ -18,12 +17,13 @@ import {
   NotFound404,
 } from 'pages';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { getUser } from 'services/actions/user';
-import { ProtectedRoute } from '../protected-route/protected-route';
+import { ProtectedRoute } from '../protected-route';
 import { getIngredients } from 'services/actions/ingredients';
-import IngredientDetails from 'components/ingredient-details/ingredient-details';
-import Modal from 'components/modal/modal';
+import { IngredientDetails } from '../ingredient-details';
+import { AppHeader } from '../app-header';
+import { Modal } from '../modal';
 
 const ModalSwitch = () => {
   const dispatch = useDispatch();
@@ -36,22 +36,23 @@ const ModalSwitch = () => {
     history.goBack();
   };
 
-  const ModalWidnows = () => {
-    return (
+  const ModalWidnows: JSX.Element = useMemo(
+    () => (
       <Modal title='Детали ингредиента' closeModalWindows={closeModalWindows}>
         <IngredientDetails />
       </Modal>
-    );
-  };
+    ),
+    [IngredientDetails]
+  );
 
   useEffect(() => {
+    // запрашиваем пользователя и ингриденты
     dispatch(getIngredients());
     dispatch(getUser());
   }, []);
 
   return (
     <>
-      <AppHeader />
       <Switch location={background || location}>
         <Route path='/' exact component={HomePage} />
         <Route path='/ingredients/:id' exact component={IngredientPage} />
@@ -64,8 +65,7 @@ const ModalSwitch = () => {
         <Route path='/reset-password' exact component={ResetPassword} />
         <Route component={NotFound404} />
       </Switch>
-
-      {background && <Route path='/ingredients/:id' component={ModalWidnows} />}
+      {background && <Route path='/ingredients/:id' children={ModalWidnows} />}
     </>
   );
 };
@@ -73,6 +73,7 @@ const ModalSwitch = () => {
 export const App = () => {
   return (
     <Router>
+      <AppHeader />
       <ModalSwitch />
     </Router>
   );

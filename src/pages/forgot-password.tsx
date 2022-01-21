@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPassword } from 'services/actions/user';
 import { RootState } from 'services/store';
+import { Wrapper } from 'components/wrapper/wrapper';
 
 export const ForgotPasswordPage = () => {
   const history = useHistory();
@@ -32,7 +33,7 @@ export const ForgotPasswordPage = () => {
   }, [passwordReset]);
 
   return (
-    <div className={styles.aligin_wrapper}>
+    <Wrapper>
       <p className='text text_type_main-medium mb-6'>Восстановление пароля</p>
       <div className='mb-6'>
         <Input
@@ -60,6 +61,6 @@ export const ForgotPasswordPage = () => {
           <p className='text text_type_main-default'>Войти</p>
         </Link>
       </div>
-    </div>
+    </Wrapper>
   );
 };

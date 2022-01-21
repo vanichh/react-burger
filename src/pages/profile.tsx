@@ -1,6 +1,6 @@
 import { ProfileEditing } from 'components/profile-editing/profile-editing';
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Route, Switch } from 'react-router-dom';
 import { logoutUser } from 'services/actions/user';
 import styles from './page.module.css';
 
@@ -41,7 +41,9 @@ export const ProfilePage = () => {
           В этом разделе вы сможите изменить персольнальные данные
         </p>
       </div>
-      <ProfileEditing />
+      <Switch>
+        <Route path='/profile' exact component={ProfileEditing} />
+      </Switch>
     </div>
   );
 };

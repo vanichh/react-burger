@@ -73,5 +73,3 @@ export const ListIngridientBurger = () => {
     </>
   );
 };
-
-export default ListIngridientBurger;

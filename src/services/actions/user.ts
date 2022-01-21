@@ -38,7 +38,9 @@ const updateToken = async () => {
     const res = await response.json();
     if (res.success) {
       localStorage.setItem('refreshToken', res.refreshToken);
-      setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
+      setCookie('accessToken', res.accessToken.split('Bearer ')[1], {
+        'max-age': 1200,
+      });
     }
   }
 };
@@ -76,7 +78,9 @@ export const authorizationUser = (data: IdataAuth) => async (dispatch: any) => {
     let userInfo = await response.json();
     dispatch({ type: SET_USER, item: userInfo.user });
     localStorage.setItem('refreshToken', userInfo.refreshToken);
-    setCookie('accessToken', userInfo.accessToken.split('Bearer ')[1]);
+    setCookie('accessToken', userInfo.accessToken.split('Bearer ')[1], {
+      'max-age': 1200,
+    });
   }
 };
 
@@ -87,7 +91,9 @@ export const registrationUser =
       let userInfo = await response.json();
       dispatch({ type: SET_USER, item: userInfo.user });
       localStorage.setItem('refreshToken', userInfo.refreshToken);
-      setCookie('accessToken', userInfo.accessToken.split('Bearer ')[1]);
+      setCookie('accessToken', userInfo.accessToken.split('Bearer ')[1], {
+        'max-age': 1200,
+      });
     }
   };
 

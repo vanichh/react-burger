@@ -12,10 +12,12 @@ interface PropsCarbohydrate {
   count: string;
 }
 
+const CLASS_NAME_TEXT: string = `${styles.details__wrapper} text text_type_main-default text_color_inactive`;
+
 const Carbohydrate: React.FC<PropsCarbohydrate> = ({ name, count }) => {
-  const CLASSNAME_TEXT: string = `${styles.details__wrapper} text text_type_main-default text_color_inactive`;
+  
   return (
-    <div className={CLASSNAME_TEXT}>
+    <div className={CLASS_NAME_TEXT}>
       <p className={styles.details__text}>{name}</p>
       <p className={styles.details__text}>{count}</p>
     </div>
@@ -74,4 +76,3 @@ export const IngredientDetails: React.FC = () => {
   );
 };
 
-export default IngredientDetails;

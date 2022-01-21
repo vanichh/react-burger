@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import { useParams } from 'react-router-dom';
 const modalElement = document.getElementById('modal-root') as HTMLElement;
 
 interface PropsModal {
@@ -13,10 +12,7 @@ interface PropsModal {
   closeModalWindows: (arg0?: any) => void;
 }
 
-const Modal = (props: PropsModal): JSX.Element => {
-  const { id }: { id: string } = useParams();
-  console.log(id);
-
+export const Modal = (props: PropsModal): JSX.Element => {
   const { children, title, closeModalWindows } = props;
 
   const closeWindowsToPress = ({ key }: KeyboardEvent) => {
@@ -47,5 +43,3 @@ const Modal = (props: PropsModal): JSX.Element => {
     modalElement
   );
 };
-
-export default Modal;

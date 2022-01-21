@@ -1,13 +1,13 @@
 import styles from './burger-constructor.module.css';
-import Modal from '../modal/modal';
-import OrderDetails from '../order-details/order-details';
+import { Modal } from '../modal';
+import { OrderDetails } from '../order-details';
 import { RootState } from 'services/store';
 import { useDispatch, useSelector } from 'react-redux';
-import ListIngridientBurger from './list-ingredients-constructor';
+import { ListIngridientBurger } from './list-ingredients-constructor';
 import { isModalWindowsOrder } from 'services/actions/constructor';
 import Payment from './payment-constructor';
 
-const BurgerConstructor: React.FC = () => {
+export const BurgerConstructor: React.FC = () => {
   const dispatch = useDispatch();
   const { isModalOpen, order } = useSelector(
     (store: RootState) => store.burgerConstructor
@@ -16,6 +16,7 @@ const BurgerConstructor: React.FC = () => {
   const isModalWindows = () => {
     dispatch(isModalWindowsOrder());
   };
+
   // Модалка дял оформления заказа
   const ModalWindow: React.FC = () => (
     <Modal closeModalWindows={isModalWindows}>
@@ -31,5 +32,3 @@ const BurgerConstructor: React.FC = () => {
     </section>
   );
 };
-
-export default BurgerConstructor;

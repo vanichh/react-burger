@@ -7,7 +7,7 @@ interface PropsBunBurger {
   type: 'top' | 'bottom';
 }
 
-const BunBurger = ({ ingredientsBun, type }: PropsBunBurger): JSX.Element => {
+export const BunBurger = ({ ingredientsBun, type }: PropsBunBurger): JSX.Element => {
 
   const CLASSNAME_BUN: string = `
     ${styles.constructor__wrapper}

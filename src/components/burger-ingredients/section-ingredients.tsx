@@ -10,7 +10,7 @@ interface PropsSectionIngredients {
 
 const CLASSNAME_TITLE = 'text text_type_main-medium mb-4';
 
-const SectionIngredients = (props: PropsSectionIngredients) => {
+export const SectionIngredients = (props: PropsSectionIngredients) => {
   
   const { title, dataIngredients, refElem } = props;
 

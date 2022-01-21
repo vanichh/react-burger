@@ -9,7 +9,7 @@ import styles from './page.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { authorizationUser } from 'services/actions/user';
 import { RootState } from 'services/store';
-
+import { Wrapper } from 'components/wrapper'
 type TEvent = React.ChangeEvent<HTMLInputElement>;
 
 export const LoginPage = () => {
@@ -34,7 +34,7 @@ export const LoginPage = () => {
       {isAuth ? (
         <Redirect to='/' />
       ) : (
-        <div className={styles.aligin_wrapper}>
+        <Wrapper>
           <p className='text text_type_main-medium mb-6'>Вход</p>
           <div className='mb-6'>
             <Input
@@ -77,7 +77,7 @@ export const LoginPage = () => {
               <p className='text text_type_main-default'>Восстановить пароль</p>
             </Link>
           </div>
-        </div>
+        </Wrapper>
       )}
     </>
   );

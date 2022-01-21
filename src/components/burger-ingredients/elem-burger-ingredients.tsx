@@ -12,7 +12,7 @@ import { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 const CLASSNAMEDIV = `${styles.ingredients__items} mt-6 ml-4 mb-10 mr-4`;
 
-const ElemBurgerIngredients: React.FC<DataProps> = (props) => {
+export const ElemBurgerIngredients: React.FC<DataProps> = (props) => {
   let location = useLocation();
   const { _id } = props;
   // счетчик количества добавленного ингридиента

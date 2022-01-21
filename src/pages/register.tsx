@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { registrationUser } from 'services/actions/user';
+import { Wrapper } from 'components/wrapper'
 
 type TEvent = React.ChangeEvent<HTMLInputElement>;
 
@@ -29,7 +30,7 @@ export const RegisterPage = () => {
   };
 
   return (
-    <div className={styles.aligin_wrapper}>
+    <Wrapper>
       <p className='text text_type_main-medium mb-6'>Регистрация</p>
       <div className='mb-6'>
         <Input
@@ -77,6 +78,6 @@ export const RegisterPage = () => {
           <p className='text text_type_main-default'>Войти</p>
         </Link>
       </div>
-    </div>
+    </Wrapper>
   );
 };

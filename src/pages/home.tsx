@@ -4,9 +4,9 @@ import { RootState } from 'services/store';
 import { useSelector } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import ErrorComponent from 'components/app/error-request';
-import BurgerIngredients from 'components/burger-ingredients/burger-ingredients';
-import BurgerConstructor from 'components/burger-constructor/burger-constructor';
+import { ErrorRequest as ErrorComponent } from 'components/app/error-request';
+import { BurgerIngredients } from 'components/burger-ingredients';
+import { BurgerConstructor } from 'components/burger-constructor';
 
 export const HomePage = () => {
   const isLoding: boolean = useSelector(
@@ -16,6 +16,9 @@ export const HomePage = () => {
     (store: RootState) => store.igridients.errorRequest
   );
 
+  if (IsError) {
+    return <ErrorComponent />;
+  }
   return (
     <>
       {isLoding && (
@@ -26,7 +29,6 @@ export const HomePage = () => {
           </DndProvider>
         </main>
       )}
-      {IsError && <ErrorComponent />}
     </>
   );
 };

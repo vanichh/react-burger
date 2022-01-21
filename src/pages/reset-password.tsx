@@ -9,6 +9,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { newPassword } from 'services/actions/user';
 import styles from './page.module.css';
 import { RootState } from 'services/store';
+import { Wrapper } from 'components/wrapper'
 
 type TEvent = React.ChangeEvent<HTMLInputElement>;
 type TIcon = 'ShowIcon' | 'HideIcon';
@@ -50,7 +51,7 @@ export const ResetPassword = () => {
   }, [successNewPassword]);
 
   return (
-    <div className={styles.aligin_wrapper}>
+    <Wrapper>
       <p className='text text_type_main-medium mb-6'>Восстановление пароля</p>
       <div className='mb-6'>
         <Input
@@ -92,6 +93,6 @@ export const ResetPassword = () => {
           <p className='text text_type_main-default'>Войти</p>
         </Link>
       </div>
-    </div>
+    </Wrapper>
   );
 };
