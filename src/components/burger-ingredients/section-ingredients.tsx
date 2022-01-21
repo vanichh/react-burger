@@ -1,5 +1,5 @@
 import styles from './burger-ingredients.module.css';
-import ElemBurgerIngredients from './elem-burger-ingredients';
+import { ElemBurgerIngredients } from './';
 import DataProps from '../../utils/types';
 
 interface PropsSectionIngredients {
@@ -25,5 +25,3 @@ export const SectionIngredients = (props: PropsSectionIngredients) => {
     </section>
   );
 };
-
-export default SectionIngredients;

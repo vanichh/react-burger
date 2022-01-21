@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from 'services/actions/user';
 import { RootState } from 'services/store';
+import { Form } from '../form';
 
 type TEvent = React.ChangeEvent<HTMLInputElement>;
 type TthisHandle = 'name' | 'email' | 'password';
@@ -68,7 +69,7 @@ export const ProfileEditing = () => {
   }, [name, email]);
 
   return (
-    <div>
+    <Form>
       <div className='mb-6'>
         <Input
           type={'text'}
@@ -120,6 +121,6 @@ export const ProfileEditing = () => {
           ref={refInputPassword}
         />
       </div>
-    </div>
+    </Form>
   );
 };

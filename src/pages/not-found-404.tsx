@@ -5,7 +5,7 @@ const classNameLink = `${styles.link} text text_type_main-default activ-link mt-
 
 export const NotFound404 = () => {
   return (
-    <Wrapper>
+    <Wrapper className={styles.flex_column}>
       <p className='text text_type_main-medium'>
         Запрашиваемая страница не найдена
       </p>
@@ -15,3 +15,6 @@ export const NotFound404 = () => {
     </Wrapper>
   );
 };
+
+
+

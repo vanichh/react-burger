@@ -1,34 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styles from './ingredient-details.module.css';
+import { Carbohydrate } from './carbohydrate'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'services/store';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getIngridient } from 'services/actions/ingredients';
-import { NotFound404 } from 'pages';
 
-interface PropsCarbohydrate {
-  name: string;
-  count: string;
-}
-
-const CLASS_NAME_TEXT: string = `${styles.details__wrapper} text text_type_main-default text_color_inactive`;
-
-const Carbohydrate: React.FC<PropsCarbohydrate> = ({ name, count }) => {
-  
-  return (
-    <div className={CLASS_NAME_TEXT}>
-      <p className={styles.details__text}>{name}</p>
-      <p className={styles.details__text}>{count}</p>
-    </div>
-  );
-};
 
 export const IngredientDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
 
-  const { isLoadingIngredientDetails, isLoding, NoSerchIngredientDetails } =
+  const { isLoadingIngredientDetails, isLoding } =
     useSelector((state: RootState) => state.igridients);
 
   const { ingredientDetails } = useSelector(
@@ -41,10 +25,6 @@ export const IngredientDetails: React.FC = () => {
     }
   }, [isLoding]);
 
-  if (NoSerchIngredientDetails) {
-    // если ингридиент не найден
-    return <NotFound404 />;
-  }
 
   return (
     <>
@@ -75,4 +55,3 @@ export const IngredientDetails: React.FC = () => {
     </>
   );
 };
-

@@ -48,3 +48,6 @@
   display: flex;
   align-items: center;
 }
+.aligin_text {
+  text-align: center;
+}

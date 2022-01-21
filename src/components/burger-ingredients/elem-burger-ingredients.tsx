@@ -29,7 +29,6 @@ export const ElemBurgerIngredients: React.FC<DataProps> = (props) => {
     }),
   });
 
-
   return useMemo(
     () => (
       <Link
@@ -50,14 +49,11 @@ export const ElemBurgerIngredients: React.FC<DataProps> = (props) => {
           <p className='text text_type_main-medium mr-2'>{props.price}</p>
           <CurrencyIcon type='primary' />
         </div>
-        <p className='text text_type_main-default'>{props.name}</p>
+        <p className={`text text_type_main-default ${styles.aligin_text}`}>
+          {props.name}
+        </p>
       </Link>
     ),
     [current]
   );
 };
-
-export default ElemBurgerIngredients;
-
-
-

@@ -5,11 +5,12 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { newPassword } from 'services/actions/user';
 import styles from './page.module.css';
 import { RootState } from 'services/store';
-import { Wrapper } from 'components/wrapper'
+import { Wrapper } from 'components/wrapper';
+import { Form } from 'components/form';
 
 type TEvent = React.ChangeEvent<HTMLInputElement>;
 type TIcon = 'ShowIcon' | 'HideIcon';
@@ -18,7 +19,9 @@ type TTypeInput = 'password' | 'text';
 export const ResetPassword = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { successNewPassword } = useSelector((store: RootState) => store.user);
+  const { successNewPassword, isAuth, passwordReset } = useSelector(
+    (store: RootState) => store.user
+  );
 
   const [value, setValue] = useState({
     password: '',
@@ -28,7 +31,7 @@ export const ResetPassword = () => {
   const [typeInput, setTypeInput] = useState<TTypeInput>('password');
 
   const handleValueInput = ({ target }: TEvent) => {
-    setValue(prev => ({ ...prev, [target.name]: target.value }));
+    setValue((prev) => ({ ...prev, [target.name]: target.value }));
   };
   const handleShowPassword = () => {
     if (typeInput === 'password') {
@@ -50,41 +53,47 @@ export const ResetPassword = () => {
     }
   }, [successNewPassword]);
 
+  if (isAuth && !passwordReset) {
+    return <Redirect to='/' />;
+  }
+
   return (
-    <Wrapper>
+    <Wrapper className={styles.aligin_form}>
       <p className='text text_type_main-medium mb-6'>Восстановление пароля</p>
-      <div className='mb-6'>
-        <Input
-          type={typeInput}
-          placeholder={'Введите новый пароль'}
-          onChange={handleValueInput}
-          value={value.password}
-          name={'password'}
-          error={false}
-          onIconClick={handleShowPassword}
-          errorText={'Ошибка'}
-          size={'default'}
-          icon={icon}
-        />
-      </div>
-      <div className='mb-6'>
-        <Input
-          type={'text'}
-          placeholder={'Введите код из письма'}
-          onChange={handleValueInput}
-          value={value.codeEmail}
-          name={'codeEmail'}
-          error={false}
-          onIconClick={() => false}
-          errorText={'Ошибка'}
-          size={'default'}
-        />
-      </div>
-      <div className='mb-20'>
-        <Button onClick={handleResetPassword} type='primary' size='medium'>
-          Сохранить
-        </Button>
-      </div>
+      <Form onSubmit={handleResetPassword}>
+        <div className='mb-6'>
+          <Input
+            type={typeInput}
+            placeholder={'Введите новый пароль'}
+            onChange={handleValueInput}
+            value={value.password}
+            name={'password'}
+            error={false}
+            onIconClick={handleShowPassword}
+            errorText={'Ошибка'}
+            size={'default'}
+            icon={icon}
+          />
+        </div>
+        <div className='mb-6'>
+          <Input
+            type={'text'}
+            placeholder={'Введите код из письма'}
+            onChange={handleValueInput}
+            value={value.codeEmail}
+            name={'codeEmail'}
+            error={false}
+            onIconClick={() => false}
+            errorText={'Ошибка'}
+            size={'default'}
+          />
+        </div>
+        <div className='mb-20'>
+          <Button type='primary' size='medium'>
+            Сохранить
+          </Button>
+        </div>
+      </Form>
       <div className={`${styles.aligin_text} mb-4`}>
         <p className='text text_type_main-default text_color_inactive mr-4'>
           Вспомнили пароль?

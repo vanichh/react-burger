@@ -3,17 +3,20 @@ import {
   Button,
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import styles from './page.module.css';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPassword } from 'services/actions/user';
 import { RootState } from 'services/store';
 import { Wrapper } from 'components/wrapper/wrapper';
+import { Form } from 'components/form';
 
 export const ForgotPasswordPage = () => {
   const history = useHistory();
-  const { passwordReset } = useSelector((store: RootState) => store.user);
+  const { passwordReset, isAuth } = useSelector(
+    (store: RootState) => store.user
+  );
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>('');
   const handleValueInput = ({
@@ -22,7 +25,8 @@ export const ForgotPasswordPage = () => {
     setValue(target.value);
   };
 
-  const handleForgotPassword = () => {
+  const handleForgotPassword = (e: FormEvent) => {
+    e.preventDefault();
     dispatch(resetPassword(value));
   };
 
@@ -32,27 +36,33 @@ export const ForgotPasswordPage = () => {
     }
   }, [passwordReset]);
 
+  if (isAuth) {
+    return <Redirect to='/' />;
+  }
+
   return (
-    <Wrapper>
+    <Wrapper className={styles.aligin_form}>
       <p className='text text_type_main-medium mb-6'>Восстановление пароля</p>
-      <div className='mb-6'>
-        <Input
-          type={'text'}
-          placeholder={'Укажите e-mail'}
-          onChange={handleValueInput}
-          value={value}
-          name={'email'}
-          error={false}
-          onIconClick={() => false}
-          errorText={'Ошибка'}
-          size={'default'}
-        />
-      </div>
-      <div className='mb-20'>
-        <Button onClick={handleForgotPassword} type='primary' size='medium'>
-          Восстановить
-        </Button>
-      </div>
+      <Form onSubmit={handleForgotPassword}>
+        <div className='mb-6'>
+          <Input
+            type={'text'}
+            placeholder={'Укажите e-mail'}
+            onChange={handleValueInput}
+            value={value}
+            name={'email'}
+            error={false}
+            onIconClick={() => false}
+            errorText={'Ошибка'}
+            size={'default'}
+          />
+        </div>
+        <div className='mb-20'>
+          <Button type='primary' size='medium'>
+            Восстановить
+          </Button>
+        </div>
+      </Form>
       <div className={`${styles.aligin_text} mb-4`}>
         <p className='text text_type_main-default text_color_inactive mr-4'>
           Вспомнили пароль?

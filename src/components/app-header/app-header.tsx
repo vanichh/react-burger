@@ -5,7 +5,7 @@ import {
   ListIcon,
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 const classNameLink = 'text text_type_main-default text_color_inactive pl-2';
 
@@ -22,7 +22,7 @@ export const AppHeader = () => {
               className={classNameLink}
               activeClassName='activ-link'
             >
-              Сонструктор
+              Kонструктор
             </NavLink>
           </div>
           <div className={`${styles.item} pl-5 pr-5 pt-4 pb-4 ml-2`}>
@@ -36,9 +36,9 @@ export const AppHeader = () => {
             </NavLink>
           </div>
         </nav>
-        <div className={styles.header__logo}>
+        <Link to='/' className={styles.header__logo}>
           <Logo />
-        </div>
+        </Link>
         <div className={`${styles.header__profile} pl-5 pr-5 pt-4 pb-4`}>
           <ProfileIcon type='primary' />
           <NavLink

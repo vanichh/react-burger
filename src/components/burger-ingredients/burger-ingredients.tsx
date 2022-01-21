@@ -2,28 +2,30 @@
 import { useState, useRef, useEffect, FC, useMemo } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
-import SectionIngredients from './section-ingredients';
+import { SectionIngredients } from './';
 import { useSelector } from 'react-redux';
 import { RootState } from 'services/store';
 import typeInfridients from 'utils/types';
 import { throttle } from 'utils/throttle';
-type typeBun = 'bun' | 'sauce' | 'main';
+
+type TtypeBun = 'bun' | 'sauce' | 'main';
+type Tref = React.RefObject<HTMLElement>;
 
 export const BurgerIngredients: FC = () => {
- // данные для отрисовки ингридиентов
+  // данные для отрисовки ингридиентов
   const ingredients: typeInfridients[] = useSelector(
     (store: RootState) => store.igridients.listIgridients
   );
 
   // переключение табов
-  const [current, setCurrent] = useState<typeBun>('bun');
+  const [current, setCurrent] = useState<TtypeBun>('bun');
 
   const refBun = useRef<HTMLElement>(null);
   const refSause = useRef<HTMLElement>(null);
   const refMain = useRef<HTMLElement>(null);
   const refSectionIngredients = useRef<HTMLDivElement>(null);
 
-  const toggleTab = (ref: React.RefObject<HTMLElement>, bun: typeBun) => {
+  const toggleTab = (ref: Tref, bun: TtypeBun) => {
     setCurrent(bun);
     ref.current.scrollIntoView({ behavior: 'smooth' });
   };
@@ -40,7 +42,7 @@ export const BurgerIngredients: FC = () => {
       setCurrent('main');
     }
   };
-  const getIngredient = (typeBun: typeBun) => {
+  const getIngredient = (typeBun: TtypeBun) => {
     return ingredients.filter(({ type }) => type === typeBun);
   };
 
@@ -59,19 +61,22 @@ export const BurgerIngredients: FC = () => {
           <Tab
             value='bun'
             active={current === 'bun'}
-            onClick={() => toggleTab(refBun, 'bun')}>
+            onClick={() => toggleTab(refBun, 'bun')}
+          >
             Булки
           </Tab>
           <Tab
             value='sauce'
             active={current === 'sauce'}
-            onClick={() => toggleTab(refSause, 'sauce')}>
+            onClick={() => toggleTab(refSause, 'sauce')}
+          >
             Соусы
           </Tab>
           <Tab
             value='main'
             active={current === 'main'}
-            onClick={() => toggleTab(refMain, 'main')}>
+            onClick={() => toggleTab(refMain, 'main')}
+          >
             Начинки
           </Tab>
         </div>
@@ -79,7 +84,8 @@ export const BurgerIngredients: FC = () => {
           () => (
             <div
               className={`${styles.wrapper} mb-5`}
-              ref={refSectionIngredients}>
+              ref={refSectionIngredients}
+            >
               <SectionIngredients
                 refElem={refBun}
                 title='Булки'
@@ -103,5 +109,3 @@ export const BurgerIngredients: FC = () => {
     </>
   );
 };
-
-export default BurgerIngredients;

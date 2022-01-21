@@ -31,8 +31,7 @@ const ModalSwitch = () => {
   const location: { [index: string]: any } = useLocation();
   const background: any = location.state && location.state.background;
 
-  const closeModalWindows = (e: Event) => {
-    e.stopPropagation();
+  const closeModalWindows = () => {
     history.goBack();
   };
 
@@ -56,9 +55,7 @@ const ModalSwitch = () => {
       <Switch location={background || location}>
         <Route path='/' exact component={HomePage} />
         <Route path='/ingredients/:id' exact component={IngredientPage} />
-        <ProtectedRoute path='/profile'>
-          <ProfilePage />
-        </ProtectedRoute>
+        <ProtectedRoute path='/profile' children={<ProfilePage />} />
         <Route path='/login' component={LoginPage} />
         <Route path='/register' exact component={RegisterPage} />
         <Route path='/forgot-password' exact component={ForgotPasswordPage} />

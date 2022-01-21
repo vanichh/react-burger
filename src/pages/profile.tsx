@@ -1,8 +1,9 @@
-import { ProfileEditing } from 'components/profile-editing/profile-editing';
+import { ProfileEditing } from 'components/profile-editing';
 import { useDispatch } from 'react-redux';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { logoutUser } from 'services/actions/user';
 import styles from './page.module.css';
+import { Wrapper } from 'components/wrapper';
 
 const classNameLink = `text text_type_main-medium ${styles.link} text_color_inactive`;
 
@@ -10,7 +11,7 @@ export const ProfilePage = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className={`${styles.aligin_text} mt-30`}>
+    <Wrapper>
       <div className={`${styles.menu_link} mr-10`}>
         <NavLink
           exact={true}
@@ -44,6 +45,6 @@ export const ProfilePage = () => {
       <Switch>
         <Route path='/profile' exact component={ProfileEditing} />
       </Switch>
-    </div>
+    </Wrapper>
   );
 };
