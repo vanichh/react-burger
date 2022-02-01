@@ -1,3 +1,5 @@
+import { FC, ChangeEvent } from 'React';
+
 import {
   Button,
   Input,
@@ -12,12 +14,12 @@ import { RootState } from 'services/store';
 import { Wrapper } from 'components/wrapper';
 import { Form } from 'components/form';
 
-type TEvent = React.ChangeEvent<HTMLInputElement>;
+type TEvent = ChangeEvent<HTMLInputElement>;
 
-export const LoginPage = () => {
+export const LoginPage: FC = () => {
   const dispatch = useDispatch();
   const { state }: any = useLocation();
-  
+
   const { isAuth } = useSelector((store: RootState) => store.user);
 
   const [value, setValue] = useState({

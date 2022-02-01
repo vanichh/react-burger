@@ -1,5 +1,5 @@
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useRef, FC, useState } from 'react';
+import { useRef, FC, useState, memo } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import {
@@ -8,11 +8,10 @@ import {
 } from 'services/actions/constructor';
 import iconIngreidient from '../../images/burger-ingredients/icon-ingridients.png';
 import styles from './burger-constructor.module.css';
-import DataProps from 'utils/types';
-import React from 'react';
+import { IDataProps } from 'utils/types';
 
-interface PropsIngredientConstructor {
-  ingredient: DataProps;
+interface IPropsIngredientConstructor {
+  ingredient: IDataProps;
   index: number;
 }
 
@@ -20,7 +19,7 @@ interface PropsIngredientConstructor {
 const PADDING_TOP = 'pt-25';
 const PADDING_BOTTOM = 'pb-25';
 
-const IngredientConstructor: FC<PropsIngredientConstructor> = ({
+export const IngredientConstructor: FC<IPropsIngredientConstructor> = memo(({
   ingredient,
   index,
 }) => {
@@ -96,6 +95,8 @@ const IngredientConstructor: FC<PropsIngredientConstructor> = ({
       )}
     </>
   );
-};
+})
 
-export default React.memo(IngredientConstructor);
+
+
+

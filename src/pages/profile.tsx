@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { ProfileEditing } from 'components/profile-editing';
 import { useDispatch } from 'react-redux';
 import { NavLink, Route, Switch } from 'react-router-dom';
@@ -7,7 +8,7 @@ import { Wrapper } from 'components/wrapper';
 
 const classNameLink = `text text_type_main-medium ${styles.link} text_color_inactive`;
 
-export const ProfilePage = () => {
+export const ProfilePage: FC = () => {
   const dispatch = useDispatch();
 
   return (

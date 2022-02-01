@@ -7,11 +7,11 @@ import {
   SET_INGRIDIENT,
   NO_INGRIDIENT,
 } from 'services/actions/ingredients';
-import IdataIgridients from 'utils/types';
+import { IDataProps } from 'utils/types';
 
 interface IinitialState {
-  listIgridients: IdataIgridients[];
-  ingredientDetails: IdataIgridients | {};
+  listIgridients: IDataProps[];
+  ingredientDetails: IDataProps | {};
   isLoadingIngredientDetails: boolean;
   NoSerchIngredientDetails: boolean;
   isLoding: boolean;

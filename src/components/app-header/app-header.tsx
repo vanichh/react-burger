@@ -1,3 +1,4 @@
+import { FC } from 'React';
 import styles from './app-header.module.css';
 import {
   Logo,
@@ -9,7 +10,7 @@ import { NavLink, Link } from 'react-router-dom';
 
 const classNameLink = 'text text_type_main-default text_color_inactive pl-2';
 
-export const AppHeader = () => {
+export const AppHeader: FC = () => {
   return (
     <header className={`${styles.header} pt-4 pb-4`}>
       <div className={styles.wrapper}>

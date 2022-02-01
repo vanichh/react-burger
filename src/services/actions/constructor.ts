@@ -56,9 +56,8 @@ export const changeStateElem = (type: 'delete' | 'add', item: any) => {
 };
 
 export const getNumberOrder =
-  (url: string) => (dispatch: any, getState: any) => {
+  (url: string) => async (dispatch: any, getState: any) => {
     const { burgerConstructor } = getState();
-    ;(async () => {
       try {
         const response = await fetch(url, {
           method: 'POST',
@@ -89,5 +88,4 @@ export const getNumberOrder =
           item: burgerConstructor.order,
         });
       }
-    })();
   };

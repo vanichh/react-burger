@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { FC } from 'React';
 import {
   Button,
   Input,
@@ -12,8 +13,8 @@ import { RootState } from 'services/store';
 import { Wrapper } from 'components/wrapper/wrapper';
 import { Form } from 'components/form';
 
-export const ForgotPasswordPage = () => {
-  const { state }:any = useLocation();
+export const ForgotPasswordPage: FC = () => {
+  const { state }: any = useLocation();
   const history = useHistory();
   const { passwordReset, isAuth } = useSelector(
     (store: RootState) => store.user

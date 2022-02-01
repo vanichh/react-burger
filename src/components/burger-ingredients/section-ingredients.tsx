@@ -1,17 +1,17 @@
+import { FC } from 'React';
 import styles from './burger-ingredients.module.css';
 import { ElemBurgerIngredients } from './';
-import DataProps from '../../utils/types';
+import { IDataProps } from '../../utils/types';
 
-interface PropsSectionIngredients {
+interface IPropsSectionIngredients {
   title: string;
-  dataIngredients: DataProps[];
+  dataIngredients: IDataProps[];
   refElem: React.RefObject<HTMLElement>;
 }
 
 const CLASSNAME_TITLE = 'text text_type_main-medium mb-4';
 
-export const SectionIngredients = (props: PropsSectionIngredients) => {
-  
+export const SectionIngredients: FC<IPropsSectionIngredients> = (props) => {
   const { title, dataIngredients, refElem } = props;
 
   return (

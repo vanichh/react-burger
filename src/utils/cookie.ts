@@ -3,7 +3,7 @@ interface IsetCookieOptions {
   [key: string]: any;
 }
 
-type TsetCookie<T> = (name: string, value: any, options?: T) => void;
+type TsetCookie<T> = (name: string, value: string, options?: T) => void;
 
 export const setCookie: TsetCookie<IsetCookieOptions> = (name, value, options?) => {
   let updatedCookie =

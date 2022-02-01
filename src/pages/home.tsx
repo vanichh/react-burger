@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styles from 'components/app/app.module.css';
+import { FC } from 'React';
 import { RootState } from 'services/store';
 import { useSelector } from 'react-redux';
 import { DndProvider } from 'react-dnd';
@@ -8,7 +9,7 @@ import { ErrorRequest as ErrorComponent } from 'components/app/error-request';
 import { BurgerIngredients } from 'components/burger-ingredients';
 import { BurgerConstructor } from 'components/burger-constructor';
 
-export const HomePage = () => {
+export const HomePage: FC = () => {
   const isLoding: boolean = useSelector(
     (store: RootState) => store.igridients.isLoding
   );

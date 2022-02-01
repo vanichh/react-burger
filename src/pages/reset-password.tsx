@@ -3,7 +3,7 @@ import {
   Button,
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import { newPassword } from 'services/actions/user';
@@ -16,7 +16,7 @@ type TEvent = React.ChangeEvent<HTMLInputElement>;
 type TIcon = 'ShowIcon' | 'HideIcon';
 type TTypeInput = 'password' | 'text';
 
-export const ResetPassword = () => {
+export const ResetPassword: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { state }: any = useLocation();
