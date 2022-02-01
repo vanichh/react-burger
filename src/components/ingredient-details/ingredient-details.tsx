@@ -1,39 +1,57 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styles from './ingredient-details.module.css';
-import { useSelector } from 'react-redux';
+import { Carbohydrate } from './carbohydrate'
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'services/store';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { getIngridient } from 'services/actions/ingredients';
 
-const IngredientDetails: React.FC = () => {
-    const { name, image_large, calories, proteins, fat, carbohydrates } =
-        useSelector((state: RootState) => state.igridients.ingredientDetails);
-    const CLASSNAME_TEXT = `${styles.details__text} text text_type_main-default text_color_inactive`;
-    return (
+
+export const IngredientDetails: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const dispatch = useDispatch();
+
+  const { isLoadingIngredientDetails, isLoding } =
+    useSelector((state: RootState) => state.igridients);
+
+  const { ingredientDetails } = useSelector(
+    (state: RootState) => state.igridients
+  );
+
+  useEffect(() => {
+    if (isLoding) {
+      dispatch(getIngridient(id));
+    }
+  }, [isLoding]);
+
+
+  return (
+    <>
+      {isLoadingIngredientDetails && (
         <>
-            <img className='mb-4' src={image_large} alt={name} />
-            <p className='text text_type_main-medium mb-8'>{name}</p>
-            <div className={styles.wpapper}>
-                <p className={CLASSNAME_TEXT}>
-                    Калории, ккал
-                    <br />
-                    {calories}
-                </p>
-                <p className={CLASSNAME_TEXT}>
-                    Белки, г
-                    <br />
-                    {proteins}
-                </p>
-                <p className={CLASSNAME_TEXT}>
-                    Жиры, г
-                    <br />
-                    {fat}
-                </p>
-                <p className={CLASSNAME_TEXT}>
-                    Углеводы, г
-                    <br />
-                    {carbohydrates}
-                </p>
-            </div>
+          <img
+            className='mb-4'
+            src={ingredientDetails.image_large}
+            alt={ingredientDetails.name}
+          />
+          <p className='text text_type_main-medium mb-8'>
+            {ingredientDetails.name}
+          </p>
+          <div className={styles.wpapper}>
+            <Carbohydrate
+              name='Калории, ккал'
+              count={ingredientDetails.calories}
+            />
+            <Carbohydrate name='Белки, г' count={ingredientDetails.proteins} />
+            <Carbohydrate name='Жиры, г' count={ingredientDetails.fat} />
+            <Carbohydrate
+              name='Углеводы, г'
+              count={ingredientDetails.carbohydrates}
+            />
+          </div>
         </>
-    );
+      )}
+    </>
+  );
 };
-
-export default IngredientDetails;

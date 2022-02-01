@@ -6,7 +6,7 @@ interface PropsOrderDetails {
 }
 
 
-const OrderDetails = ({ order }: PropsOrderDetails): JSX.Element => {
+export const OrderDetails = ({ order }: PropsOrderDetails): JSX.Element => {
     return (
         <>
             <p className='text text_type_digits-large mb-8'>{order.number}</p>
@@ -22,4 +22,3 @@ const OrderDetails = ({ order }: PropsOrderDetails): JSX.Element => {
     );
 };
 
-export default OrderDetails;

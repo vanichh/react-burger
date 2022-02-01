@@ -7,12 +7,12 @@ interface PropsBunBurger {
   type: 'top' | 'bottom';
 }
 
-const BunBurger = ({ ingredientsBun, type }: PropsBunBurger): JSX.Element => {
+export const BunBurger = ({ ingredientsBun, type }: PropsBunBurger): JSX.Element => {
 
   const CLASSNAME_BUN: string = `
     ${styles.constructor__wrapper}
     ${styles.constructor__wrapper_align}
-    ${type === 'top' ? 'mb-4' : 'mt-4'} ml-4 mr-6
+    ${type === 'top' ? 'mb-4' : 'mt-4'} ml-4 mr-6 
     `;
   return (
     <div

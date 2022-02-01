@@ -1,42 +1,77 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import styles from './app.module.css';
-import { useEffect } from 'react';
-import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { RootState } from 'services/store';
-import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients } from '../../services/actions/ingredients';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import ErrorComponent from './error-request';
-import { URL_API } from 'utils/url-api'
-const URL_REQUEST_INGREDIENTS = URL_API + 'ingredients';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useLocation,
+  useHistory,
+} from 'react-router-dom';
+import {
+  HomePage,
+  LoginPage,
+  RegisterPage,
+  ForgotPasswordPage,
+  ResetPassword,
+  ProfilePage,
+  IngredientPage,
+  NotFound404,
+} from 'pages';
+import { useDispatch } from 'react-redux';
+import { useEffect, useMemo } from 'react';
+import { getUser } from 'services/actions/user';
+import { ProtectedRoute } from '../protected-route';
+import { getIngredients } from 'services/actions/ingredients';
+import { IngredientDetails } from '../ingredient-details';
+import { AppHeader } from '../app-header';
+import { Modal } from '../modal';
 
-export default function App() {
+const ModalSwitch = () => {
   const dispatch = useDispatch();
-  const isLoding: boolean = useSelector(
-    (store: RootState) => store.igridients.isLoding
+  const history = useHistory();
+  const location: { [index: string]: any } = useLocation();
+  const background: any = location.state && location.state.background;
+
+  const closeModalWindows = () => {
+    history.goBack();
+  };
+
+  const ModalWidnows: JSX.Element = useMemo(
+    () => (
+      <Modal title='Детали ингредиента' closeModalWindows={closeModalWindows}>
+        <IngredientDetails />
+      </Modal>
+    ),
+    [IngredientDetails]
   );
-  const IsError: boolean = useSelector(
-    (store: RootState) => store.igridients.errorRequest
-  );
+
   useEffect(() => {
-    dispatch(getIngredients(URL_REQUEST_INGREDIENTS));
+    // запрашиваем пользователя и ингриденты
+    dispatch(getIngredients());
+    dispatch(getUser());
   }, []);
 
   return (
     <>
-      <AppHeader />
-      {isLoding && (
-        <main className={styles.container}>
-          <DndProvider backend={HTML5Backend}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </DndProvider>
-        </main>
-      )}
-      {IsError && <ErrorComponent />}
+      <Switch location={background || location}>
+        <Route path='/' exact component={HomePage} />
+        <Route path='/ingredients/:id' exact component={IngredientPage} />
+        <ProtectedRoute path='/profile' children={<ProfilePage />} />
+        <Route path='/login' component={LoginPage} />
+        <Route path='/register' exact component={RegisterPage} />
+        <Route path='/forgot-password' exact component={ForgotPasswordPage} />
+        <Route path='/reset-password' exact component={ResetPassword} />
+        <Route component={NotFound404} />
+      </Switch>
+      {background && <Route path='/ingredients/:id' children={ModalWidnows} />}
     </>
   );
-}
+};
+
+export const App = () => {
+  return (
+    <Router>
+      <AppHeader />
+      <ModalSwitch />
+    </Router>
+  );
+};

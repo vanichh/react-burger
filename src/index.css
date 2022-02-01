@@ -3,3 +3,9 @@ body {
     -moz-osx-font-smoothing: grayscale;
     height: 100vh;
 }
+a {
+    text-decoration: none;
+}
+.activ-link {
+    color: white !important;
+}

@@ -5,7 +5,6 @@ export const ErrorRequest: React.FC = () => {
   const textError = useSelector(
     (store: RootState) => store.igridients.errorRequestText
   );
-  console.log(textError)
   return (
     <div
       style={{
@@ -26,4 +25,3 @@ export const ErrorRequest: React.FC = () => {
   );
 };
 
-export default ErrorRequest;

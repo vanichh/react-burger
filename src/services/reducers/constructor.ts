@@ -10,16 +10,22 @@ import {
 } from '../actions/constructor';
 import IdataIgridients from 'utils/types';
 
-interface IinitialState {
+interface InitialState {
   ingridientsConstructor: IdataIgridients[] | [];
-  order: any;
+  order:
+    | {
+        number: string;
+      }
+    | {};
   isModalOpen: boolean;
   orderSum: number;
   bunConstructor: IdataIgridients | any;
-  countIngridientsConstructor: any;
+  countIngridientsConstructor?: {
+    [key: string]: number;
+  } | any;
 }
 
-const initialState: IinitialState = {
+const initialState: InitialState = {
   ingridientsConstructor: [],
   order: {},
   isModalOpen: false,
@@ -105,10 +111,10 @@ export const constructorReducer = (state = initialState, action: any) => {
       return {
         ...state,
         ingridientsConstructor: [
-          ...action.item.ingridientsConstructor.filter(
-            (elem: any) => elem.uuid !== action.item.uuid
-          ),
-        ],
+          ...state.ingridientsConstructor.slice(0, action.item.index),
+          action.item.newItem,
+          ...state.ingridientsConstructor.slice(action.item.index),
+        ].filter((elem: any) => elem.uuid !== action.item.uuid),
       };
     }
     case RESET_STATE_INGRIDIENT: {

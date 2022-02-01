@@ -4,51 +4,42 @@ import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import { useDispatch } from 'react-redux';
 const modalElement = document.getElementById('modal-root') as HTMLElement;
 
 interface PropsModal {
-    children: React.ReactNode;
-    title?: string;
-    isModalWindows: (arg0: boolean) => void;
+  children: React.ReactNode;
+  title?: string;
+  closeModalWindows: (arg0?: any) => void;
 }
 
-const Modal = ({ children, title, isModalWindows }: PropsModal): JSX.Element => {
-    const dispatch = useDispatch();
-    const closeWindowsToPress = ({ key }: KeyboardEvent) => {
-        if (key === 'Escape') {
-            dispatch(isModalWindows(false));
-        }
-    };
+export const Modal = (props: PropsModal): JSX.Element => {
+  const { children, title, closeModalWindows } = props;
 
-    useEffect(() => {
-        window.addEventListener('keydown', closeWindowsToPress);
-        return () => window.removeEventListener('keydown', closeWindowsToPress);
-    }, [closeWindowsToPress]);
+  const closeWindowsToPress = ({ key }: KeyboardEvent) => {
+    if (key === 'Escape') {
+      closeModalWindows();
+    }
+  };
 
-    return ReactDOM.createPortal(
-        <ModalOverlay isModalWindows={isModalWindows}>
-            <div className={`${styles.modal} p-10`}>
-                <div className={`${styles.wrapper}`}>
-                    <h2
-                        className={`${styles.modal__title} text text_type_main-large`}
-                    >
-                        {title}
-                    </h2>
-                    <div
-                        className={styles.modal__close}
-                        onClick={() =>
-                            dispatch(isModalWindows(false))
-                        }
-                    >
-                        <CloseIcon type='primary' />
-                    </div>
-                </div>
-                <div className={styles.container}>{children}</div>
-            </div>
-        </ModalOverlay>,
-        modalElement
-    );
+  useEffect(() => {
+    window.addEventListener('keydown', closeWindowsToPress);
+    return () => window.removeEventListener('keydown', closeWindowsToPress);
+  }, [closeWindowsToPress]);
+
+  return ReactDOM.createPortal(
+    <ModalOverlay closeModalWindows={closeModalWindows}>
+      <div className={`${styles.modal} p-10`}>
+        <div className={`${styles.wrapper}`}>
+          <h2 className={`${styles.modal__title} text text_type_main-large`}>
+            {title}
+          </h2>
+          <div className={styles.modal__close} onClick={closeModalWindows}>
+            <CloseIcon type='primary' />
+          </div>
+        </div>
+        <div className={styles.container}>{children}</div>
+      </div>
+    </ModalOverlay>,
+    modalElement
+  );
 };
-
-export default Modal;

@@ -1,58 +1,55 @@
-import { useState, useRef, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useRef, useEffect, FC, useMemo } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
-import SectionIngredients from './section-ingredients';
+import { SectionIngredients } from './';
 import { useSelector } from 'react-redux';
 import { RootState } from 'services/store';
-import IngredientDetails from 'components/ingredient-details/ingredient-details';
-import Modal from 'components/modal/modal';
-import { isModalWindowsIngridient } from 'services/actions/ingredients';
+import typeInfridients from 'utils/types';
+import { throttle } from 'utils/throttle';
 
-type ingredientType = 'bun' | 'sauce' | 'main';
+type TtypeBun = 'bun' | 'sauce' | 'main';
+type Tref = React.RefObject<HTMLElement>;
 
-export const BurgerIngredients = (): JSX.Element => {
-  const isModalOpen = useSelector(
-    (store: RootState) => store.igridients.isModalOpenIngridients
+export const BurgerIngredients: FC = () => {
+  // данные для отрисовки ингридиентов
+  const ingredients: typeInfridients[] = useSelector(
+    (store: RootState) => store.igridients.listIgridients
   );
+
+  // переключение табов
+  const [current, setCurrent] = useState<TtypeBun>('bun');
 
   const refBun = useRef<HTMLElement>(null);
   const refSause = useRef<HTMLElement>(null);
   const refMain = useRef<HTMLElement>(null);
   const refSectionIngredients = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    refSectionIngredients.current.addEventListener('scroll', () => {
-      const bunTop = refBun.current.getBoundingClientRect().top;
-      const sauseTop = refSause.current.getBoundingClientRect().top;
-      const mainTop = refMain.current.getBoundingClientRect().top;
-      if (bunTop > 200 && bunTop < 260) {
-        setCurrent('bun');
-      } else if (sauseTop > 200 && sauseTop < 260) {
-        setCurrent('sauce');
-      } else if (mainTop > 200 && mainTop < 260) {
-        setCurrent('main');
-      }
-    });
-  }, []);
-
-  // данные для отрисовки ингридиентов
-  const dataIngredients = useSelector(
-    (store: RootState) => store.igridients.listIgridients
-  );
-
-  // переключение табов
-  const [current, setCurrent] = useState<ingredientType>('bun');
-
-  const ModalWindow: React.FC = () => {
-    return (
-      <Modal
-        isModalWindows={isModalWindowsIngridient}
-        title='Детали Ингридиента'
-      >
-        <IngredientDetails />
-      </Modal>
-    );
+  const toggleTab = (ref: Tref, bun: TtypeBun) => {
+    setCurrent(bun);
+    ref.current.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const activTab = () => {
+    const bunTop = refBun.current.getBoundingClientRect().top;
+    const sauseTop = refSause.current.getBoundingClientRect().top;
+    const mainTop = refMain.current.getBoundingClientRect().top;
+    if (bunTop > 200 && bunTop < 260) {
+      setCurrent('bun');
+    } else if (sauseTop > 200 && sauseTop < 260) {
+      setCurrent('sauce');
+    } else if (mainTop > 200 && mainTop < 260) {
+      setCurrent('main');
+    }
+  };
+  const getIngredient = (typeBun: TtypeBun) => {
+    return ingredients.filter(({ type }) => type === typeBun);
+  };
+
+  useEffect(() => {
+    const optimizedActivTab = throttle(activTab, 50);
+    refSectionIngredients.current.addEventListener('scroll', optimizedActivTab);
+  }, []);
 
   return (
     <>
@@ -64,61 +61,51 @@ export const BurgerIngredients = (): JSX.Element => {
           <Tab
             value='bun'
             active={current === 'bun'}
-            onClick={() => {
-              setCurrent('bun');
-              refBun.current.scrollIntoView({ behavior: 'smooth' });
-            }}
+            onClick={() => toggleTab(refBun, 'bun')}
           >
             Булки
           </Tab>
           <Tab
             value='sauce'
             active={current === 'sauce'}
-            onClick={() => {
-              setCurrent('sauce');
-              refSause.current.scrollIntoView({ behavior: 'smooth' });
-            }}
+            onClick={() => toggleTab(refSause, 'sauce')}
           >
             Соусы
           </Tab>
           <Tab
             value='main'
             active={current === 'main'}
-            onClick={() => {
-              setCurrent('main');
-              refMain.current.scrollIntoView({ behavior: 'smooth' });
-            }}
+            onClick={() => toggleTab(refMain, 'main')}
           >
             Начинки
           </Tab>
         </div>
-        <div className={`${styles.wrapper} mb-5`} ref={refSectionIngredients}>
-          <SectionIngredients
-            refElem={refBun}
-            title='Булки'
-            dataIngredients={dataIngredients.filter(
-              (elem: { type: string }) => elem.type === 'bun'
-            )}
-          />
-          <SectionIngredients
-            refElem={refSause}
-            title='Соусы'
-            dataIngredients={dataIngredients.filter(
-              (elem: { type: string }) => elem.type === 'sauce'
-            )}
-          />
-          <SectionIngredients
-            refElem={refMain}
-            title='Начинки'
-            dataIngredients={dataIngredients.filter(
-              (elem: { type: string }) => elem.type === 'main'
-            )}
-          />
-        </div>
+        {useMemo(
+          () => (
+            <div
+              className={`${styles.wrapper} mb-5`}
+              ref={refSectionIngredients}
+            >
+              <SectionIngredients
+                refElem={refBun}
+                title='Булки'
+                dataIngredients={getIngredient('bun')}
+              />
+              <SectionIngredients
+                refElem={refSause}
+                title='Соусы'
+                dataIngredients={getIngredient('sauce')}
+              />
+              <SectionIngredients
+                refElem={refMain}
+                title='Начинки'
+                dataIngredients={getIngredient('main')}
+              />
+            </div>
+          ),
+          []
+        )}
       </section>
-      {isModalOpen && <ModalWindow />}
     </>
   );
 };
-
-export default BurgerIngredients;

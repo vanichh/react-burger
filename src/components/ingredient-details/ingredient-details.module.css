@@ -12,6 +12,9 @@
     column-gap: 20px;
 }
 
-.details__text {
+.details__wrapper {
     text-align: center;
+}
+.details__text {
+  margin: 5px 0;
 }

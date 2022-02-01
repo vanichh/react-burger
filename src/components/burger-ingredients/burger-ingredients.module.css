@@ -38,6 +38,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: white;
 }
 .ingredients__items:hover {
   cursor: pointer;
@@ -46,4 +47,7 @@
 .ingredients__wrapper {
   display: flex;
   align-items: center;
+}
+.aligin_text {
+  text-align: center;
 }
