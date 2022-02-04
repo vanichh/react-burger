@@ -1,4 +1,6 @@
-import { checkResponse } from 'utils/check-response';
+import { Dispatch } from 'redux';
+import { request, checkResponse } from 'utils/api-methods';
+import { URL_ORDER } from 'utils/url-api';
 import { v4 as uuidv4 } from 'uuid';
 
 export const STATE_MODAL_WINDOWS_ORDER = 'STATE_MODAL_WINDOWS_ORDER';
@@ -39,7 +41,7 @@ export const movingIngridient = (item: any, index: number) => {
   };
 };
 
-export const changeStateElem = (type: 'delete' | 'add', item: any) => {
+export const changeStateElem = (type: 'add' | 'del', item: any) => {
   if (type === 'add') {
     const newItem = { ...item };
     newItem.uuid = uuidv4();
@@ -47,7 +49,7 @@ export const changeStateElem = (type: 'delete' | 'add', item: any) => {
       type: ADD_INGRIDIENT,
       item: newItem,
     };
-  } else if (type === 'delete') {
+  } else if (type === 'del') {
     return {
       type: DELETE_INGRIDIENT,
       item: item,
@@ -56,36 +58,34 @@ export const changeStateElem = (type: 'delete' | 'add', item: any) => {
 };
 
 export const getNumberOrder =
-  (url: string) => async (dispatch: any, getState: any) => {
+  () => async (dispatch: Dispatch, getState: any) => {
     const { burgerConstructor } = getState();
-      try {
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-          },
-          body: JSON.stringify({
-            ingredients: [
-              burgerConstructor.bunConstructor._id,
-              ...burgerConstructor.ingridientsConstructor.map(
-                (elem: { _id: string }) => elem._id
-              ),
-              burgerConstructor.bunConstructor._id,
-            ],
-          }),
-        });
-        const res = await checkResponse(response);
-        if (res.success) {
-          dispatch({
-            type: REQUEST_NUMBER_ORDER,
-            item: res.order,
-          });
-        }
-      } catch (err) {
-        console.log(err);
+
+    const ingredients = [
+      burgerConstructor.bunConstructor._id,
+      ...burgerConstructor.ingridientsConstructor.map(
+        (elem: { _id: string }) => elem._id
+      ),
+      burgerConstructor.bunConstructor._id,
+    ];
+    try {
+      const response = await request({
+        url: URL_ORDER,
+        method: 'POST',
+        body: { ingredients },
+      });
+      const res = await checkResponse(response);
+      if (res.success) {
         dispatch({
           type: REQUEST_NUMBER_ORDER,
-          item: burgerConstructor.order,
+          item: res.order,
         });
       }
+    } catch (err) {
+      console.log(err);
+      dispatch({
+        type: REQUEST_NUMBER_ORDER,
+        item: burgerConstructor.order,
+      });
+    }
   };

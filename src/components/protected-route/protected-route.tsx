@@ -1,14 +1,10 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 
 import { Route, Redirect, RouteProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from 'services/store';
 
-interface IPropsProtectedRoute extends RouteProps {
-  children: ReactNode;
-}
-
-export const ProtectedRoute: FC<IPropsProtectedRoute> = (props) => {
+export const ProtectedRoute: FC<RouteProps> = (props) => {
   const { children, ...rest } = props;
 
   const { isAuth } = useSelector((store: RootState) => store.user);

@@ -12,6 +12,13 @@ import BunBurger from './bun-ingredient-constructor';
 
 const CLASS_NAME_TEXT_CONSTRUCTOR = `${styles.constructor__text_default} text text_type_main-default`;
 
+  // дефолтное состояние без ингридиентов
+  const DefaultIngridient: FC = () => (
+    <p className={CLASS_NAME_TEXT_CONSTRUCTOR}>
+      Пожалуйста, перенесите сюда булку и ингредиенты для создания заказа
+    </p>
+  );
+
 export const ListIngridientBurger: FC = () => {
   const dispatch = useDispatch();
 
@@ -40,15 +47,8 @@ export const ListIngridientBurger: FC = () => {
       : true;
 
   // проверяем наличие булок
-
   const isHaveBun = bunConstructor.length === 0 ? false : true;
-  // дефолтное состояние без ингридиентов
-
-  const DefaultIngridient: React.FC = () => (
-    <p className={CLASS_NAME_TEXT_CONSTRUCTOR}>
-      Пожалуйста, перенесите сюда булку и ингредиенты для создания заказа
-    </p>
-  );
+  
 
   const CLASS_NAME_WRAPPER = `${styles.wrapper} ${
     isHover ? styles.hover_dnd : ''

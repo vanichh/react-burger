@@ -4,11 +4,11 @@ import { Carbohydrate } from './carbohydrate'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'services/store';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { getIngridient } from 'services/actions/ingredients';
 
 
-export const IngredientDetails: React.FC = () => {
+export const IngredientDetails: FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
 

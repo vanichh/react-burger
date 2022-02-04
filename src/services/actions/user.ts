@@ -1,6 +1,20 @@
-import { URL_API } from 'utils/url-api';
-import { setCookie, getCookie, delCookie } from 'utils/cookie';
-import { RequestPOST, RequestGET, RequestPATCH } from 'utils/fetchSettings';
+import { getCookie, delCookie } from 'utils/cookie';
+import {
+  checkResponse,
+  request,
+  setAccessToken,
+  setTokenCookie,
+} from 'utils/api-methods';
+import {
+  API_AUTCH,
+  API_REGISTRATION,
+  API_LOGOUT,
+  API_RESSET_PASSWORD,
+  API_NEW_PASSWORD,
+  API_GET_AND_UPD_USER,
+  API_UPD_TOKEN,
+} from 'utils/url-api';
+import { Dispatch } from 'redux';
 
 export const SET_USER = 'SET_ACCOUNT';
 export const LOGOUT_USER = 'LOGOUT_USER';
@@ -20,32 +34,25 @@ interface InewPassword {
   codeEmail: string;
 }
 
-const URL_API_AUTCH = URL_API + 'auth/login';
-const URL_API_REGISTRATION = URL_API + 'auth/register';
-const URL_API_LOGOUT = URL_API + 'auth/logout';
-const URL_API_RESSET_PASSWORD = URL_API + 'password-reset';
-const URL_API_NEW_PASSWORD = URL_API + 'password-reset/reset';
-const URL_API_GET_AND_UPD_USER = URL_API + 'auth/user';
-const URL_API_UPD_TOKEN = URL_API + 'auth/token';
-
 const updateToken = async () => {
+  
   const refreshToken = localStorage.getItem('refreshToken');
-  const requestBody = {
-    token: refreshToken,
-  };
-  const response = await fetch(URL_API_UPD_TOKEN, RequestPOST(requestBody));
+
+  const response = await request({
+    url: API_UPD_TOKEN,
+    method: 'POST',
+    body: { token: refreshToken },
+  });
   if (response.ok) {
     const res = await response.json();
     if (res.success) {
-      localStorage.setItem('refreshToken', res.refreshToken);
-      setCookie('accessToken', res.accessToken.split('Bearer ')[1], {
-        'max-age': 1200,
-      });
+      setAccessToken(res);
+      setTokenCookie(res);
     }
   }
 };
 
-export const getUser = () => async (dispatch: any) => {
+export const getUser = () => async (dispatch: Dispatch) => {
   // проверяем что ранее не был авторизован пользователь
   if (!getCookie('accessToken')) {
     updateToken();
@@ -54,9 +61,16 @@ export const getUser = () => async (dispatch: any) => {
     return dispatch({ type: ERROR_LODING_USER });
   }
   const token = 'Bearer ' + getCookie('accessToken');
-  const response = await fetch(URL_API_GET_AND_UPD_USER, RequestGET(token));
-  if (response.ok) {
-    const res = await response.json();
+
+  const response = await request({
+    url: API_GET_AND_UPD_USER,
+    method: 'GET',
+    token,
+  });
+
+  const res = await checkResponse(response);
+
+  if (res.success) {
     dispatch({ type: SET_USER, item: res.user });
   } else {
     updateToken();
@@ -64,69 +78,105 @@ export const getUser = () => async (dispatch: any) => {
   }
 };
 
-export const updateUser = (data: any) => async (dispatch: any) => {
-  const response = await fetch(URL_API_GET_AND_UPD_USER, RequestPATCH(data));
-  if (response.ok) {
-    let userInfo = await response.json();
+export const updateUser = (data: any) => async (dispatch: Dispatch) => {
+  const token = 'Bearer ' + getCookie('accessToken');
+
+  const response = await request({
+    url: API_GET_AND_UPD_USER,
+    method: 'PATCH',
+    body: data,
+    token,
+  });
+
+  const userInfo = await checkResponse(response);
+
+  if (userInfo.success) {
     dispatch({ type: SET_USER, item: userInfo.user });
   }
 };
 
-export const authorizationUser = (data: IdataAuth) => async (dispatch: any) => {
-  const response = await fetch(URL_API_AUTCH, RequestPOST(data));
-  if (response.ok) {
-    let userInfo = await response.json();
-    dispatch({ type: SET_USER, item: userInfo.user });
-    localStorage.setItem('refreshToken', userInfo.refreshToken);
-    setCookie('accessToken', userInfo.accessToken.split('Bearer ')[1], {
-      'max-age': 1200,
+export const authorizationUser =
+  (data: IdataAuth) => async (dispatch: Dispatch) => {
+    const response = await request({
+      url: API_AUTCH,
+      method: 'POST',
+      body: data,
     });
-  }
-};
 
-export const registrationUser =
-  (data: IdataRegist) => async (dispatch: any) => {
-    const response = await fetch(URL_API_REGISTRATION, RequestPOST(data));
-    if (response.ok) {
-      let userInfo = await response.json();
+    const userInfo = await checkResponse(response);
+
+    if (userInfo.success) {
       dispatch({ type: SET_USER, item: userInfo.user });
-      localStorage.setItem('refreshToken', userInfo.refreshToken);
-      setCookie('accessToken', userInfo.accessToken.split('Bearer ')[1], {
-        'max-age': 1200,
-      });
+      setAccessToken(userInfo);
+      setTokenCookie(userInfo);
     }
   };
 
-export const logoutUser = () => async (dispatch: any) => {
-  const refreshToken = localStorage.getItem('refreshToken');
-  const token = { token: refreshToken };
+export const registrationUser =
+  (data: IdataRegist) => async (dispatch: Dispatch) => {
+    const response = await request({
+      url: API_REGISTRATION,
+      method: 'POST',
+      body: data,
+    });
 
-  const response = await fetch(URL_API_LOGOUT, RequestPOST(token));
-  if (response.ok) {
+    const userInfo = await checkResponse(response);
+
+    if (userInfo.success) {
+      dispatch({ type: SET_USER, item: userInfo.user });
+      setAccessToken(userInfo);
+      setTokenCookie(userInfo);
+    }
+  };
+
+export const logoutUser = () => async (dispatch: Dispatch) => {
+  const refreshToken = localStorage.getItem('refreshToken');
+
+  const response = await request({
+    url: API_LOGOUT,
+    method: 'POST',
+    body: { token: refreshToken },
+  });
+
+  const userInfo = await checkResponse(response);
+
+  if (userInfo.success) {
     dispatch({ type: LOGOUT_USER });
     localStorage.removeItem('refreshToken');
     delCookie('accessToken');
   }
 };
 
-export const resetPassword = (emali: string) => async (dispatch: any) => {
-  const response = await fetch(URL_API_RESSET_PASSWORD, RequestPOST({ emali }));
-  if (response.ok) {
+export const resetPassword = (emali: string) => async (dispatch: Dispatch) => {
+  const response = await request({
+    url: API_RESSET_PASSWORD,
+    method: 'POST',
+    body: { emali: emali },
+  });
+
+  const res = await checkResponse(response);
+
+  if (res.success) {
     dispatch({ type: RESET_PASSWORD });
   }
 };
 
-export const newPassword = (data: InewPassword) => async (dispatch: any) => {
-  const requestBody = {
-    password: data.password,
-    token: data.codeEmail,
-  };
+export const newPassword =
+  (data: InewPassword) => async (dispatch: Dispatch) => {
+    const requestBody = {
+      password: data.password,
+      token: data.codeEmail,
+    };
 
-  const response = await fetch(
-    URL_API_NEW_PASSWORD,
-    RequestPOST({ ...requestBody })
-  );
-  if (response.ok) {
-    dispatch({ type: NEW_PASSWORD });
-  }
-};
+    const response = await request({
+      url: API_NEW_PASSWORD,
+      method: 'POST',
+      body: requestBody,
+    });
+
+    const res = await checkResponse(response);
+
+    if (res.success) {
+      dispatch({ type: NEW_PASSWORD });
+    }
+  };

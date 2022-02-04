@@ -62,7 +62,7 @@ export const IngredientConstructor: FC<IPropsIngredientConstructor> = memo(({
 
   // удаление ингридиента
   const deleteIngredient = () => {
-    dispatch(changeStateElem('delete', ingredient));
+    dispatch(changeStateElem('del', ingredient));
   };
 
   dragRef(dropRef(ref));
