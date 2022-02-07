@@ -1,6 +1,6 @@
 export const URL_API = 'https://norma.nomoreparties.space/api/';
 
-export const URL_ORDER = URL_API + 'orders';
+export const API_ORDER = URL_API + 'orders';
 export const API_INGREDIENTS = URL_API + 'ingredients';
 export const API_AUTCH = URL_API + 'auth/login';
 export const API_REGISTRATION = URL_API + 'auth/register';

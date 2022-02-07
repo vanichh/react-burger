@@ -20,11 +20,11 @@ interface InitialState {
   isModalOpen: boolean;
   orderSum: number;
   bunConstructor: IDataProps | any;
-  countIngridientsConstructor?:
+  countIngridientsConstructor:
     | {
         [key: string]: number;
-      }
-    | any;
+      } | any
+    ;
 }
 
 const initialState: InitialState = {
@@ -136,3 +136,6 @@ export const constructorReducer = (state = initialState, action: any) => {
     }
   }
 };
+
+
+

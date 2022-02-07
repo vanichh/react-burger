@@ -1,3 +1,5 @@
+// функция для плавного скрола(пропуск срабатываний)
+
 type timerType = ReturnType<typeof setTimeout>
 
 export const throttle = (callee: any, timeout: number) => {

@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { request, checkResponse } from 'utils/api-methods';
-import { URL_ORDER } from 'utils/url-api';
+import { API_ORDER } from 'utils/url-api';
 import { v4 as uuidv4 } from 'uuid';
 
 export const STATE_MODAL_WINDOWS_ORDER = 'STATE_MODAL_WINDOWS_ORDER';
@@ -70,7 +70,7 @@ export const getNumberOrder =
     ];
     try {
       const response = await request({
-        url: URL_ORDER,
+        url: API_ORDER,
         method: 'POST',
         body: { ingredients },
       });

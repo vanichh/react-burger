@@ -8,17 +8,17 @@ import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { RootState } from 'services/store';
 import { IDataProps } from 'utils/types';
-import { useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 const CLASSNAMEDIV = `${styles.ingredients__items} mt-6 ml-4 mb-10 mr-4`;
 
-export const ElemBurgerIngredients: React.FC<IDataProps> = (props) => {
+export const ElemBurgerIngredients: FC<IDataProps> = (props) => {
   let location = useLocation();
   const { _id } = props;
   // счетчик количества добавленного ингридиента
   const current = useSelector(
     (store: RootState) =>
-      store.burgerConstructor.countIngridientsConstructor[props._id]
+      store.burgerConstructor.countIngridientsConstructor[_id]
   );
 
   const [, drag] = useDrag({

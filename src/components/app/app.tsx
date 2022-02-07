@@ -31,9 +31,7 @@ const ModalSwitch: FC = () => {
   const location: { [index: string]: any } = useLocation();
   const background: any = location.state && location.state.background;
 
-  const closeModalWindows = () => {
-    history.goBack();
-  };
+  const closeModalWindows = () => history.goBack();
 
   const ModalWidnows: JSX.Element = useMemo(
     () => (
