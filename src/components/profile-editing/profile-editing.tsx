@@ -53,7 +53,10 @@ export const ProfileEditing = () => {
       ...prev,
       [this]: true,
     }));
-    dispatch(updateUser(value));
+    
+    const newValue = { [this]: value[this] };
+
+    dispatch(updateUser(newValue));
   }
 
   useEffect(() => {

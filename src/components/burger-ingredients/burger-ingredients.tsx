@@ -5,7 +5,7 @@ import styles from './burger-ingredients.module.css';
 import { SectionIngredients } from './';
 import { useSelector } from 'react-redux';
 import { RootState } from 'services/store';
-import typeInfridients from 'utils/types';
+import {IDataProps } from 'utils/types';
 import { throttle } from 'utils/throttle';
 
 type TtypeBun = 'bun' | 'sauce' | 'main';
@@ -13,7 +13,7 @@ type Tref = React.RefObject<HTMLElement>;
 
 export const BurgerIngredients: FC = () => {
   // данные для отрисовки ингридиентов
-  const ingredients: typeInfridients[] = useSelector(
+  const ingredients: IDataProps[] = useSelector(
     (store: RootState) => store.igridients.listIgridients
   );
 

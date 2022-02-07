@@ -1,4 +1,4 @@
-interface DataProps {
+export interface IDataProps {
     _id: string;
     name: string;
     type: 'bun' | 'main' | 'sauce';
@@ -13,5 +13,3 @@ interface DataProps {
     __v: number;
     uuid?: number;
 }
-
-export default DataProps;

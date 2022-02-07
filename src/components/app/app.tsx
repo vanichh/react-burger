@@ -17,7 +17,7 @@ import {
   NotFound404,
 } from 'pages';
 import { useDispatch } from 'react-redux';
-import { useEffect, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { getUser } from 'services/actions/user';
 import { ProtectedRoute } from '../protected-route';
 import { getIngredients } from 'services/actions/ingredients';
@@ -25,15 +25,13 @@ import { IngredientDetails } from '../ingredient-details';
 import { AppHeader } from '../app-header';
 import { Modal } from '../modal';
 
-const ModalSwitch = () => {
+const ModalSwitch: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location: { [index: string]: any } = useLocation();
   const background: any = location.state && location.state.background;
 
-  const closeModalWindows = () => {
-    history.goBack();
-  };
+  const closeModalWindows = () => history.goBack();
 
   const ModalWidnows: JSX.Element = useMemo(
     () => (
@@ -67,7 +65,7 @@ const ModalSwitch = () => {
   );
 };
 
-export const App = () => {
+export const App: FC = () => {
   return (
     <Router>
       <AppHeader />

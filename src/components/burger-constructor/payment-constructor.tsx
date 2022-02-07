@@ -2,16 +2,15 @@ import {
   Button,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getNumberOrder } from 'services/actions/constructor';
 import { RootState } from 'services/store';
 import styles from './burger-constructor.module.css';
-import { URL_API } from 'utils/url-api';
 import { useHistory } from 'react-router-dom';
 
-const URL_REQUEST_ORDER = URL_API + 'orders';
 
-export const PaymentConstructor: React.FC = () => {
+export const PaymentConstructor: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -35,7 +34,7 @@ export const PaymentConstructor: React.FC = () => {
       if (!isAuth) {
         return history.replace({ pathname: '/login' });
       }
-      dispatch(getNumberOrder(URL_REQUEST_ORDER));
+      dispatch(getNumberOrder());
     }
   };
 
@@ -52,4 +51,3 @@ export const PaymentConstructor: React.FC = () => {
   );
 };
 
-export default PaymentConstructor;

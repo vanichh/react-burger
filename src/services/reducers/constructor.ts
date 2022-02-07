@@ -8,10 +8,10 @@ import {
   MOVING_INGRIDIENT_CONSTRUCTOR,
   RESET_STATE_INGRIDIENT,
 } from '../actions/constructor';
-import IdataIgridients from 'utils/types';
+import { IDataProps } from 'utils/types';
 
 interface InitialState {
-  ingridientsConstructor: IdataIgridients[] | [];
+  ingridientsConstructor: IDataProps[] | [];
   order:
     | {
         number: string;
@@ -19,10 +19,12 @@ interface InitialState {
     | {};
   isModalOpen: boolean;
   orderSum: number;
-  bunConstructor: IdataIgridients | any;
-  countIngridientsConstructor?: {
-    [key: string]: number;
-  } | any;
+  bunConstructor: IDataProps | any;
+  countIngridientsConstructor:
+    | {
+        [key: string]: number;
+      } | any
+    ;
 }
 
 const initialState: InitialState = {
@@ -74,7 +76,7 @@ export const constructorReducer = (state = initialState, action: any) => {
         ...state,
         ingridientsConstructor: [
           ...state.ingridientsConstructor.filter(
-            elem => elem.uuid !== action.item.uuid
+            (elem) => elem.uuid !== action.item.uuid
           ),
         ],
         orderSum: state.orderSum - action.item.price,
@@ -134,3 +136,6 @@ export const constructorReducer = (state = initialState, action: any) => {
     }
   }
 };
+
+
+

@@ -1,23 +1,21 @@
 import styles from './burger-constructor.module.css';
+import { FC } from 'React';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import DataProps from '../../utils/types';
+import { IDataProps } from '../../utils/types';
 
-interface PropsBunBurger {
-  ingredientsBun: DataProps;
+interface IPropsBunBurger {
+  ingredientsBun: IDataProps;
   type: 'top' | 'bottom';
 }
 
-export const BunBurger = ({ ingredientsBun, type }: PropsBunBurger): JSX.Element => {
-
+export const BunBurger: FC<IPropsBunBurger> = ({ ingredientsBun, type }) => {
   const CLASSNAME_BUN: string = `
     ${styles.constructor__wrapper}
     ${styles.constructor__wrapper_align}
     ${type === 'top' ? 'mb-4' : 'mt-4'} ml-4 mr-6 
     `;
   return (
-    <div
-      className={CLASSNAME_BUN}
-    >
+    <div className={CLASSNAME_BUN}>
       <ConstructorElement
         type={type}
         handleClose={() => false}

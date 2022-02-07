@@ -1,18 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-const modalElement = document.getElementById('modal-root') as HTMLElement;
 
-interface PropsModal {
-  children: React.ReactNode;
+const modalElement = document.getElementById('modal-root') as HTMLDivElement;
+
+interface IPropsModal {
+  children: ReactNode;
   title?: string;
-  closeModalWindows: (arg0?: any) => void;
+  closeModalWindows: (_?: any) => void;
 }
 
-export const Modal = (props: PropsModal): JSX.Element => {
+export const Modal: FC<IPropsModal> = (props) => {
   const { children, title, closeModalWindows } = props;
 
   const closeWindowsToPress = ({ key }: KeyboardEvent) => {

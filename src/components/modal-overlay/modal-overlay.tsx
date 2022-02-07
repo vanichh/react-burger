@@ -1,11 +1,11 @@
 import styles from './modal-overlay.module.css';
-import { SyntheticEvent } from 'react';
+import { FC, ReactNode, SyntheticEvent } from 'react';
 interface PropsModalOverlay {
-  children: React.ReactNode;
+  children: ReactNode;
   closeModalWindows?: (args?: false) => void;
 }
 
-const ModalOverlay: React.FC<PropsModalOverlay> = (props) => {
+const ModalOverlay: FC<PropsModalOverlay> = (props) => {
   
   const { children, closeModalWindows } = props;
 

@@ -1,8 +1,8 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import styles from './wrapper.module.css';
 
 interface IWrapper {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
 }
 
