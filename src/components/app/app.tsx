@@ -15,6 +15,7 @@ import {
   ProfilePage,
   IngredientPage,
   NotFound404,
+  FeedPage,
 } from 'pages';
 import { useDispatch } from 'react-redux';
 import { FC, useEffect, useMemo } from 'react';
@@ -52,6 +53,7 @@ const ModalSwitch: FC = () => {
     <>
       <Switch location={background || location}>
         <Route path='/' exact component={HomePage} />
+        <Route path='/feed' exact component={FeedPage} />
         <Route path='/ingredients/:id' exact component={IngredientPage} />
         <ProtectedRoute path='/profile' children={<ProfilePage />} />
         <Route path='/login' component={LoginPage} />

@@ -2,30 +2,27 @@ import {
   Button,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { FC } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { FC } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'services/types';
 import { getNumberOrder } from 'services/actions/constructor';
-import { RootState } from 'services/store';
 import styles from './burger-constructor.module.css';
 import { useHistory } from 'react-router-dom';
-
 
 export const PaymentConstructor: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const orderSum = useSelector(
-    (store: RootState) => store.burgerConstructor.orderSum
-  );
+  const orderSum = useSelector((store) => store.burgerConstructor.orderSum);
 
-  const { isAuth } = useSelector((store: RootState) => store.user);
+  const { isAuth } = useSelector((store) => store.user);
 
   const { bunConstructor, ingridientsConstructor } = useSelector(
-    (store: RootState) => store.burgerConstructor
+    (store) => store.burgerConstructor
   );
 
   const isThereIngridients =
-    bunConstructor.length === 0 && ingridientsConstructor.length === 0
+    bunConstructor.length === 0 || ingridientsConstructor.length === 0
       ? false
       : true;
 
@@ -50,4 +47,3 @@ export const PaymentConstructor: FC = () => {
     </div>
   );
 };
-

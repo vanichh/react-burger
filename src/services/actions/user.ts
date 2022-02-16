@@ -1,4 +1,5 @@
 import { getCookie, delCookie } from 'utils/cookie';
+import { TThunks } from '../types/';
 import {
   checkResponse,
   request,
@@ -14,14 +15,14 @@ import {
   API_GET_AND_UPD_USER,
   API_UPD_TOKEN,
 } from 'utils/url-api';
-import { Dispatch } from 'redux';
 
-export const SET_USER = 'SET_ACCOUNT';
-export const LOGOUT_USER = 'LOGOUT_USER';
-export const RESET_PASSWORD = 'RESET_PASSWORD';
-export const NEW_PASSWORD = 'NEW_PASSWORD';
-export const UPDATE_USER = 'UPDATE_USER';
-export const ERROR_LODING_USER = 'ERROR_LODING_USER';
+import {
+  SET_USER,
+  LOGOUT_USER,
+  RESET_PASSWORD,
+  NEW_PASSWORD,
+  ERROR_LODING_USER,
+} from 'services/constants';
 interface IdataAuth {
   email: string;
   password: string;
@@ -34,14 +35,11 @@ interface InewPassword {
   codeEmail: string;
 }
 
-const updateToken = async () => {
-  
-  const refreshToken = localStorage.getItem('refreshToken');
-
+const updateToken = async (token: string) => {
   const response = await request({
     url: API_UPD_TOKEN,
     method: 'POST',
-    body: { token: refreshToken },
+    body: { token: token },
   });
   if (response.ok) {
     const res = await response.json();
@@ -52,14 +50,18 @@ const updateToken = async () => {
   }
 };
 
-export const getUser = () => async (dispatch: Dispatch) => {
-  // проверяем что ранее не был авторизован пользователь
-  if (!getCookie('accessToken')) {
-    updateToken();
-  }
-  if (!localStorage.getItem('refreshToken')) {
+export const getUser:TThunks = () => async (dispatch) => {
+  const refreshToken = localStorage.getItem('refreshToken');
+
+  if (!refreshToken) {
     return dispatch({ type: ERROR_LODING_USER });
   }
+
+  // проверяем что ранее не был авторизован пользователь
+  if (!getCookie('accessToken')) {
+    updateToken(refreshToken);
+  }
+
   const token = 'Bearer ' + getCookie('accessToken');
 
   const response = await request({
@@ -73,12 +75,18 @@ export const getUser = () => async (dispatch: Dispatch) => {
   if (res.success) {
     dispatch({ type: SET_USER, item: res.user });
   } else {
-    updateToken();
+    updateToken(refreshToken);
     getUser();
   }
 };
 
-export const updateUser = (data: any) => async (dispatch: Dispatch) => {
+interface IUpdateUser {
+  password?: string;
+  name?: string;
+  email?: string;
+}
+
+export const updateUser: TThunks<IUpdateUser> = (data) => async (dispatch) => {
   const token = 'Bearer ' + getCookie('accessToken');
 
   const response = await request({
@@ -95,8 +103,8 @@ export const updateUser = (data: any) => async (dispatch: Dispatch) => {
   }
 };
 
-export const authorizationUser =
-  (data: IdataAuth) => async (dispatch: Dispatch) => {
+export const authorizationUser: TThunks<IdataAuth> =
+  (data) => async (dispatch) => {
     const response = await request({
       url: API_AUTCH,
       method: 'POST',
@@ -112,8 +120,8 @@ export const authorizationUser =
     }
   };
 
-export const registrationUser =
-  (data: IdataRegist) => async (dispatch: Dispatch) => {
+export const registrationUser: TThunks<IdataRegist> =
+  (data) => async (dispatch) => {
     const response = await request({
       url: API_REGISTRATION,
       method: 'POST',
@@ -129,7 +137,7 @@ export const registrationUser =
     }
   };
 
-export const logoutUser = () => async (dispatch: Dispatch) => {
+export const logoutUser: TThunks = () => async (dispatch) => {
   const refreshToken = localStorage.getItem('refreshToken');
 
   const response = await request({
@@ -147,7 +155,7 @@ export const logoutUser = () => async (dispatch: Dispatch) => {
   }
 };
 
-export const resetPassword = (emali: string) => async (dispatch: Dispatch) => {
+export const resetPassword: TThunks<string> = (emali) => async (dispatch) => {
   const response = await request({
     url: API_RESSET_PASSWORD,
     method: 'POST',
@@ -161,8 +169,8 @@ export const resetPassword = (emali: string) => async (dispatch: Dispatch) => {
   }
 };
 
-export const newPassword =
-  (data: InewPassword) => async (dispatch: Dispatch) => {
+export const newPassword: TThunks<InewPassword> =
+  (data: InewPassword) => async (dispatch) => {
     const requestBody = {
       password: data.password,
       token: data.codeEmail,

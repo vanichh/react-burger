@@ -1,12 +1,12 @@
-import { FC } from 'React';
+import { FC, RefObject } from 'React';
 import styles from './burger-ingredients.module.css';
 import { ElemBurgerIngredients } from './';
-import { IDataProps } from '../../utils/types';
+import { IDataProps } from 'utils/types';
 
 interface IPropsSectionIngredients {
   title: string;
   dataIngredients: IDataProps[];
-  refElem: React.RefObject<HTMLElement>;
+  refElem: RefObject<HTMLElement>;
 }
 
 const CLASSNAME_TITLE = 'text text_type_main-medium mb-4';

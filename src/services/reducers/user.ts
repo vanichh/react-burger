@@ -5,7 +5,7 @@ import {
   NEW_PASSWORD,
   UPDATE_USER,
   ERROR_LODING_USER,
-} from 'services/actions/user';
+} from 'services/constants';
 
 interface IinitialState {
   isAuth: boolean | null;
@@ -71,7 +71,7 @@ export const userReducer = (state = initialState, action: any) => {
       };
     }
     default: {
-      return state;
+      return  state ;
     }
   }
 };

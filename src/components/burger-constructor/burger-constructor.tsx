@@ -3,8 +3,8 @@ import styles from './burger-constructor.module.css';
 import { FC, useMemo } from 'react';
 import { Modal } from '../modal';
 import { OrderDetails } from '../order-details';
-import { RootState } from 'services/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'services/types'
 import { ListIngridientBurger } from './list-ingredients-constructor';
 import { isModalWindowsOrder } from 'services/actions/constructor';
 import { PaymentConstructor } from './payment-constructor';
@@ -12,7 +12,7 @@ import { PaymentConstructor } from './payment-constructor';
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const { isModalOpen, order } = useSelector(
-    (store: RootState) => store.burgerConstructor
+    (store) => store.burgerConstructor
   );
 
   const isModalWindows = () => dispatch(isModalWindowsOrder());

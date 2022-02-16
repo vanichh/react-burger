@@ -1,35 +1,30 @@
-import { FC, ChangeEvent } from 'React';
+import { FC } from 'React';
 
 import {
   Button,
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { FormEvent, useState } from 'react';
+import { FormEvent } from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import styles from './page.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'services/types'
 import { authorizationUser } from 'services/actions/user';
-import { RootState } from 'services/store';
 import { Wrapper } from 'components/wrapper';
 import { Form } from 'components/form';
-
-type TEvent = ChangeEvent<HTMLInputElement>;
+import { useInputValue } from 'utils/custom-hooks';
 
 export const LoginPage: FC = () => {
-  const dispatch = useDispatch();
-  const { state }: any = useLocation();
-
-  const { isAuth } = useSelector((store: RootState) => store.user);
-
-  const [value, setValue] = useState({
+  const { handleValueInput, value } = useInputValue({
     email: '',
     password: '',
   });
 
-  const handleValueInput = ({ target }: TEvent) => {
-    setValue((prev) => ({ ...prev, [target.name]: target.value }));
-  };
+  const dispatch = useDispatch();
+  const { state }: any = useLocation();
+
+  const { isAuth } = useSelector((store) => store.user);
 
   const hendlerRequestLogin = (e: FormEvent) => {
     e.preventDefault();
@@ -51,7 +46,6 @@ export const LoginPage: FC = () => {
             value={value.email}
             name={'email'}
             error={false}
-            onIconClick={() => false}
             errorText={'Ошибка'}
             size={'default'}
           />

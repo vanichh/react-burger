@@ -4,21 +4,20 @@ import {
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'services/types/';
 import { useDrag } from 'react-dnd';
-import { RootState } from 'services/store';
 import { IDataProps } from 'utils/types';
 import { FC, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-const CLASSNAMEDIV = `${styles.ingredients__items} mt-6 ml-4 mb-10 mr-4`;
+
+const CLASS_NAME_DIV = `${styles.ingredients__items} mt-6 ml-4 mb-10 mr-4`;
 
 export const ElemBurgerIngredients: FC<IDataProps> = (props) => {
   let location = useLocation();
   const { _id } = props;
   // счетчик количества добавленного ингридиента
   const current = useSelector(
-    (store: RootState) =>
-      store.burgerConstructor.countIngridientsConstructor[_id]
+    (store) => store.burgerConstructor.countIngridientsConstructor[_id]
   );
 
   const [, drag] = useDrag({
@@ -36,7 +35,7 @@ export const ElemBurgerIngredients: FC<IDataProps> = (props) => {
           pathname: `/ingredients/${_id}`,
           state: { background: location },
         }}
-        className={CLASSNAMEDIV}
+        className={CLASS_NAME_DIV}
       >
         {current ? <Counter count={current} size='default' /> : null}
         <img
@@ -57,6 +56,3 @@ export const ElemBurgerIngredients: FC<IDataProps> = (props) => {
     [current]
   );
 };
-
-
-

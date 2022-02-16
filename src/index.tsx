@@ -2,15 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { App } from './components/app/app';
-import reportWebVitals from './reportWebVitals';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { rootReducer, composeEnhancers } from './services/store';
-import thunk from 'redux-thunk';
+import { initStore } from 'services/store'
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
-
-const store = createStore(rootReducer, enhancer);
+const store = initStore();
 
 ReactDOM.render(
   <React.StrictMode>
@@ -21,4 +16,3 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-reportWebVitals();

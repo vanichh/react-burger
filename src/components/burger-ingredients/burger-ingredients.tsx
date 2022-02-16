@@ -3,8 +3,7 @@ import { useState, useRef, useEffect, FC, useMemo } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import { SectionIngredients } from './';
-import { useSelector } from 'react-redux';
-import { RootState } from 'services/store';
+import { useSelector } from 'services/types/';
 import {IDataProps } from 'utils/types';
 import { throttle } from 'utils/throttle';
 
@@ -14,7 +13,7 @@ type Tref = React.RefObject<HTMLElement>;
 export const BurgerIngredients: FC = () => {
   // данные для отрисовки ингридиентов
   const ingredients: IDataProps[] = useSelector(
-    (store: RootState) => store.igridients.listIgridients
+    (store) => store.igridients.listIgridients
   );
 
   // переключение табов

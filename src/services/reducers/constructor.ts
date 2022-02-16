@@ -7,24 +7,16 @@ import {
   ADD_BUN_CONSTRUCTOR,
   MOVING_INGRIDIENT_CONSTRUCTOR,
   RESET_STATE_INGRIDIENT,
-} from '../actions/constructor';
+} from 'services/constants';
 import { IDataProps } from 'utils/types';
 
 interface InitialState {
   ingridientsConstructor: IDataProps[] | [];
-  order:
-    | {
-        number: string;
-      }
-    | {};
+  order: { number: string } | {};
   isModalOpen: boolean;
   orderSum: number;
-  bunConstructor: IDataProps | any;
-  countIngridientsConstructor:
-    | {
-        [key: string]: number;
-      } | any
-    ;
+  bunConstructor: IDataProps[] | any;
+  countIngridientsConstructor: { [key: string]: number } | any;
 }
 
 const initialState: InitialState = {
@@ -136,6 +128,3 @@ export const constructorReducer = (state = initialState, action: any) => {
     }
   }
 };
-
-
-

@@ -1,30 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styles from './ingredient-details.module.css';
-import { Carbohydrate } from './carbohydrate'
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'services/store';
+import { Carbohydrate } from './carbohydrate';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'services/types';
 import { useParams } from 'react-router-dom';
 import { FC, useEffect } from 'react';
 import { getIngridient } from 'services/actions/ingredients';
-
 
 export const IngredientDetails: FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
 
-  const { isLoadingIngredientDetails, isLoding } =
-    useSelector((state: RootState) => state.igridients);
-
-  const { ingredientDetails } = useSelector(
-    (state: RootState) => state.igridients
+  const { isLoadingIngredientDetails, isLoding } = useSelector(
+    (state) => state.igridients
   );
+
+  const { ingredientDetails } = useSelector((state) => state.igridients);
 
   useEffect(() => {
     if (isLoding) {
       dispatch(getIngridient(id));
     }
   }, [isLoding]);
-
 
   return (
     <>

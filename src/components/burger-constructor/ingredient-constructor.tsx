@@ -6,7 +6,7 @@ import {
   changeStateElem,
   movingIngridient,
 } from 'services/actions/constructor';
-import iconIngreidient from '../../images/burger-ingredients/icon-ingridients.png';
+import iconIngreidient from 'images/burger-ingredients/icon-ingridients.png';
 import styles from './burger-constructor.module.css';
 import { IDataProps } from 'utils/types';
 

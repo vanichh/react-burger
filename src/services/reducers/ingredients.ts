@@ -1,12 +1,12 @@
 import {
-  STATE_MODAL_WINDOWS_INGRIDIENTS,
+  STATE_MODAL_WINDOWS,
   ERROR_REQUEST_INGRIDIENT_BURGER,
   REQUEST_INGRIDIENT_BURGER,
   DELETE_DATA_MODAL,
   SET_INGRIDIENT_MODAL,
   SET_INGRIDIENT,
   NO_INGRIDIENT,
-} from 'services/actions/ingredients';
+} from 'services/constants';
 import { IDataProps } from 'utils/types';
 
 interface IinitialState {
@@ -77,7 +77,7 @@ export const igridientsReducer = (state = initialState, action: any) => {
         ...state,
       };
     }
-    case STATE_MODAL_WINDOWS_INGRIDIENTS: {
+    case STATE_MODAL_WINDOWS: {
       return {
         ...state,
         isModalOpenIngridients: action.state,

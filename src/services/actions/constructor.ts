@@ -1,18 +1,16 @@
-import { Dispatch } from 'redux';
+import {
+  ADD_INGRIDIENT,
+  DELETE_INGRIDIENT,
+  MOVING_INGRIDIENT_CONSTRUCTOR,
+  REQUEST_NUMBER_ORDER,
+  RESET_STATE_INGRIDIENT,
+  STATE_MODAL_WINDOWS_ORDER,
+} from 'services/constants';
 import { request, checkResponse } from 'utils/api-methods';
 import { API_ORDER } from 'utils/url-api';
 import { v4 as uuidv4 } from 'uuid';
-
-export const STATE_MODAL_WINDOWS_ORDER = 'STATE_MODAL_WINDOWS_ORDER';
-export const REQUEST_NUMBER_ORDER = 'REQUEST_NUMBER_OREDER';
-export const SET_INGRIDIENT_CONSTRUCTOR = 'SET_INGRIDIENT_CONSTRUCTOR';
-export const PLUS_ORDER_SUM = 'PLUS_ORDER_SUM';
-export const MINUS_ORDER_SUM = 'MINUS_ORDER_SUM';
-export const ADD_INGRIDIENT = 'ADD_INGRIDIENT';
-export const DELETE_INGRIDIENT = 'DELETE_INGRIDIENT';
-export const RESET_STATE_INGRIDIENT = 'RESET_STATE_INGRIDIENT';
-export const ADD_BUN_CONSTRUCTOR = 'ADD_BUN_CONSTRUCTOR';
-export const MOVING_INGRIDIENT_CONSTRUCTOR = 'MOVING_INGRIDIENT_CONSTRUCTOR';
+import { IDataProps } from 'utils/types';
+import { TThunks } from '../types/';
 
 export const isModalWindowsOrder = (state: boolean = false) => {
   if (state) {
@@ -41,7 +39,7 @@ export const movingIngridient = (item: any, index: number) => {
   };
 };
 
-export const changeStateElem = (type: 'add' | 'del', item: any) => {
+export const changeStateElem = (type: 'add' | 'del', item: IDataProps) => {
   if (type === 'add') {
     const newItem = { ...item };
     newItem.uuid = uuidv4();
@@ -57,35 +55,34 @@ export const changeStateElem = (type: 'add' | 'del', item: any) => {
   }
 };
 
-export const getNumberOrder =
-  () => async (dispatch: Dispatch, getState: any) => {
-    const { burgerConstructor } = getState();
+export const getNumberOrder: TThunks = () => async (dispatch, getState) => {
+  const { burgerConstructor } = getState();
 
-    const ingredients = [
-      burgerConstructor.bunConstructor._id,
-      ...burgerConstructor.ingridientsConstructor.map(
-        (elem: { _id: string }) => elem._id
-      ),
-      burgerConstructor.bunConstructor._id,
-    ];
-    try {
-      const response = await request({
-        url: API_ORDER,
-        method: 'POST',
-        body: { ingredients },
-      });
-      const res = await checkResponse(response);
-      if (res.success) {
-        dispatch({
-          type: REQUEST_NUMBER_ORDER,
-          item: res.order,
-        });
-      }
-    } catch (err) {
-      console.log(err);
+  const ingredients = [
+    burgerConstructor.bunConstructor._id,
+    ...burgerConstructor.ingridientsConstructor.map(
+      (elem: { _id: string }) => elem._id
+    ),
+    burgerConstructor.bunConstructor._id,
+  ];
+  try {
+    const response = await request({
+      url: API_ORDER,
+      method: 'POST',
+      body: { ingredients },
+    });
+    const res = await checkResponse(response);
+    if (res.success) {
       dispatch({
         type: REQUEST_NUMBER_ORDER,
-        item: burgerConstructor.order,
+        item: res.order,
       });
     }
-  };
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: REQUEST_NUMBER_ORDER,
+      item: burgerConstructor.order,
+    });
+  }
+};

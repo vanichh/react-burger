@@ -1,17 +1,16 @@
-import { useSelector } from 'react-redux';
-import { RootState } from 'services/store';
+import { FC } from 'react';
+import { useSelector } from 'services/types/';
 
-export const ErrorRequest: React.FC = () => {
-  const textError = useSelector(
-    (store: RootState) => store.igridients.errorRequestText
-  );
+export const ErrorRequest: FC = () => {
+  const textError = useSelector((store) => store.igridients.errorRequestText);
   return (
     <div
       style={{
         flexDirection: 'column',
         display: 'flex',
         alignItems: 'center',
-      }}>
+      }}
+    >
       <p className='text text_type_main-medium mt-10 mb-10'>
         Произошла ошибка космического маштаба
       </p>
@@ -24,4 +23,3 @@ export const ErrorRequest: React.FC = () => {
     </div>
   );
 };
-
