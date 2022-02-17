@@ -1,7 +1,7 @@
-const { REACT_APP_KEY_API } = process.env;
+const { REACT_APP_KEY_API, REACT_APP_KEY_WSS } = process.env;
 
 const API = 'https://' + REACT_APP_KEY_API;
-export const WS = 'wss://' + REACT_APP_KEY_API;
+export const WS = 'wss://' + REACT_APP_KEY_WSS;
 
 export const API_ORDER = API + 'orders';
 export const API_INGREDIENTS = API + 'ingredients';

@@ -15,3 +15,12 @@
   max-width: 320px;
   width: 100%;
 }
+
+.container {
+  display: grid;
+  grid-template-columns: 600px 600px;
+  justify-items: center;
+  align-items: start;
+  width: fit-content;
+  margin: 0 auto;
+}

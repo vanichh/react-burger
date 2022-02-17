@@ -1,10 +1,7 @@
-import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
-import { constructorReducer } from './reducers/constructor';
-import { igridientsReducer } from './reducers/ingredients';
-import { userReducer } from './reducers/user';
+import { applyMiddleware, createStore, compose } from 'redux';
+import { rootReducer } from './reducers';
 import thunkMiddleware from 'redux-thunk';
 import { socketMiddleware } from './middleware/socket-middleware';
-import { WS } from 'utils/url-api';
 import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
@@ -13,26 +10,18 @@ import {
   WS_GET_ORDERS,
 } from './constants';
 
-export const composeEnhancers =
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-export const rootReducer = combineReducers({
-  igridients: igridientsReducer,
-  burgerConstructor: constructorReducer,
-  user: userReducer,
-});
-
 const wsActions = {
-  wsInit: WS_CONNECTION_START,
-  onOpen: WS_CONNECTION_SUCCESS,
-  onClose: WS_CONNECTION_CLOSED,
-  onError: WS_CONNECTION_ERROR,
-  onMessage: WS_GET_ORDERS,
+  init: WS_CONNECTION_START,
+  open: WS_CONNECTION_SUCCESS,
+  close: WS_CONNECTION_CLOSED,
+  error: WS_CONNECTION_ERROR,
+  getOrders: WS_GET_ORDERS,
 };
 
 export const initStore = (initialState = {}) =>
   createStore(
     rootReducer,
     initialState,
-    compose(applyMiddleware(thunkMiddleware, socketMiddleware(WS, wsActions)))
+    compose(applyMiddleware(thunkMiddleware, socketMiddleware(wsActions)))
   );
+

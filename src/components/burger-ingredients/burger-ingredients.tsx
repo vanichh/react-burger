@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useRef, useEffect, FC, useMemo } from 'react';
+import { useState, useRef, useEffect, FC, useMemo, RefObject } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import { SectionIngredients } from './';
-import { useSelector } from 'services/types/';
-import {IDataProps } from 'utils/types';
+import { useSelector } from 'services/types';
+import { IDataProps } from 'utils/types';
 import { throttle } from 'utils/throttle';
 
 type TtypeBun = 'bun' | 'sauce' | 'main';
-type Tref = React.RefObject<HTMLElement>;
+type TtoggleTab = (ref: RefObject<HTMLElement>, TtypeBun: TtypeBun) => void;
 
 export const BurgerIngredients: FC = () => {
   // данные для отрисовки ингридиентов
@@ -24,7 +24,7 @@ export const BurgerIngredients: FC = () => {
   const refMain = useRef<HTMLElement>(null);
   const refSectionIngredients = useRef<HTMLDivElement>(null);
 
-  const toggleTab = (ref: Tref, bun: TtypeBun) => {
+  const toggleTab: TtoggleTab = (ref, bun) => {
     setCurrent(bun);
     ref.current.scrollIntoView({ behavior: 'smooth' });
   };

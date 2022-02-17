@@ -1,3 +1,4 @@
+import { IOrders } from 'utils/types';
 import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
@@ -7,15 +8,19 @@ import {
 
 interface IinitialState {
   wsConnected: boolean;
-  messages: any[];
+  ordersList: IOrders[];
+  total: number;
+  totalToday: number;
 }
 
 const initialState: IinitialState = {
   wsConnected: false,
-  messages: [],
+  ordersList: [],
+  total: 0,
+  totalToday: 0,
 };
 
-export const userReducer = (state = initialState, action: any) => {
+export const wsOredersReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS: {
       return {
@@ -38,7 +43,9 @@ export const userReducer = (state = initialState, action: any) => {
     case WS_GET_ORDERS: {
       return {
         ...state,
-        messages: [...action.messages, ...action.payload],
+        ordersList: [...action.payload.orders],
+        total: action.payload.total,
+        totalToday: action.payload.totalToday,
       };
     }
     default: {

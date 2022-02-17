@@ -13,3 +13,14 @@ export interface IDataProps {
   __v: number;
   uuid?: string;
 }
+
+export interface IOrders {
+  createdAt: string;
+  ingredients: string[];
+  name: string;
+  number: number;
+  status: string
+  updatedAt: string;
+  _id: string;
+
+}

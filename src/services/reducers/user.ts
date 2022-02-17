@@ -14,6 +14,7 @@ interface IinitialState {
   email: string;
   passwordReset: boolean;
   successNewPassword: boolean;
+  orders: any[];
 }
 
 const initialState: IinitialState = {
@@ -23,6 +24,7 @@ const initialState: IinitialState = {
   email: '',
   passwordReset: false,
   successNewPassword: false,
+  orders: [],
 };
 
 export const userReducer = (state = initialState, action: any) => {
@@ -71,7 +73,7 @@ export const userReducer = (state = initialState, action: any) => {
       };
     }
     default: {
-      return  state ;
+      return state;
     }
   }
 };
