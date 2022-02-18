@@ -23,10 +23,10 @@ export const FeedPage: FC = () => {
   return (
     <>
       <main className={styles.container}>
+        <h2 className={`text text_type_main-large mt-10 mb-5 ${styles.title}`}>
+          Лента заказов
+        </h2>
         <section>
-          <h2 className='text text_type_main-large mt-10 mb-5'>
-            Лента заказов
-          </h2>
           <div>
             {ordersList.map((item) => (
               <OrderItemList {...item} key={item._id} />

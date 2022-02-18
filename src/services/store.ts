@@ -18,10 +18,13 @@ const wsActions = {
   getOrders: WS_GET_ORDERS,
 };
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 export const initStore = (initialState = {}) =>
   createStore(
     rootReducer,
     initialState,
-    compose(applyMiddleware(thunkMiddleware, socketMiddleware(wsActions)))
+    composeEnhancers(
+      applyMiddleware(thunkMiddleware, socketMiddleware(wsActions))
+    )
   );
-

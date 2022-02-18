@@ -18,7 +18,7 @@ export const socketMiddleware =
     }
     if (socket) {
       socket.addEventListener('open', (e: Event) => {
-        console.log(e);
+        // console.log(e);
         dispatch({ type: open, payload: e });
       });
 

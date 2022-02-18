@@ -9,16 +9,18 @@ export const InfoAllOrders: FC = () => {
     <section>
       <div className={styles.wrapper}>
         <div>
-          <p>Готовы</p>
+          <p className='text text_type_main-medium'>Готовы:</p>
         </div>
         <div>
-          <p>В работе</p>
+          <p className='text text_type_main-medium'>В работе:</p>
         </div>
       </div>
-      <p className='mt-6'>Выполненно за все время</p>
-      <h3>{totalToday}</h3>
-      <p>Выполненно за сегодня</p>
-      <h3>{total}</h3>
+      <p className='mt-6 text text_type_main-medium'>Выполненно за все время</p>
+      <p className={`text text_type_digits-large ${styles.number}`}>
+        {totalToday}
+      </p>
+      <p className='text text_type_main-medium mt-15'>Выполненно за сегодня</p>
+      <p className={`text text_type_digits-large ${styles.number}`}>{total}</p>
     </section>
   );
 };
