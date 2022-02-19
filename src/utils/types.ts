@@ -19,8 +19,7 @@ export interface IOrders {
   ingredients: string[];
   name: string;
   number: number;
-  status: string
+  status: 'status' | string;
   updatedAt: string;
   _id: string;
-
 }

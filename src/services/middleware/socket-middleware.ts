@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux';
 import { RootState } from 'services/types';
+import { IOrders } from 'utils/types';
 import { WS_GET_ORDERS } from 'utils/url-api';
 
 export const socketMiddleware =
@@ -8,10 +9,9 @@ export const socketMiddleware =
   (next: (arg0: { type: any }) => void) =>
   (action: { type: any }) => {
     let socket: WebSocket | null = null;
-    const { dispatch, getState } = store;
+    const { dispatch } = store;
     const { type } = action;
     const { init, open, close, error, getOrders } = wsActions;
-    const { isAuth } = getState().user;
 
     if (type === init) {
       socket = new WebSocket(WS_GET_ORDERS);
@@ -23,9 +23,9 @@ export const socketMiddleware =
       });
 
       socket.addEventListener('message', ({ data }: MessageEvent) => {
-        const item = JSON.parse(data);
-        if (item.success) {
-          dispatch({ type: getOrders, payload: item });
+        const response = JSON.parse(data);
+        if (response.success) {
+          dispatch({ type: getOrders, payload: response });
         } else {
           socket.close(1011);
         }

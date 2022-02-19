@@ -2,37 +2,31 @@
 import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'services/types';
-import { IOrders } from 'utils/types';
-import { closeWSOrders, startWSOrders } from 'services/actions';
-import { OrderItemList } from 'components/order-item-list';
+import { startWSOrders } from 'services/actions';
+import { OrderList } from 'components/order-list';
 import { InfoAllOrders } from 'components/info-all-orders';
 import styles from './page.module.css';
 
 export const FeedPage: FC = () => {
   const dispatch = useDispatch();
-  const { isLoding } = useSelector((store) => store.igridients);
-  const { ordersList } = useSelector((store) => store.wsOrders);
+  const { isLoding } = useSelector(store => store.igridients);
+  
   useEffect(() => {
     if (isLoding) {
       dispatch(startWSOrders());
     }
   }, [isLoding]);
 
-  console.log(ordersList);
-
+  if (!isLoding) {
+    return null;
+  }
   return (
     <>
       <main className={styles.container}>
-        <h2 className={`text text_type_main-large mt-10 mb-5 ${styles.title}`}>
+        <h2 className={`text text_type_main-large mt-10 mb-5 ml-7 ${styles.title}`}>
           Лента заказов
         </h2>
-        <section>
-          <div>
-            {ordersList.map((item) => (
-              <OrderItemList {...item} key={item._id} />
-            ))}
-          </div>
-        </section>
+        <OrderList />
         <InfoAllOrders />
       </main>
     </>

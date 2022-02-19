@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import styles from './page.module.css';
 import { FC } from 'React';
 import { useSelector } from 'services/types';
@@ -9,12 +8,10 @@ import { BurgerIngredients } from 'components/burger-ingredients';
 import { BurgerConstructor } from 'components/burger-constructor';
 
 export const HomePage: FC = () => {
-  const isLoding: boolean = useSelector((store) => store.igridients.isLoding);
-  const IsError: boolean = useSelector(
-    (store) => store.igridients.errorRequest
-  );
+  
+  const { isLoding, errorRequest } = useSelector(store => store.igridients);
 
-  if (IsError) {
+  if (errorRequest) {
     return <ErrorComponent />;
   }
   return (

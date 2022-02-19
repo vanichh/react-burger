@@ -11,6 +11,8 @@ interface IinitialState {
   ordersList: IOrders[];
   total: number;
   totalToday: number;
+  readyOrders: number[];
+  inWorkOrders: number[];
 }
 
 const initialState: IinitialState = {
@@ -18,6 +20,8 @@ const initialState: IinitialState = {
   ordersList: [],
   total: 0,
   totalToday: 0,
+  readyOrders: [],
+  inWorkOrders: [],
 };
 
 export const wsOredersReducer = (state = initialState, action: any) => {
@@ -46,6 +50,11 @@ export const wsOredersReducer = (state = initialState, action: any) => {
         ordersList: [...action.payload.orders],
         total: action.payload.total,
         totalToday: action.payload.totalToday,
+        readyOrders: [
+          ...action.payload.orders
+            .filter(({ status }: { status: string }) => status === 'done')
+            .map(({ number }: { number: number }) => number),
+        ],
       };
     }
     default: {
