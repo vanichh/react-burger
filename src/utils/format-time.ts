@@ -17,11 +17,13 @@ export const formatTime = (time: string): string => {
       stringData += `${differenceday} дней назад `;
     }
   }
-  const hourAndMinute = Intl.DateTimeFormat('ru', { timeStyle: 'short' }).format(date);
+  const hourAndMinute = Intl.DateTimeFormat('ru', {
+    timeStyle: 'short',
+  }).format(date);
   stringData += hourAndMinute;
-  
-  const timeZpne = ' I-GTM' + Math.floor(date.getTimezoneOffset() / 60);
+
+  const timeZpne = ` I-GTM${Math.floor(date.getTimezoneOffset() / 60)}`;
   stringData += timeZpne;
-  
+
   return stringData;
 };

@@ -1,0 +1,9 @@
+.footer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.price {
+  margin-left: auto;
+}

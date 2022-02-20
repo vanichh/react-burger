@@ -4,7 +4,6 @@ import {
   Switch,
   Route,
   useLocation,
-  useHistory,
 } from 'react-router-dom';
 import {
   HomePage,
@@ -18,30 +17,17 @@ import {
   FeedPage,
 } from 'pages';
 import { useDispatch } from 'react-redux';
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useEffect } from 'react';
 import { getUser } from 'services/actions/user';
 import { ProtectedRoute } from '../protected-route';
 import { getIngredients } from 'services/actions/ingredients';
-import { IngredientDetails } from '../ingredient-details';
 import { AppHeader } from '../app-header';
-import { Modal } from '../modal';
+import { ModalIngredients, ModalOrder } from './modals';
 
 const ModalSwitch: FC = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const location: { [index: string]: any } = useLocation();
   const background: any = location.state && location.state.background;
-
-  const closeModalWindows = () => history.goBack();
-
-  const ModalWidnows: JSX.Element = useMemo(
-    () => (
-      <Modal title='Детали ингредиента' closeModalWindows={closeModalWindows}>
-        <IngredientDetails />
-      </Modal>
-    ),
-    [IngredientDetails]
-  );
 
   useEffect(() => {
     // запрашиваем пользователя и ингриденты
@@ -62,7 +48,12 @@ const ModalSwitch: FC = () => {
         <Route path='/reset-password' exact component={ResetPassword} />
         <Route component={NotFound404} />
       </Switch>
-      {background && <Route path='/ingredients/:id' children={ModalWidnows} />}
+      {background && (
+        <>
+          <Route path='/ingredients/:id' component={ModalIngredients} />
+          <Route path='/feed/:id' component={ModalOrder} />
+        </>
+      )}
     </>
   );
 };

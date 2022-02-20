@@ -2,7 +2,7 @@
 import styles from './burger-constructor.module.css';
 import { FC, useMemo } from 'react';
 import { Modal } from '../modal';
-import { OrderDetails } from '../order-details';
+import { OrderDetails } from 'components/modals';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'services/types'
 import { ListIngridientBurger } from './list-ingredients-constructor';

@@ -8,7 +8,7 @@ export const OrderList = () => {
   return (
     <section className={`${styles.list} pr-2`}>
       {ordersList.map(item => (
-        <OrderItem {...item} key={item._id} />
+        <OrderItem {...item} key={item._id} id={item._id} />
       ))}
     </section>
   );

@@ -24,6 +24,7 @@ export const socketMiddleware =
 
       socket.addEventListener('message', ({ data }: MessageEvent) => {
         const response = JSON.parse(data);
+        console.log(response)
         if (response.success) {
           dispatch({ type: getOrders, payload: response });
         } else {
