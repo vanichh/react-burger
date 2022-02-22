@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styles from './order-list.module.css';
-import { formatTime } from 'utils/format-time'
+import { formatTime } from 'utils/format-time';
 
 import { ListImgIgridients } from './list-img-Igridients';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -21,16 +21,16 @@ interface IOrderItemList {
 const CLASS_NAME_TIME = `text text_type_main-small text_color_inactive ${styles.time}`;
 const CLASS_NAME_PRICE = `${styles.price} text text_type_digits-default mr-3`;
 
-export const OrderItem: FC<IOrderItemList> = props => {
+export const OrderItem: FC<IOrderItemList> = (props) => {
   const location = useLocation();
 
   const { createdAt, ingredients, name, number, id } = props;
 
   const { listIgridients }: { listIgridients: IDataProps[] } = useSelector(
-    store => store.igridients
+    (store) => store.igridients
   );
 
-  const newIngredients = ingredients.filter(number => number);
+  const newIngredients = ingredients.filter((number) => number);
 
   const price = newIngredients.reduce(
     (sum, id) => (sum += listIgridients.find(({ _id }) => _id === id).price),
@@ -45,14 +45,18 @@ export const OrderItem: FC<IOrderItemList> = props => {
         pathname: `${location.pathname}/${id}`,
         state: { background: location },
       }}
-      className={`p-6 ${styles.container}`}>
+      className={`p-6 ${styles.container}`}
+    >
       <header className={styles.title}>
         <p className='text text_type_digits-default'>{`#${number}`}</p>
         <p className={CLASS_NAME_TIME}>{data}</p>
       </header>
       <h3 className='text text_type_main-medium mt-6'>{name}</h3>
       <div className={styles.wrapperList}>
-        <ListImgIgridients ArrIdIngredients={newIngredients} />
+        <ListImgIgridients
+          ArrIdIngredients={newIngredients}
+          listIgridients={listIgridients}
+        />
         <p className={CLASS_NAME_PRICE}>{price}</p>
         <CurrencyIcon type='primary' />
       </div>
