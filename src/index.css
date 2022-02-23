@@ -1,11 +1,15 @@
+
+
 body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
 }
+
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
+
 .activ-link {
-    color: white !important;
+  color: white !important;
 }

@@ -7,3 +7,66 @@
 .price {
   margin-left: auto;
 }
+
+.container {
+  position: relative;
+  max-width: 480px;
+  width: 100%;
+}
+
+.title {
+  text-align: center;
+}
+
+.number-order {
+  position: absolute;
+  top: -28px;
+  left: 0;
+}
+
+.success-order {
+  color: var(--colors-interface-success);
+}
+
+.list {
+  list-style-type: none;
+  padding-inline-start: 0;
+  overflow-y: auto;
+  max-height: 265px;
+}
+
+.list::-webkit-scrollbar {
+  width: 8px;
+  background-color: #2f2f37;
+  border-radius: 0;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+  border-radius: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.item__icon-wrapper {
+  height: 64px;
+  width: 64px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: linear-gradient(#1c1c21, #1c1c21) padding-box,
+    linear-gradient(to right, #801AB2, #4C4CFF) border-box;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.item__count {
+  margin-left: auto;
+  flex-shrink: 0;
+}
