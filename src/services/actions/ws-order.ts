@@ -1,11 +1,11 @@
-import { WS_CONNECTION_START } from 'services/constants';
-import { TThunks } from 'services/types';
+import {
+  WS_CONNECTION_START_ORDERS_ALL,
+  WS_CONNECTION_START_ORDERS_USER,
+} from 'services/constants';
 
-export const startWSOrders = () => {
-  return { type: WS_CONNECTION_START };
+export const startWSOrdersAll = () => {
+  return { type: WS_CONNECTION_START_ORDERS_ALL };
 };
-
-export const closeWSOrders: TThunks = () => async (dispatch, getState) => {
-  const { socket } = getState().wsOrders;
-  socket.close(1000, 'работа закончена');
+export const startWSOrdersUser = () => {
+  return { type: WS_CONNECTION_START_ORDERS_USER };
 };

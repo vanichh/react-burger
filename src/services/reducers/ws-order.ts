@@ -52,6 +52,7 @@ export const wsOredersReducer = (state = initialState, action: any) => {
       return {
         ...state,
         wsConnected: false,
+        socket: null,
       };
     }
     case WS_GET_ORDERS: {

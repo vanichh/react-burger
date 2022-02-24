@@ -3,21 +3,15 @@ import { rootReducer } from './reducers';
 import thunkMiddleware from 'redux-thunk';
 import { socketMiddleware } from './middleware/socket-middleware';
 import {
-  WS_CONNECTION_CLOSED,
-  WS_CONNECTION_ERROR,
-  WS_CONNECTION_START,
-  WS_CONNECTION_SUCCESS,
-  WS_GET_ORDERS,
-  WS_SET_SOKET
+  WS_CONNECTION_START_ORDERS_ALL,
+  WS_SET_SOKET,
+  WS_CONNECTION_START_ORDERS_USER,
 } from './constants';
 
 const wsActions = {
-  init: WS_CONNECTION_START,
-  open: WS_CONNECTION_SUCCESS,
-  close: WS_CONNECTION_CLOSED,
-  error: WS_CONNECTION_ERROR,
-  getOrders: WS_GET_ORDERS,
-  setSocet: WS_SET_SOKET
+  initOrdersAll: WS_CONNECTION_START_ORDERS_ALL,
+  initOrdersUser: WS_CONNECTION_START_ORDERS_USER,
+  setSocet: WS_SET_SOKET,
 };
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { ProfileEditing } from 'components/profile-editing';
+import { ProfileOrders } from 'components/profile-orders';
 import { useDispatch } from 'react-redux';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { logoutUser } from 'services/actions/user';
@@ -12,7 +13,7 @@ export const ProfilePage: FC = () => {
   const dispatch = useDispatch();
 
   return (
-    <Wrapper>
+    <Wrapper style={{ alignItems: 'start' }}>
       <div className={`${styles.menu_link} mr-10`}>
         <NavLink
           exact={true}
@@ -45,6 +46,7 @@ export const ProfilePage: FC = () => {
       </div>
       <Switch>
         <Route path='/profile' exact component={ProfileEditing} />
+        <Route path='/profile/orders' exact component={ProfileOrders} />
       </Switch>
     </Wrapper>
   );

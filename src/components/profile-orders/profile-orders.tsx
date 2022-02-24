@@ -1,20 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useSelector } from 'services/types';
-import { startWSOrdersAll } from 'services/actions';
+import styles from './profile-orders.module.css';
 import { OrderList } from 'components/order-list';
-import { InfoAllOrders } from 'components/info-all-orders';
-import styles from './page.module.css';
+import { useDispatch } from 'react-redux';
+import { startWSOrdersUser } from 'services/actions';
 
-export const FeedPage: FC = () => {
+export const ProfileOrders: FC = () => {
+  console.log(1)
   const dispatch = useDispatch();
   const { isLoding } = useSelector((store) => store.igridients);
   const { socket } = useSelector((store) => store.wsOrders);
 
   useEffect(() => {
     if (isLoding) {
-      dispatch(startWSOrdersAll());
+      dispatch(startWSOrdersUser());
     }
     return () => {
       if (socket) {
@@ -26,19 +26,5 @@ export const FeedPage: FC = () => {
   if (!isLoding) {
     return null;
   }
-  return (
-    <>
-      <main className={styles.container}>
-        <h2
-          className={`text text_type_main-large mt-10 mb-5 ml-7 ${styles.title}`}
-        >
-          Лента заказов
-        </h2>
-        <OrderList />
-        <InfoAllOrders />
-      </main>
-    </>
-  );
+  return <OrderList />;
 };
-
-
