@@ -11,10 +11,11 @@ export const socketMiddleware =
     let socket: WebSocket | null = null;
     const { dispatch } = store;
     const { type } = action;
-    const { init, open, close, error, getOrders } = wsActions;
+    const { init, open, close, error, getOrders, setSocet } = wsActions;
 
     if (type === init) {
       socket = new WebSocket(WS_GET_ORDERS);
+      dispatch({ type: setSocet, payload: socket });
     }
     if (socket) {
       socket.addEventListener('open', (e: Event) => {
@@ -24,7 +25,7 @@ export const socketMiddleware =
 
       socket.addEventListener('message', ({ data }: MessageEvent) => {
         const response = JSON.parse(data);
-        console.log(response)
+        console.log(response);
         if (response.success) {
           dispatch({ type: getOrders, payload: response });
         } else {
@@ -37,13 +38,10 @@ export const socketMiddleware =
       //   dispatch({ type: error, payload: event });
       // };
 
-      // socket.onclose = (event) => {
-      //   dispatch({ type: close, payload: event });
-      // };
-
-      // if (type === close) {
-      //   socket.close(1000, 'работа закончена');
-      // }
+      socket.addEventListener('close', (event) => {
+        dispatch({ type: close, payload: event });
+      });
     }
+
     next(action);
   };

@@ -4,6 +4,7 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_ORDERS,
+  WS_SET_SOKET,
 } from 'services/constants';
 
 interface IinitialState {
@@ -13,6 +14,7 @@ interface IinitialState {
   totalToday: number;
   readyOrders: number[];
   inWorkOrders: number[];
+  socket: WebSocket | null;
 }
 
 const initialState: IinitialState = {
@@ -22,10 +24,18 @@ const initialState: IinitialState = {
   totalToday: 0,
   readyOrders: [],
   inWorkOrders: [],
+  socket: null,
 };
 
 export const wsOredersReducer = (state = initialState, action: any) => {
   switch (action.type) {
+    case WS_SET_SOKET: {
+      return {
+        ...state,
+        socket: action.payload,
+      };
+    }
+
     case WS_CONNECTION_SUCCESS: {
       return {
         ...state,

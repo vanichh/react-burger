@@ -8,6 +8,7 @@ import {
   WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
   WS_GET_ORDERS,
+  WS_SET_SOKET
 } from './constants';
 
 const wsActions = {
@@ -16,6 +17,7 @@ const wsActions = {
   close: WS_CONNECTION_CLOSED,
   error: WS_CONNECTION_ERROR,
   getOrders: WS_GET_ORDERS,
+  setSocet: WS_SET_SOKET
 };
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
