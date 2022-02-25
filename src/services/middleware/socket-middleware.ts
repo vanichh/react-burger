@@ -19,9 +19,8 @@ export const socketMiddleware =
       dispatch({ type: setSocet, payload: socket });
     }
     if (type === initOrdersUser) {
-      socket = new WebSocket(
-        `${WS_GET_ORDERS}?token=${getCookie('accessToken')}`
-      );
+      const TOKEN = getCookie('accessToken');
+      socket = new WebSocket(`${WS_GET_ORDERS}?token=${TOKEN}`);
       dispatch({ type: setSocet, payload: socket });
     }
 

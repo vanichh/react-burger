@@ -10,12 +10,14 @@ import { ListIngridients } from './list-ingridients';
 
 const CLASS_NAME_TIME = `text text_type_main-small text_color_inactive`;
 const CLASS_NAME_PRICE = `${styles.price} text text_type_digits-default mr-3`;
+const CLASS_NAME_STATUS = `text text_type_main-default mt-3 ${styles['success-order']}`;
+const CLASS_NAME_NUMBER = `text text_type_digits-default ${styles['number-order']}`;
 
 let statusOrder = '';
 export const OrdeInfo: FC = () => {
   const { id }: { id: string } = useParams();
   const { name, number, status, createdAt, ingredients } = useSelector(
-    store => store.wsOrders.ordersList
+    (store) => store.wsOrders.ordersList
   ).find(({ _id }) => _id === id);
 
   switch (status) {
@@ -24,7 +26,7 @@ export const OrdeInfo: FC = () => {
     }
   }
   const { listIgridients }: { listIgridients: IDataProps[] } = useSelector(
-    store => store.igridients
+    (store) => store.igridients
   );
 
   const price = ingredients.reduce(
@@ -46,18 +48,11 @@ export const OrdeInfo: FC = () => {
 
   return (
     <div className={styles.container}>
-      <p className={`text text_type_digits-default ${styles['number-order']}`}>
-        #{number}
-      </p>
       <header>
-        <h3 className={`text text_type_main-medium mt-6 ${styles.title}`}>
-          {name}
-        </h3>
+        <p className={CLASS_NAME_NUMBER}>#{number}</p>
+        <h3 className='text text_type_main-medium mt-6'>{name}</h3>
+        <p className={CLASS_NAME_STATUS}>{statusOrder}</p>
       </header>
-      <p
-        className={`text text_type_main-default mt-3 ${styles['success-order']}`}>
-        {statusOrder}
-      </p>
       <p className='text text_type_main-medium mt-15'>Состав:</p>
       <div>
         <ListIngridients

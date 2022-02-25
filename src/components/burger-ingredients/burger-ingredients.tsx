@@ -4,27 +4,24 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import { SectionIngredients } from './';
 import { useSelector } from 'services/types';
-import { IDataProps } from 'utils/types';
 import { throttle } from 'utils/throttle';
 
-type TtypeBun = 'bun' | 'sauce' | 'main';
-type TtoggleTab = (ref: RefObject<HTMLElement>, TtypeBun: TtypeBun) => void;
+type TTypeBun = 'bun' | 'sauce' | 'main';
+type TToggleTab = (ref: RefObject<HTMLElement>, TtypeBun: TTypeBun) => void;
 
 export const BurgerIngredients: FC = () => {
   // данные для отрисовки ингридиентов
-  const ingredients: IDataProps[] = useSelector(
-    (store) => store.igridients.listIgridients
-  );
+  const { listIgridients } = useSelector((store) => store.igridients);
 
   // переключение табов
-  const [current, setCurrent] = useState<TtypeBun>('bun');
+  const [current, setCurrent] = useState<TTypeBun>('bun');
 
   const refBun = useRef<HTMLElement>(null);
   const refSause = useRef<HTMLElement>(null);
   const refMain = useRef<HTMLElement>(null);
   const refSectionIngredients = useRef<HTMLDivElement>(null);
 
-  const toggleTab: TtoggleTab = (ref, bun) => {
+  const toggleTab: TToggleTab = (ref, bun) => {
     setCurrent(bun);
     ref.current.scrollIntoView({ behavior: 'smooth' });
   };
@@ -41,8 +38,8 @@ export const BurgerIngredients: FC = () => {
       setCurrent('main');
     }
   };
-  const getIngredient = (typeBun: TtypeBun) => {
-    return ingredients.filter(({ type }) => type === typeBun);
+  const getIngredient = (typeBun: TTypeBun) => {
+    return listIgridients.filter(({ type }) => type === typeBun);
   };
 
   useEffect(() => {

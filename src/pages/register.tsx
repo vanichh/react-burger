@@ -4,7 +4,7 @@ import {
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { FormEvent } from 'react';
+import { FC, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { registrationUser } from 'services/actions/user';
@@ -13,7 +13,7 @@ import { Form } from 'components/form';
 import { useInputValue } from 'utils/custom-hooks';
 
 
-export const RegisterPage = () => {
+export const RegisterPage:FC = () => {
   const dispatch = useDispatch();
 
   const { handleValueInput, value } = useInputValue({

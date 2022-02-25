@@ -1,18 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { FC, useEffect } from 'react';
+import { Wrapper } from 'components/wrapper';
 import { useSelector } from 'services/types';
-import { OrderList } from 'components/order-list';
+import { startWSOrdersAll } from 'services/actions';
 import { useDispatch } from 'react-redux';
-import { startWSOrdersUser } from 'services/actions';
+import { OrdeInfo } from 'components/order-info';
 
-export const ProfileOrders: FC = () => {
+export const OrderPage: FC = () => {
   const dispatch = useDispatch();
   const { isLoding } = useSelector((store) => store.igridients);
-  const { socket } = useSelector((store) => store.wsOrders);
+  const { socket, ordersList } = useSelector((store) => store.wsOrders);
 
   useEffect(() => {
     if (isLoding) {
-      dispatch(startWSOrdersUser());
+      dispatch(startWSOrdersAll());
     }
     return () => {
       if (socket) {
@@ -21,8 +22,13 @@ export const ProfileOrders: FC = () => {
     };
   }, [isLoding]);
 
-  if (!isLoding) {
+  if (ordersList.length === 0) {
     return null;
   }
-  return <OrderList />;
+
+  return (
+    <Wrapper>
+      <OrdeInfo />
+    </Wrapper>
+  );
 };

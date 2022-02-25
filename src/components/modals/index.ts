@@ -1,2 +1,3 @@
-export { OrderDetails } from './order-details';
-export { OrdeInfo } from './order-info';
+export { ModalOrder }  from './modal-order'
+export { ModalIngredients } from './modal-Ingredients'
+export { ModalOrderDetails } from './modal-order-details'

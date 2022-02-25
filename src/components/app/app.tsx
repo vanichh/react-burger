@@ -15,6 +15,7 @@ import {
   IngredientPage,
   NotFound404,
   FeedPage,
+  OrderPage
 } from 'pages';
 import { useDispatch } from 'react-redux';
 import { FC, useEffect } from 'react';
@@ -22,7 +23,7 @@ import { getUser } from 'services/actions/user';
 import { ProtectedRoute } from '../protected-route';
 import { getIngredients } from 'services/actions/ingredients';
 import { AppHeader } from '../app-header';
-import { ModalIngredients, ModalOrder } from './modals';
+import { ModalIngredients, ModalOrder } from 'components/modals';
 
 const ModalSwitch: FC = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,8 @@ const ModalSwitch: FC = () => {
         <Route path='/register' exact component={RegisterPage} />
         <Route path='/forgot-password' exact component={ForgotPasswordPage} />
         <Route path='/reset-password' exact component={ResetPassword} />
+        <Route path='/feed/:id' exact component={OrderPage} />
+        <Route path='/profile/orders/:id' exact component={OrderPage} />
         <Route component={NotFound404} />
       </Switch>
       {background && (

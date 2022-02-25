@@ -7,3 +7,4 @@ export { ProfilePage } from './profile';
 export { IngredientPage } from './ingredients';
 export { NotFound404 } from './not-found-404'
 export { FeedPage } from './feed'
+export { OrderPage } from './order'

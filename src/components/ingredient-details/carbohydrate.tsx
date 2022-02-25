@@ -3,7 +3,7 @@ import styles from './ingredient-details.module.css';
 
 interface IPropsCarbohydrate {
   name: string;
-  count: string;
+  count: number;
 }
 
 const CLASS_NAME_TEXT = `${styles.details__wrapper} text text_type_main-default text_color_inactive`;

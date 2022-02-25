@@ -18,7 +18,7 @@ export const soketOrdersAll = (
 
   socket.addEventListener('message', ({ data }: MessageEvent) => {
     const response = JSON.parse(data);
-    console.log(response);
+    console.log(response)
     if (response.success) {
       dispatch({ type: WS_GET_ORDERS, payload: response });
     } else {

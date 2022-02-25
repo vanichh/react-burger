@@ -1,8 +1,9 @@
+import { FC } from 'react';
 import { useSelector } from 'services/types';
 import { OrderItem } from './order-item';
 import styles from './order-list.module.css';
 
-export const OrderList = () => {
+export const OrderList: FC = () => {
   const { ordersList } = useSelector(store => store.wsOrders);
   
   return (

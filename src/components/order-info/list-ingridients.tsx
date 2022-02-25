@@ -31,7 +31,7 @@ export const ListIngridients: FC<IListIngridients> = props => {
             className={`${styles.item__count} mr-4 text text_type_digits-default`}>
             {count} x {price}
           </p>
-          <CurrencyIcon type='primary' />
+          <div className={styles.icon}><CurrencyIcon type='primary' /></div>
         </li>
       ))}
     </ol>

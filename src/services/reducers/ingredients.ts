@@ -8,10 +8,11 @@ import {
   NO_INGRIDIENT,
 } from 'services/constants';
 import { IDataProps } from 'utils/types';
+import { TIngridientActions } from 'services/types/actions';
 
 interface IinitialState {
   listIgridients: IDataProps[];
-  ingredientDetails: IDataProps | {};
+  ingredientDetails: IDataProps;
   isLoadingIngredientDetails: boolean;
   NoSerchIngredientDetails: boolean;
   isLoding: boolean;
@@ -22,7 +23,7 @@ interface IinitialState {
 
 const initialState: IinitialState = {
   listIgridients: [],
-  ingredientDetails: [],
+  ingredientDetails: {} as IDataProps,
   isLoadingIngredientDetails: false,
   NoSerchIngredientDetails: false,
   isLoding: false,
@@ -31,7 +32,7 @@ const initialState: IinitialState = {
   errorRequestText: '',
 };
 
-export const igridientsReducer = (state = initialState, action: any) => {
+export const igridientsReducer = (state = initialState, action: TIngridientActions) => {
   switch (action.type) {
     case REQUEST_INGRIDIENT_BURGER: {
       return {

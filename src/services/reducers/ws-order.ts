@@ -1,4 +1,5 @@
 import { IOrders } from 'utils/types';
+import { TWSActions } from 'services/types/actions';
 import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
@@ -27,7 +28,7 @@ const initialState: IinitialState = {
   socket: null,
 };
 
-export const wsOredersReducer = (state = initialState, action: any) => {
+export const wsOredersReducer = (state = initialState, action: TWSActions) => {
   switch (action.type) {
     case WS_SET_SOKET: {
       return {

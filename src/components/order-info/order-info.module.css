@@ -14,13 +14,10 @@
   width: 100%;
 }
 
-.title {
-  text-align: center;
-}
 
 .number-order {
   position: absolute;
-  top: -28px;
+  top: -25px;
   left: 0;
 }
 
@@ -69,4 +66,7 @@
 .item__count {
   margin-left: auto;
   flex-shrink: 0;
+}
+.icon {
+flex-shrink: 0;
 }

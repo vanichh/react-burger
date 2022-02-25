@@ -21,7 +21,6 @@ export const formatTime = (time: string): string => {
     timeStyle: 'short',
   }).format(date);
   stringData += hourAndMinute;
-
   const timeZpne = ` I-GTM${Math.floor(date.getTimezoneOffset() / 60)}`;
   stringData += timeZpne;
 
