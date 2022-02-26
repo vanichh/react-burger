@@ -9,10 +9,11 @@ import {
   RESET_STATE_INGRIDIENT,
 } from 'services/constants';
 import { IDataProps } from 'utils/types';
+import { TConstructorActions  } from 'services/types/actions'
 
 interface InitialState {
   ingridientsConstructor: IDataProps[] | [];
-  order: { number: string } | {};
+  order: { number: string } | any;
   isModalOpen: boolean;
   orderSum: number;
   bunConstructor: IDataProps[] | any;
@@ -28,7 +29,10 @@ const initialState: InitialState = {
   countIngridientsConstructor: {},
 };
 
-export const constructorReducer = (state = initialState, action: any) => {
+export const constructorReducer = (
+  state = initialState,
+  action: TConstructorActions
+) => {
   switch (action.type) {
     case SET_INGRIDIENT_CONSTRUCTOR: {
       return {
@@ -68,7 +72,7 @@ export const constructorReducer = (state = initialState, action: any) => {
         ...state,
         ingridientsConstructor: [
           ...state.ingridientsConstructor.filter(
-            (elem) => elem.uuid !== action.item.uuid
+            elem => elem.uuid !== action.item.uuid
           ),
         ],
         orderSum: state.orderSum - action.item.price,

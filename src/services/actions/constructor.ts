@@ -55,15 +55,15 @@ export const changeStateElem = (type: 'add' | 'del', item: IDataProps) => {
   }
 };
 
-export const getNumberOrder: TThunks = () => async (dispatch, getState) => {
-  const { burgerConstructor } = getState();
+export const getNumberOrder: TThunks = () => async (dispatch, getState ) => {
+  const state = getState();
+  const { bunConstructor, ingridientsConstructor, order } =
+    state.burgerConstructor;
 
   const ingredients = [
-    burgerConstructor.bunConstructor._id,
-    ...burgerConstructor.ingridientsConstructor.map(
-      (elem: { _id: string }) => elem._id
-    ),
-    burgerConstructor.bunConstructor._id,
+    bunConstructor._id,
+    ...ingridientsConstructor.map((elem: { _id: string }) => elem._id),
+    bunConstructor._id,
   ];
   try {
     const response = await request({
@@ -82,7 +82,7 @@ export const getNumberOrder: TThunks = () => async (dispatch, getState) => {
     console.log(err);
     dispatch({
       type: REQUEST_NUMBER_ORDER,
-      item: burgerConstructor.order,
+      item: order,
     });
   }
 };
