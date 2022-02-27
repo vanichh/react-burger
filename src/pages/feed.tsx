@@ -9,6 +9,8 @@ import { closeWS } from 'services/actions/';
 import { Loading } from 'components/loading';
 import styles from './page.module.css';
 
+const CLASS_NAME_TITLE = `text text_type_main-large mt-10 mb-5 ml-7 ${styles.title}`;
+
 export const FeedPage: FC = () => {
   const dispatch = useDispatch();
   const { isLoding } = useSelector(store => store.igridients);
@@ -28,10 +30,7 @@ export const FeedPage: FC = () => {
   return (
     <>
       <main className={styles.container}>
-        <h2
-          className={`text text_type_main-large mt-10 mb-5 ml-7 ${styles.title}`}>
-          Лента заказов
-        </h2>
+        <h2 className={CLASS_NAME_TITLE}>Лента заказов</h2>
         <OrderList />
         <InfoAllOrders />
       </main>

@@ -55,7 +55,7 @@ const ModalSwitch: FC = () => {
         <>
           <Route path='/ingredients/:id' component={ModalIngredients} />
           <Route path='/feed/:id' component={ModalOrder} />
-          <ProtectedRoute path='/profile/orders/:id' component={ModalOrder} />
+          <Route path='/profile/orders/:id' component={ModalOrder} />
         </>
       )}
     </>

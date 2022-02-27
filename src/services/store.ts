@@ -12,7 +12,17 @@ import {
   WS_GET_ORDERS,
 } from './constants';
 
-const wsActions = {
+export interface IWSActions {
+  initOrdersAll: typeof WS_CONNECTION_START_ORDERS_ALL;
+  initOrdersUser: typeof WS_CONNECTION_START_ORDERS_USER;
+  setSocet: typeof WS_SET_SOKET;
+  close: typeof WS_CONNECTION_CLOSED;
+  connectError: typeof WS_CONNECTION_ERROR;
+  connectSuccess: typeof WS_CONNECTION_SUCCESS;
+  getOrders: typeof WS_GET_ORDERS;
+}
+
+const wsActions: IWSActions = {
   initOrdersAll: WS_CONNECTION_START_ORDERS_ALL,
   initOrdersUser: WS_CONNECTION_START_ORDERS_USER,
   setSocet: WS_SET_SOKET,
@@ -21,6 +31,8 @@ const wsActions = {
   connectSuccess: WS_CONNECTION_SUCCESS,
   getOrders: WS_GET_ORDERS,
 };
+
+export type TWSActions = { [key in keyof IWSActions]: IWSActions[key] };
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

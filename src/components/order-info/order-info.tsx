@@ -3,7 +3,6 @@ import { FC } from 'react';
 import { useSelector } from 'services/types';
 import { useParams } from 'react-router-dom';
 import { formatTime } from 'utils/format-time';
-import { IDataProps } from 'utils/types';
 import styles from './order-info.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ListIngridients } from './list-ingridients';
@@ -14,30 +13,37 @@ const CLASS_NAME_STATUS = `text text_type_main-default mt-3 ${styles['success-or
 const CLASS_NAME_NUMBER = `text text_type_digits-default ${styles['number-order']}`;
 
 let statusOrder = '';
+
 export const OrdeInfo: FC = () => {
-  const { id }: { id: string } = useParams();
+  const { id } = useParams<{ id: string }>();
   const { name, number, status, createdAt, ingredients } = useSelector(
-    (store) => store.wsOrders.ordersList
+    store => store.wsOrders.ordersList
   ).find(({ _id }) => _id === id);
 
   switch (status) {
     case 'done': {
       statusOrder = 'Выполнен';
+      break;
+    }
+    case 'pending': {
+      statusOrder = 'Ожидает';
+      break;
+    }
+    case 'created': {
+      statusOrder = 'Создан';
+      break;
     }
   }
-  const { listIgridients }: { listIgridients: IDataProps[] } = useSelector(
-    (store) => store.igridients
-  );
+  const { listIgridients } = useSelector(store => store.igridients);
 
   const price = ingredients.reduce(
-    (sum: number, id: string) =>
-      (sum += listIgridients.find(({ _id }) => _id === id).price),
+    (sum, id) => (sum += listIgridients.find(({ _id }) => _id === id).price),
     0
   );
 
-  const ingridientsOrder: [string, number][] = Object.entries(
+  const ingridientsOrder = Object.entries(
     ingredients.reduce(
-      (acum: { [key: string]: number }, id: string) => (
+      (acum: { [key: string]: number }, id) => (
         (acum[id] = (acum[id] || 0) + 1), acum
       ),
       {}
