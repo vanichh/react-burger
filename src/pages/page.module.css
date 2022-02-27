@@ -12,11 +12,6 @@
   flex-direction: column;
 }
 
-.menu_link {
-  max-width: 320px;
-  width: 100%;
-}
-
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr;

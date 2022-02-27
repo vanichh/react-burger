@@ -35,7 +35,7 @@ export const isModalWindowsIngridient = (state: boolean) => {
   };
 };
 
-export const getIngridient: TThunks<string> = (id) => (dispatch, getState) => {
+export const getIngridient: TThunks = (id) => (dispatch, getState) => {
   const { listIgridients } = getState().igridients;
   
   const igridient = listIgridients.find(

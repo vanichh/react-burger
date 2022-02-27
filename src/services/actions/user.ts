@@ -86,7 +86,7 @@ interface IUpdateUser {
   email?: string;
 }
 
-export const updateUser: TThunks<IUpdateUser> = (data) => async (dispatch) => {
+export const updateUser: TThunks = (data: IUpdateUser) => async dispatch => {
   const token = 'Bearer ' + getCookie('accessToken');
 
   const response = await request({
@@ -103,39 +103,37 @@ export const updateUser: TThunks<IUpdateUser> = (data) => async (dispatch) => {
   }
 };
 
-export const authorizationUser: TThunks<IdataAuth> =
-  (data) => async (dispatch) => {
-    const response = await request({
-      url: API_AUTCH,
-      method: 'POST',
-      body: data,
-    });
+export const authorizationUser: TThunks = (data: IdataAuth) => async dispatch => {
+  const response = await request({
+    url: API_AUTCH,
+    method: 'POST',
+    body: data,
+  });
 
-    const userInfo = await checkResponse(response);
+  const userInfo = await checkResponse(response);
 
-    if (userInfo.success) {
-      dispatch({ type: SET_USER, item: userInfo.user });
-      setAccessToken(userInfo);
-      setTokenCookie(userInfo);
-    }
-  };
+  if (userInfo.success) {
+    dispatch({ type: SET_USER, item: userInfo.user });
+    setAccessToken(userInfo);
+    setTokenCookie(userInfo);
+  }
+};
 
-export const registrationUser: TThunks<IdataRegist> =
-  (data) => async (dispatch) => {
-    const response = await request({
-      url: API_REGISTRATION,
-      method: 'POST',
-      body: data,
-    });
+export const registrationUser: TThunks = (data: IdataRegist) => async dispatch => {
+  const response = await request({
+    url: API_REGISTRATION,
+    method: 'POST',
+    body: data,
+  });
 
-    const userInfo = await checkResponse(response);
+  const userInfo = await checkResponse(response);
 
-    if (userInfo.success) {
-      dispatch({ type: SET_USER, item: userInfo.user });
-      setAccessToken(userInfo);
-      setTokenCookie(userInfo);
-    }
-  };
+  if (userInfo.success) {
+    dispatch({ type: SET_USER, item: userInfo.user });
+    setAccessToken(userInfo);
+    setTokenCookie(userInfo);
+  }
+};
 
 export const logoutUser: TThunks = () => async (dispatch) => {
   const refreshToken = localStorage.getItem('refreshToken');
@@ -155,7 +153,7 @@ export const logoutUser: TThunks = () => async (dispatch) => {
   }
 };
 
-export const resetPassword: TThunks<string> = (emali) => async (dispatch) => {
+export const resetPassword: TThunks = (emali: string) => async dispatch => {
   const response = await request({
     url: API_RESSET_PASSWORD,
     method: 'POST',
@@ -169,7 +167,7 @@ export const resetPassword: TThunks<string> = (emali) => async (dispatch) => {
   }
 };
 
-export const newPassword: TThunks<InewPassword> =
+export const newPassword: TThunks =
   (data: InewPassword) => async (dispatch) => {
     const requestBody = {
       password: data.password,

@@ -7,7 +7,7 @@ import {
 import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import styles from './page.module.css';
 import { FormEvent, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from 'services/types';
 import { useSelector } from 'services/types';
 import { resetPassword } from 'services/actions/user';
 import { Wrapper } from 'components/wrapper/wrapper';
@@ -16,7 +16,7 @@ import { Form } from 'components/form';
 export const ForgotPasswordPage: FC = () => {
   const { state }: any = useLocation();
   const history = useHistory();
-  const { passwordReset, isAuth } = useSelector((store) => store.user);
+  const { passwordReset, isAuth } = useSelector(store => store.user);
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>('');
   const handleValueInput = ({

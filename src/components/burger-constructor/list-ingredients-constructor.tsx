@@ -1,8 +1,7 @@
 import styles from './burger-constructor.module.css';
 import { FC } from 'react';
 import { useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'services/types'
+import { useSelector, useDispatch } from 'services/types';
 import { changeStateElem } from 'services/actions/constructor';
 import { IngredientConstructor } from './ingredient-constructor';
 import BunBurger from './bun-ingredient-constructor';
@@ -22,7 +21,7 @@ export const ListIngridientBurger: FC = () => {
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingridient',
-    collect: (monitor) => ({
+    collect: monitor => ({
       isHover: monitor.isOver(),
     }),
     drop(item: any) {
@@ -35,7 +34,7 @@ export const ListIngridientBurger: FC = () => {
   });
 
   const { ingridientsConstructor, bunConstructor } = useSelector(
-    (store) => store.burgerConstructor
+    store => store.burgerConstructor
   );
 
   // проверяем наличие ингридиентов в конструкторе чтоб выводить дефолтное состояние

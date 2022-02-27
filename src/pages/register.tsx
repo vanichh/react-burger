@@ -6,14 +6,13 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from 'services/types';
 import { registrationUser } from 'services/actions/user';
 import { Wrapper } from 'components/wrapper';
 import { Form } from 'components/form';
 import { useInputValue } from 'utils/custom-hooks';
 
-
-export const RegisterPage:FC = () => {
+export const RegisterPage: FC = () => {
   const dispatch = useDispatch();
 
   const { handleValueInput, value } = useInputValue({
@@ -21,7 +20,6 @@ export const RegisterPage:FC = () => {
     email: '',
     password: '',
   });
-
 
   const handleRegisterUser = (e: FormEvent) => {
     e.preventDefault();

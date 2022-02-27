@@ -8,8 +8,8 @@ import {
 import { FormEvent } from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import styles from './page.module.css';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'services/types'
+import { useDispatch } from 'services/types';
+import { useSelector } from 'services/types';
 import { authorizationUser } from 'services/actions/user';
 import { Wrapper } from 'components/wrapper';
 import { Form } from 'components/form';
@@ -24,7 +24,7 @@ export const LoginPage: FC = () => {
   const dispatch = useDispatch();
   const { state }: any = useLocation();
 
-  const { isAuth } = useSelector((store) => store.user);
+  const { isAuth } = useSelector(store => store.user);
 
   const hendlerRequestLogin = (e: FormEvent) => {
     e.preventDefault();

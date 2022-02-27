@@ -11,6 +11,7 @@ import { API_ORDER } from 'utils/url-api';
 import { v4 as uuidv4 } from 'uuid';
 import { IDataProps } from 'utils/types';
 import { TThunks } from '../types/';
+import { getCookie } from 'utils/cookie';
 
 export const isModalWindowsOrder = (state: boolean = false) => {
   if (state) {
@@ -55,21 +56,25 @@ export const changeStateElem = (type: 'add' | 'del', item: IDataProps) => {
   }
 };
 
-export const getNumberOrder: TThunks = () => async (dispatch, getState ) => {
+export const getNumberOrder: TThunks = () => async (dispatch, getState) => {
   const state = getState();
   const { bunConstructor, ingridientsConstructor, order } =
     state.burgerConstructor;
 
   const ingredients = [
     bunConstructor._id,
-    ...ingridientsConstructor.map((elem: { _id: string }) => elem._id),
+    ...ingridientsConstructor.map(elem => elem._id),
     bunConstructor._id,
   ];
   try {
+    const token = getCookie('accessToken') as string;
     const response = await request({
       url: API_ORDER,
       method: 'POST',
-      body: { ingredients },
+      body: {
+        ingredients,
+      },
+      token: `Bearer ${token}`,
     });
     const res = await checkResponse(response);
     if (res.success) {

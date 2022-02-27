@@ -1,17 +1,14 @@
 import { Modal } from 'components/modal';
 import { OrderDetails } from 'components/order-details';
 import { FC } from 'react';
-import { useDispatch } from 'react-redux';
 import { isModalWindowsOrder } from 'services/actions';
-import { useSelector } from 'services/types';
+import { useSelector, useDispatch } from 'services/types';
 
 export const ModalOrderDetails: FC = () => {
   const dispatch = useDispatch();
   const isModalWindows = () => dispatch(isModalWindowsOrder());
 
-  const { order } = useSelector(
-    store => store.burgerConstructor
-  );
+  const { order } = useSelector(store => store.burgerConstructor);
 
   return (
     <Modal closeModalWindows={isModalWindows}>

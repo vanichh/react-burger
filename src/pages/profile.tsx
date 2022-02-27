@@ -1,49 +1,16 @@
 import { FC } from 'react';
 import { ProfileEditing } from 'components/profile-editing';
 import { ProfileOrders } from 'components/profile-orders';
-import { useDispatch } from 'react-redux';
-import { NavLink, Route, Switch } from 'react-router-dom';
-import { logoutUser } from 'services/actions/user';
-import styles from './page.module.css';
+import { Route, Switch } from 'react-router-dom';
 import { Wrapper } from 'components/wrapper';
+import { MenuProfile } from 'components/menu-profile';
 
-const classNameLink = `text text_type_main-medium ${styles.link} text_color_inactive`;
+const style = { alignItems: 'start' };
 
 export const ProfilePage: FC = () => {
-  const dispatch = useDispatch();
-
   return (
-    <Wrapper style={{ alignItems: 'start' }}>
-      <div className={`${styles.menu_link} mr-10`}>
-        <NavLink
-          exact={true}
-          className={classNameLink}
-          activeClassName='activ-link'
-          to='/profile'
-        >
-          Профиль
-        </NavLink>
-        <NavLink
-          exact={true}
-          className={classNameLink}
-          activeClassName='activ-link'
-          to='/profile/orders'
-        >
-          История заказов
-        </NavLink>
-        <NavLink
-          exact={true}
-          className={classNameLink}
-          activeClassName='activ-link'
-          onClick={() => dispatch(logoutUser())}
-          to='/login'
-        >
-          Выход
-        </NavLink>
-        <p className='text text_type_main-default text_color_inactive mt-20'>
-          В этом разделе вы сможите изменить персольнальные данные
-        </p>
-      </div>
+    <Wrapper style={style}>
+      <MenuProfile />
       <Switch>
         <Route path='/profile' exact component={ProfileEditing} />
         <Route path='/profile/orders' exact component={ProfileOrders} />

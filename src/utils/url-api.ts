@@ -13,5 +13,5 @@ export const API_NEW_PASSWORD = API + 'password-reset/reset';
 export const API_GET_AND_UPD_USER = API + 'auth/user';
 export const API_UPD_TOKEN = API + 'auth/token';
 
-export const WS_GET_ORDERS = WS + 'orders/all';
-export const WS_GET_USER_ORDERS = WS + 'orders';
+export const WSS_GET_ORDERS = WS + 'orders/all';
+export const WSS_GET_USER_ORDERS = WS + 'orders';

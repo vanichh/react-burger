@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styles from './ingredient-details.module.css';
 import { Carbohydrate } from './carbohydrate';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'services/types';
+import { useSelector, useDispatch } from 'services/types';
 import { useParams } from 'react-router-dom';
 import { FC, useEffect } from 'react';
 import { getIngridient } from 'services/actions/ingredients';
@@ -12,10 +11,10 @@ export const IngredientDetails: FC = () => {
   const dispatch = useDispatch();
 
   const { isLoadingIngredientDetails, isLoding } = useSelector(
-    (state) => state.igridients
+    state => state.igridients
   );
 
-  const { ingredientDetails } = useSelector((state) => state.igridients);
+  const { ingredientDetails } = useSelector(state => state.igridients);
 
   useEffect(() => {
     if (isLoding) {

@@ -1,6 +1,21 @@
-import { Dispatch } from 'redux';
-import { RootState } from '.';
+import { Action, ActionCreator } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { rootReducer } from 'services/reducers';
+import {
+  TWSActions,
+  TUserActions,
+  TIngridientActions,
+  TConstructorActions,
+} from './actions';
 
-export type TThunks<T = unknown> = (
-  _?: T
-) => (dispatch: Dispatch, getState?: () => RootState) => void;
+export type RootState = ReturnType<typeof rootReducer>;
+
+export type TAllActions =
+  | TWSActions
+  | TUserActions
+  | TIngridientActions
+  | TConstructorActions;
+
+export type TThunks<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, RootState, TAllActions, Action>
+>;
