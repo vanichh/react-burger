@@ -1,11 +1,17 @@
-export const URL_API = 'https://norma.nomoreparties.space/api/';
+const { REACT_APP_KEY_API, REACT_APP_KEY_WSS } = process.env;
 
-export const API_ORDER = URL_API + 'orders';
-export const API_INGREDIENTS = URL_API + 'ingredients';
-export const API_AUTCH = URL_API + 'auth/login';
-export const API_REGISTRATION = URL_API + 'auth/register';
-export const API_LOGOUT = URL_API + 'auth/logout';
-export const API_RESSET_PASSWORD = URL_API + 'password-reset';
-export const API_NEW_PASSWORD = URL_API + 'password-reset/reset';
-export const API_GET_AND_UPD_USER = URL_API + 'auth/user';
-export const API_UPD_TOKEN = URL_API + 'auth/token';
+const API = 'https://' + REACT_APP_KEY_API;
+export const WS = 'wss://' + REACT_APP_KEY_WSS;
+
+export const API_ORDER = API + 'orders';
+export const API_INGREDIENTS = API + 'ingredients';
+export const API_AUTCH = API + 'auth/login';
+export const API_REGISTRATION = API + 'auth/register';
+export const API_LOGOUT = API + 'auth/logout';
+export const API_RESSET_PASSWORD = API + 'password-reset';
+export const API_NEW_PASSWORD = API + 'password-reset/reset';
+export const API_GET_AND_UPD_USER = API + 'auth/user';
+export const API_UPD_TOKEN = API + 'auth/token';
+
+export const WSS_GET_ORDERS = WS + 'orders/all';
+export const WSS_GET_USER_ORDERS = WS + 'orders';

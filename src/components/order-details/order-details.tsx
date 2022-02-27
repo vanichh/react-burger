@@ -1,8 +1,8 @@
-import icon from '../../images/order-details/done.svg';
+import icon from 'images/order-details/done.svg';
 import { FC } from 'React';
 interface IPropsOrderDetails {
   order: {
-    number: number;
+    number: string;
   };
 }
 

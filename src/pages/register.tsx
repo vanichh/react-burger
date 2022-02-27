@@ -4,27 +4,22 @@ import {
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { FormEvent, useState } from 'react';
+import { FC, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from 'services/types';
 import { registrationUser } from 'services/actions/user';
 import { Wrapper } from 'components/wrapper';
 import { Form } from 'components/form';
+import { useInputValue } from 'utils/custom-hooks';
 
-type TEvent = React.ChangeEvent<HTMLInputElement>;
-
-export const RegisterPage = () => {
+export const RegisterPage: FC = () => {
   const dispatch = useDispatch();
 
-  const [value, setValue] = useState({
+  const { handleValueInput, value } = useInputValue({
     name: '',
     email: '',
     password: '',
   });
-
-  const handleValueInput = ({ target }: TEvent) => {
-    setValue((prev) => ({ ...prev, [target.name]: target.value }));
-  };
 
   const handleRegisterUser = (e: FormEvent) => {
     e.preventDefault();

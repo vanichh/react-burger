@@ -4,11 +4,10 @@ import {
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useState, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'services/types';
 import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import { newPassword } from 'services/actions/user';
 import styles from './page.module.css';
-import { RootState } from 'services/store';
 import { Wrapper } from 'components/wrapper';
 import { Form } from 'components/form';
 
@@ -22,7 +21,7 @@ export const ResetPassword: FC = () => {
   const { state }: any = useLocation();
 
   const { successNewPassword, isAuth, passwordReset } = useSelector(
-    (store: RootState) => store.user
+    store => store.user
   );
 
   const [value, setValue] = useState({
@@ -33,7 +32,7 @@ export const ResetPassword: FC = () => {
   const [typeInput, setTypeInput] = useState<TTypeInput>('password');
 
   const handleValueInput = ({ target }: TEvent) => {
-    setValue((prev) => ({ ...prev, [target.name]: target.value }));
+    setValue(prev => ({ ...prev, [target.name]: target.value }));
   };
   const handleShowPassword = () => {
     if (typeInput === 'password') {

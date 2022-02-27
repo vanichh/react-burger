@@ -1,17 +1,18 @@
 import {
-  STATE_MODAL_WINDOWS_INGRIDIENTS,
+  STATE_MODAL_WINDOWS,
   ERROR_REQUEST_INGRIDIENT_BURGER,
   REQUEST_INGRIDIENT_BURGER,
   DELETE_DATA_MODAL,
   SET_INGRIDIENT_MODAL,
   SET_INGRIDIENT,
   NO_INGRIDIENT,
-} from 'services/actions/ingredients';
+} from 'services/constants';
 import { IDataProps } from 'utils/types';
+import { TIngridientActions } from 'services/types/actions';
 
 interface IinitialState {
   listIgridients: IDataProps[];
-  ingredientDetails: IDataProps | {};
+  ingredientDetails: IDataProps;
   isLoadingIngredientDetails: boolean;
   NoSerchIngredientDetails: boolean;
   isLoding: boolean;
@@ -22,7 +23,7 @@ interface IinitialState {
 
 const initialState: IinitialState = {
   listIgridients: [],
-  ingredientDetails: [],
+  ingredientDetails: {} as IDataProps,
   isLoadingIngredientDetails: false,
   NoSerchIngredientDetails: false,
   isLoding: false,
@@ -31,7 +32,7 @@ const initialState: IinitialState = {
   errorRequestText: '',
 };
 
-export const igridientsReducer = (state = initialState, action: any) => {
+export const igridientsReducer = (state = initialState, action: TIngridientActions) => {
   switch (action.type) {
     case REQUEST_INGRIDIENT_BURGER: {
       return {
@@ -77,7 +78,7 @@ export const igridientsReducer = (state = initialState, action: any) => {
         ...state,
       };
     }
-    case STATE_MODAL_WINDOWS_INGRIDIENTS: {
+    case STATE_MODAL_WINDOWS: {
       return {
         ...state,
         isModalOpenIngridients: action.state,

@@ -5,27 +5,31 @@ import {
   NEW_PASSWORD,
   UPDATE_USER,
   ERROR_LODING_USER,
-} from 'services/actions/user';
+} from 'services/constants';
+
+import { TUserActions } from 'services/types/actions';
 
 interface IinitialState {
   isAuth: boolean | null;
   errorLodingUser: boolean;
-  name: string;
-  email: string;
+  name: string | null;
+  email: string | null;
   passwordReset: boolean;
   successNewPassword: boolean;
+  orders: any[];
 }
 
 const initialState: IinitialState = {
   isAuth: null,
   errorLodingUser: false,
-  name: '',
-  email: '',
+  name: null,
+  email: null,
   passwordReset: false,
   successNewPassword: false,
+  orders: [],
 };
 
-export const userReducer = (state = initialState, action: any) => {
+export const userReducer = (state = initialState, action: TUserActions) => {
   switch (action.type) {
     case SET_USER: {
       return {
@@ -45,8 +49,8 @@ export const userReducer = (state = initialState, action: any) => {
     case LOGOUT_USER: {
       return {
         ...state,
-        name: '',
-        email: '',
+        name: null,
+        email: null,
         isAuth: false,
       };
     }
@@ -75,3 +79,6 @@ export const userReducer = (state = initialState, action: any) => {
     }
   }
 };
+
+
+
