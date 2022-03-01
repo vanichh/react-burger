@@ -18,7 +18,7 @@ interface IinitialState {
   socket: WebSocket | null;
 }
 
-const initialState: IinitialState = {
+export const initialState: IinitialState = {
   wsConnected: false,
   ordersList: [],
   total: 0,
@@ -64,8 +64,8 @@ export const wsOredersReducer = (state = initialState, action: TWSActions) => {
         totalToday: action.payload.totalToday,
         readyOrders: [
           ...action.payload.orders
-            .filter(({ status }: { status: string }) => status === 'done')
-            .map(({ number }: { number: number }) => number),
+            .filter(({ status }) => status === 'done')
+            .map(({ number }) => number),
         ],
       };
     }

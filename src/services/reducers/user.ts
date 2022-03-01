@@ -19,7 +19,7 @@ interface IinitialState {
   orders: any[];
 }
 
-const initialState: IinitialState = {
+export const initialState: IinitialState = {
   isAuth: null,
   errorLodingUser: false,
   name: null,

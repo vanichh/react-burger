@@ -32,8 +32,6 @@ const wsActions: IWSActions = {
   getOrders: WS_GET_ORDERS,
 };
 
-export type TWSActions = { [key in keyof IWSActions]: IWSActions[key] };
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const initStore = (initialState = {}) =>
