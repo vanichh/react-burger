@@ -1,5 +1,5 @@
 
-[Страница на GitHub Pages][https://vanichh.github.io/react-burger/]
+[Страница на GitHub Pages](https://vanichh.github.io/react-burger/)
 ### `npm start`
 
 Запустить проект в режиме разработке, проект откроется на localhost:3000
