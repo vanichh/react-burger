@@ -38,7 +38,7 @@ export const IngredientConstructor: FC<IPropsIngredientConstructor> = memo(
       collect: monitor => ({
         isHover: monitor.isOver(),
       }),
-      drop(item: any) {
+      drop(item:IDataProps) {
         if (newPadding === PADDING_BOTTOM) {
           ++index; // учеличиваем индекс чтоб добавить элемент снизу
         }
@@ -65,7 +65,7 @@ export const IngredientConstructor: FC<IPropsIngredientConstructor> = memo(
 
     dragRef(dropRef(ref));
 
-    const CLASSNAME_WRAPPER = `
+    const CLASS_NAME_WRAPPER = `
   ${styles.constructor__wrapper}  ml-4 mr-4 pt-2 pb-2
   ${isHover ? `${styles.constructor__wrapper_activ} ${newPadding}` : ''}
   `;
@@ -73,7 +73,7 @@ export const IngredientConstructor: FC<IPropsIngredientConstructor> = memo(
     return (
       <>
         {!isDragging ? (
-          <div ref={ref} key={ingredient._id} className={CLASSNAME_WRAPPER}>
+          <div ref={ref} key={ingredient._id} className={CLASS_NAME_WRAPPER}>
             <img
               src={iconIngreidient}
               alt={ingredient.name}

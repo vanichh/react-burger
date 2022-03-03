@@ -16,7 +16,6 @@ interface IinitialState {
   email: string | null;
   passwordReset: boolean;
   successNewPassword: boolean;
-  orders: any[];
 }
 
 export const initialState: IinitialState = {
@@ -26,7 +25,6 @@ export const initialState: IinitialState = {
   email: null,
   passwordReset: false,
   successNewPassword: false,
-  orders: [],
 };
 
 export const userReducer = (state = initialState, action: TUserActions) => {

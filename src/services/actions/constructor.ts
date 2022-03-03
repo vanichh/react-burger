@@ -5,6 +5,7 @@ import {
   REQUEST_NUMBER_ORDER,
   RESET_STATE_INGRIDIENT,
   STATE_MODAL_WINDOWS_ORDER,
+  ADD_BUN_CONSTRUCTOR,
 } from 'services/constants';
 import { request, checkResponse } from 'utils/api-methods';
 import { API_ORDER } from 'utils/url-api';
@@ -27,7 +28,17 @@ export const isModalWindowsOrder = (state: boolean = false) => {
   }
 };
 
-export const movingIngridient = (item: any, index: number) => {
+export const addBunConstructor: TThunks =
+  (item: IDataProps) => (dispatch, getState) => {
+    const { bunConstructor } = getState().burgerConstructor;
+    if (bunConstructor === item) {
+      return;
+    } else {
+      dispatch({ type: ADD_BUN_CONSTRUCTOR, item });
+    }
+  };
+
+export const movingIngridient = (item: IDataProps, index: number) => {
   const newItem = { ...item };
   newItem.uuid = uuidv4();
   return {
@@ -57,13 +68,12 @@ export const changeStateElem = (type: 'add' | 'del', item: IDataProps) => {
 };
 
 export const getNumberOrder: TThunks = () => async (dispatch, getState) => {
-  const state = getState();
   const { bunConstructor, ingridientsConstructor, order } =
-    state.burgerConstructor;
+    getState().burgerConstructor;
 
   const ingredients = [
     bunConstructor._id,
-    ...ingridientsConstructor.map(elem => elem._id),
+    ...ingridientsConstructor.map((elem) => elem._id),
     bunConstructor._id,
   ];
   try {

@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from 'services/types';
 import { changeStateElem } from 'services/actions/constructor';
 import { IngredientConstructor } from './ingredient-constructor';
 import BunBurger from './bun-ingredient-constructor';
-import { ADD_BUN_CONSTRUCTOR } from 'services/constants';
+import { addBunConstructor } from 'services/actions';
+import { IDataProps } from 'utils/types';
 
 const CLASS_NAME_TEXT_CONSTRUCTOR = `${styles.constructor__text_default} text text_type_main-default`;
 
@@ -21,20 +22,20 @@ export const ListIngridientBurger: FC = () => {
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingridient',
-    collect: monitor => ({
+    collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
-    drop(item: any) {
+    drop(item: IDataProps) {
       if (item.type !== 'bun') {
         dispatch(changeStateElem('add', item));
       } else {
-        dispatch({ type: ADD_BUN_CONSTRUCTOR, item: item });
+        dispatch(addBunConstructor(item));
       }
     },
   });
 
   const { ingridientsConstructor, bunConstructor } = useSelector(
-    store => store.burgerConstructor
+    (store) => store.burgerConstructor
   );
 
   // проверяем наличие ингридиентов в конструкторе чтоб выводить дефолтное состояние

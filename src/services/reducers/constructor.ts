@@ -60,10 +60,9 @@ export const constructorReducer = (
         orderSum: state.orderSum + action.item.price,
         countIngridientsConstructor: {
           ...state.countIngridientsConstructor,
-          [action.item._id]:
-            state.countIngridientsConstructor[action.item._id] === undefined
-              ? 1
-              : ++state.countIngridientsConstructor[action.item._id],
+          [action.item._id]: !state.countIngridientsConstructor[action.item._id]
+            ? 1
+            : ++state.countIngridientsConstructor[action.item._id],
         },
       };
     }
@@ -85,25 +84,19 @@ export const constructorReducer = (
       };
     }
     case ADD_BUN_CONSTRUCTOR: {
-      if (action.item._id === state.bunConstructor._id) {
-        return { ...state };
-      } else {
-        return {
-          ...state,
-          bunConstructor: action.item,
-          orderSum:
-            state.orderSum +
-            action.item.price * 2 -
-            (state.bunConstructor.price !== undefined
-              ? state.bunConstructor.price * 2
-              : 0),
-          countIngridientsConstructor: {
-            ...state.countIngridientsConstructor,
-            [action.item._id]: 1,
-            [state.bunConstructor._id]: 0,
-          },
-        };
-      }
+      return {
+        ...state,
+        bunConstructor: action.item,
+        orderSum:
+          state.orderSum +
+          action.item.price * 2 -
+          (state.bunConstructor.price ? state.bunConstructor.price * 2 : 0),
+        countIngridientsConstructor: {
+          ...state.countIngridientsConstructor,
+          [action.item._id]: 1,
+          [state.bunConstructor._id]: 0,
+        },
+      };
     }
 
     case MOVING_INGRIDIENT_CONSTRUCTOR: {
