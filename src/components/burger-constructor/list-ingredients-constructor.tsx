@@ -57,7 +57,7 @@ export const ListIngridientBurger: FC = () => {
         {isHaveIngridient ? (
           <DefaultIngridient />
         ) : (
-          ingridientsConstructor.map((ingredient: any, i: number) => (
+          ingridientsConstructor.map((ingredient, i) => (
             <IngredientConstructor
               key={ingredient.uuid}
               index={i}

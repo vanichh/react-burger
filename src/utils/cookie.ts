@@ -1,11 +1,13 @@
 /* eslint-disable no-useless-escape */
-interface IsetCookieOptions {
-  [key: string]: any;
-}
 
-type TsetCookie<T> = (name: string, value: string, options?: T) => void;
 
-export const setCookie: TsetCookie<IsetCookieOptions> = (name, value, options?) => {
+type TsetCookie<T = {[key: string]: any;}> = (
+  name: string,
+  value: string,
+  options?: T
+) => void;
+
+export const setCookie: TsetCookie = (name, value, options?) => {
   let updatedCookie =
     encodeURIComponent(name) + '=' + encodeURIComponent(value);
 

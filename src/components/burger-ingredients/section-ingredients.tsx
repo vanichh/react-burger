@@ -18,7 +18,7 @@ export const SectionIngredients: FC<IPropsSectionIngredients> = (props) => {
     <section className='pt-5' ref={refElem}>
       <h3 className={CLASSNAME_TITLE}>{title}</h3>
       <div className={styles.ingredients__list}>
-        {dataIngredients.map((elem: any) => (
+        {dataIngredients.map((elem) => (
           <ElemBurgerIngredients key={elem._id} {...elem} />
         ))}
       </div>
