@@ -9,7 +9,7 @@ import {
   RESET_STATE_INGRIDIENT,
 } from 'services/constants';
 import { IDataProps } from 'utils/types';
-import { TConstructorActions  } from 'services/types/actions'
+import { TConstructorActions } from 'services/types/actions';
 
 interface InitialState {
   ingridientsConstructor: IDataProps[] | [];
@@ -20,7 +20,7 @@ interface InitialState {
   countIngridientsConstructor: { [key: string]: number } | any;
 }
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
   ingridientsConstructor: [],
   order: {},
   isModalOpen: false,
@@ -37,7 +37,7 @@ export const constructorReducer = (
     case SET_INGRIDIENT_CONSTRUCTOR: {
       return {
         ...state,
-        igridientsConstructor: action.items,
+        ingridientsConstructor: action.items,
       };
     }
     case REQUEST_NUMBER_ORDER: {
@@ -60,10 +60,9 @@ export const constructorReducer = (
         orderSum: state.orderSum + action.item.price,
         countIngridientsConstructor: {
           ...state.countIngridientsConstructor,
-          [action.item._id]:
-            state.countIngridientsConstructor[action.item._id] === undefined
-              ? 1
-              : ++state.countIngridientsConstructor[action.item._id],
+          [action.item._id]: !state.countIngridientsConstructor[action.item._id]
+            ? 1
+            : ++state.countIngridientsConstructor[action.item._id],
         },
       };
     }
@@ -72,7 +71,7 @@ export const constructorReducer = (
         ...state,
         ingridientsConstructor: [
           ...state.ingridientsConstructor.filter(
-            elem => elem.uuid !== action.item.uuid
+            (elem) => elem.uuid !== action.item.uuid
           ),
         ],
         orderSum: state.orderSum - action.item.price,
@@ -85,24 +84,19 @@ export const constructorReducer = (
       };
     }
     case ADD_BUN_CONSTRUCTOR: {
-      if (action.item._id === state.bunConstructor._id) {
-        return { ...state };
-      } else {
-        const pricePrevBun =
-          state.bunConstructor.price !== undefined
-            ? state.bunConstructor.price * 2
-            : 0;
-        return {
-          ...state,
-          bunConstructor: action.item,
-          orderSum: state.orderSum + action.item.price * 2 - pricePrevBun,
-          countIngridientsConstructor: {
-            ...state.countIngridientsConstructor,
-            [action.item._id]: 1,
-            [state.bunConstructor._id]: 0,
-          },
-        };
-      }
+      return {
+        ...state,
+        bunConstructor: action.item,
+        orderSum:
+          state.orderSum +
+          action.item.price * 2 -
+          (state.bunConstructor.price ? state.bunConstructor.price * 2 : 0),
+        countIngridientsConstructor: {
+          ...state.countIngridientsConstructor,
+          [action.item._id]: 1,
+          [state.bunConstructor._id]: 0,
+        },
+      };
     }
 
     case MOVING_INGRIDIENT_CONSTRUCTOR: {
@@ -112,7 +106,7 @@ export const constructorReducer = (
           ...state.ingridientsConstructor.slice(0, action.item.index),
           action.item.newItem,
           ...state.ingridientsConstructor.slice(action.item.index),
-        ].filter((elem: any) => elem.uuid !== action.item.uuid),
+        ].filter((elem) => elem.uuid !== action.item.uuid),
       };
     }
     case RESET_STATE_INGRIDIENT: {

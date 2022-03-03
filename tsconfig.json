@@ -21,11 +21,12 @@
     "jsx": "react-jsx",
     "strictNullChecks": false,
     "baseUrl": "src",
-    "pretty": true
+    "pretty": true,
+    "types": ["cypress"]
   },
   "include": [
     "src",
     "**/*.ts",
     "**/*.tsx"
-  ]
+, "cypress/integration/constructor/modal-ingridient.spec.js", "cypress/integration/constructor/dnd.spec.js"  ]
 }

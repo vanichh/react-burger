@@ -28,7 +28,8 @@ import { ModalIngredients, ModalOrder } from 'components/modals';
 const ModalSwitch: FC = () => {
   const dispatch = useDispatch();
   const location: { [index: string]: any } = useLocation();
-  const background = location.state && location.state.background;
+  const { state } = location;
+  const background = state && state.background;
 
   useEffect(() => {
     // запрашиваем пользователя и ингриденты

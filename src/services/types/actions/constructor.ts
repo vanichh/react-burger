@@ -43,7 +43,7 @@ interface IAddBunConstructor {
 interface IMovingIngridientConstructor {
   readonly type: typeof MOVING_INGRIDIENT_CONSTRUCTOR;
   item: {
-    uuid: number;
+    uuid: string;
     newItem: IDataProps;
     index: number;
   };

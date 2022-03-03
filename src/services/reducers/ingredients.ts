@@ -21,7 +21,7 @@ interface IinitialState {
   errorRequestText: string;
 }
 
-const initialState: IinitialState = {
+export const initialState: IinitialState = {
   listIgridients: [],
   ingredientDetails: {} as IDataProps,
   isLoadingIngredientDetails: false,

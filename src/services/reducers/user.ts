@@ -16,17 +16,15 @@ interface IinitialState {
   email: string | null;
   passwordReset: boolean;
   successNewPassword: boolean;
-  orders: any[];
 }
 
-const initialState: IinitialState = {
+export const initialState: IinitialState = {
   isAuth: null,
   errorLodingUser: false,
   name: null,
   email: null,
   passwordReset: false,
   successNewPassword: false,
-  orders: [],
 };
 
 export const userReducer = (state = initialState, action: TUserActions) => {
