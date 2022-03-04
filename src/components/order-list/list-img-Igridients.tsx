@@ -22,7 +22,7 @@ export const ListImgIgridients: FC<IListImgIgridients> = (props) => {
     ArrIdIngredients.splice(6);
   }
 
-  let iRight = -16;
+  let right = -16;
   let zIndex = 999;
 
   const counterMoreIdIngredients: JSX.Element = (
@@ -36,7 +36,7 @@ export const ListImgIgridients: FC<IListImgIgridients> = (props) => {
       {ArrIgridients.map(({ image_mobile, name, _id }, i) => (
         <li
           className={styles.item}
-          style={{ right: (iRight += 16), zIndex: (zIndex -= 1) }}
+          style={{ right: (right += 16), zIndex: (zIndex -= 1) }}
           key={_id + i}
         >
           <img className={styles.icon} src={image_mobile} alt={name} />

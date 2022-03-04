@@ -65,7 +65,7 @@ const ModalSwitch: FC = () => {
 
 export const App: FC = () => {
   return (
-    <Router>
+    <Router basename='/react-burger'>
       <AppHeader />
       <ModalSwitch />
     </Router>
