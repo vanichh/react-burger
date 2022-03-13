@@ -31,11 +31,10 @@ export const isModalWindowsOrder = (state: boolean = false) => {
 export const addBunConstructor: TThunks =
   (item: IDataProps) => (dispatch, getState) => {
     const { bunConstructor } = getState().burgerConstructor;
-    if (bunConstructor === item) {
+    if (bunConstructor && bunConstructor === item) {
       return;
-    } else {
-      dispatch({ type: ADD_BUN_CONSTRUCTOR, item });
     }
+    dispatch({ type: ADD_BUN_CONSTRUCTOR, item });
   };
 
 export const movingIngridient = (item: IDataProps, index: number) => {
@@ -73,7 +72,7 @@ export const getNumberOrder: TThunks = () => async (dispatch, getState) => {
 
   const ingredients = [
     bunConstructor._id,
-    ...ingridientsConstructor.map((elem) => elem._id),
+    ...ingridientsConstructor.map(elem => elem._id),
     bunConstructor._id,
   ];
   try {

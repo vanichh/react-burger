@@ -22,7 +22,7 @@ export const LoginPage: FC = () => {
   });
 
   const dispatch = useDispatch();
-  const { state }: any = useLocation();
+  const { state } = useLocation<{ [key: string]: string } | undefined>();
 
   const { isAuth } = useSelector(store => store.user);
 

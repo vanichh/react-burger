@@ -18,7 +18,7 @@ export const request: Trequest<IRequest> = (params) => {
     requestHeaders.set('Authorization', params.token);
   }
 
-  let sitingFetch: RequestInit = {
+  const sitingFetch: RequestInit = {
     method: params.method || 'GET',
     mode: 'cors',
     cache: 'no-cache',

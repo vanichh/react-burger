@@ -19,9 +19,7 @@ export const PaymentConstructor: FC = () => {
   );
 
   const isThereIngridients =
-    bunConstructor.length === 0 || ingridientsConstructor.length === 0
-      ? false
-      : true;
+    !bunConstructor || !ingridientsConstructor.length ? false : true;
 
   const handlerOreder = () => {
     if (isThereIngridients) {

@@ -22,7 +22,7 @@ export const ListIngridientBurger: FC = () => {
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingridient',
-    collect: (monitor) => ({
+    collect: monitor => ({
       isHover: monitor.isOver(),
     }),
     drop(item: IDataProps) {
@@ -35,17 +35,12 @@ export const ListIngridientBurger: FC = () => {
   });
 
   const { ingridientsConstructor, bunConstructor } = useSelector(
-    (store) => store.burgerConstructor
+    store => store.burgerConstructor
   );
 
   // проверяем наличие ингридиентов в конструкторе чтоб выводить дефолтное состояние
   const isHaveIngridient =
-    bunConstructor.length !== 0 || ingridientsConstructor.length !== 0
-      ? false
-      : true;
-
-  // проверяем наличие булок
-  const isHaveBun = bunConstructor.length === 0 ? false : true;
+    bunConstructor || ingridientsConstructor.length? false : true;
 
   const CLASS_NAME_WRAPPER = `${styles.wrapper} ${
     isHover ? styles.hover_dnd : ''
@@ -53,7 +48,9 @@ export const ListIngridientBurger: FC = () => {
 
   return (
     <>
-      {isHaveBun && <BunBurger ingredientsBun={bunConstructor} type='top' />}
+      {bunConstructor && (
+        <BunBurger ingredientsBun={bunConstructor} type='top' />
+      )}
       <div ref={dropTarget} className={CLASS_NAME_WRAPPER}>
         {isHaveIngridient ? (
           <DefaultIngridient />
@@ -67,7 +64,9 @@ export const ListIngridientBurger: FC = () => {
           ))
         )}
       </div>
-      {isHaveBun && <BunBurger ingredientsBun={bunConstructor} type='bottom' />}
+      {bunConstructor && (
+        <BunBurger ingredientsBun={bunConstructor} type='bottom' />
+      )}
     </>
   );
 };

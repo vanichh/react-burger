@@ -23,3 +23,19 @@ export interface IOrders {
   updatedAt: string;
   _id: string;
 }
+
+export interface ILocationState {
+  readonly hash: string;
+  readonly pathname: string;
+  readonly search: string;
+  readonly state:
+    | undefined
+    | {
+        background: {
+          readonly hash: string;
+          readonly pathname: string;
+          readonly search: string;
+          readonly state: undefined;
+        };
+      };
+}

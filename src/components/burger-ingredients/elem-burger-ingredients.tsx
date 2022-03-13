@@ -11,6 +11,7 @@ import { FC, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const CLASS_NAME_ITEM = `${styles.ingredients__items} mt-6 ml-4 mb-10 mr-4`;
+const CLASS_NAME_NAME = `text text_type_main-default ${styles.aligin_text}`;
 
 export const ElemBurgerIngredients: FC<IDataProps> = (props) => {
   const location = useLocation();
@@ -35,8 +36,7 @@ export const ElemBurgerIngredients: FC<IDataProps> = (props) => {
           pathname: `/ingredients/${_id}`,
           state: { background: location },
         }}
-        className={CLASS_NAME_ITEM}
-      >
+        className={CLASS_NAME_ITEM}>
         {current ? <Counter count={current} size='default' /> : null}
         <img
           ref={drag}
@@ -48,9 +48,7 @@ export const ElemBurgerIngredients: FC<IDataProps> = (props) => {
           <p className='text text_type_main-medium mr-2'>{props.price}</p>
           <CurrencyIcon type='primary' />
         </div>
-        <p className={`text text_type_main-default ${styles.aligin_text}`}>
-          {props.name}
-        </p>
+        <p className={CLASS_NAME_NAME}>{props.name}</p>
       </Link>
     ),
     [current]

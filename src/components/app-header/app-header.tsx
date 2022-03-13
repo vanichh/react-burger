@@ -8,7 +8,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, Link } from 'react-router-dom';
 
-const classNameLink = 'text text_type_main-default text_color_inactive pl-2';
+const CLASS_NAME_LINK = 'text text_type_main-default text_color_inactive pl-2';
 
 export const AppHeader: FC = () => {
   return (
@@ -20,7 +20,7 @@ export const AppHeader: FC = () => {
             <NavLink
               to='/'
               exact={true}
-              className={classNameLink}
+              className={CLASS_NAME_LINK}
               activeClassName='activ-link'
             >
               Kонструктор
@@ -30,7 +30,7 @@ export const AppHeader: FC = () => {
             <ListIcon type='primary' />
             <NavLink
               to='feed'
-              className={classNameLink}
+              className={CLASS_NAME_LINK}
               activeClassName='activ-link'
             >
               Лента заказов
@@ -44,7 +44,7 @@ export const AppHeader: FC = () => {
           <ProfileIcon type='primary' />
           <NavLink
             to='/profile'
-            className={classNameLink}
+            className={CLASS_NAME_LINK}
             activeClassName='activ-link'
           >
             Личный кабинет

@@ -14,7 +14,7 @@ import { Wrapper } from 'components/wrapper/wrapper';
 import { Form } from 'components/form';
 
 export const ForgotPasswordPage: FC = () => {
-  const { state }: any = useLocation();
+  const { state } = useLocation<{ [key: string]: string } | undefined>();
   const history = useHistory();
   const { passwordReset, isAuth } = useSelector(store => store.user);
   const dispatch = useDispatch();

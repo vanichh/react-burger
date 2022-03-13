@@ -24,12 +24,12 @@ import { ProtectedRoute } from '../protected-route';
 import { getIngredients } from 'services/actions/ingredients';
 import { AppHeader } from '../app-header';
 import { ModalIngredients, ModalOrder } from 'components/modals';
+import { ILocationState } from 'utils/types'
 
 const ModalSwitch: FC = () => {
   const dispatch = useDispatch();
-  const location: { [index: string]: any } = useLocation();
-  const { state } = location;
-  const background = state && state.background;
+  const location: ILocationState = useLocation();
+  const background = location.state && location.state.background;
 
   useEffect(() => {
     // запрашиваем пользователя и ингриденты

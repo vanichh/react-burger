@@ -12,20 +12,20 @@ import { IDataProps } from 'utils/types';
 import { TConstructorActions } from 'services/types/actions';
 
 interface InitialState {
-  ingridientsConstructor: IDataProps[] | [];
-  order: { number: string } | any;
+  ingridientsConstructor: IDataProps[];
+  order: { number: string } | null;
   isModalOpen: boolean;
   orderSum: number;
-  bunConstructor: IDataProps[] | any;
-  countIngridientsConstructor: { [key: string]: number } | any;
+  bunConstructor: IDataProps | null;
+  countIngridientsConstructor: { [key: string]: number };
 }
 
 export const initialState: InitialState = {
   ingridientsConstructor: [],
-  order: {},
+  order: null,
   isModalOpen: false,
   orderSum: 0,
-  bunConstructor: [],
+  bunConstructor: null,
   countIngridientsConstructor: {},
 };
 
@@ -90,11 +90,11 @@ export const constructorReducer = (
         orderSum:
           state.orderSum +
           action.item.price * 2 -
-          (state.bunConstructor.price ? state.bunConstructor.price * 2 : 0),
+          (state.bunConstructor? state.bunConstructor.price * 2 : 0),
         countIngridientsConstructor: {
           ...state.countIngridientsConstructor,
           [action.item._id]: 1,
-          [state.bunConstructor._id]: 0,
+          [state.bunConstructor?._id]: 0,
         },
       };
     }
@@ -114,8 +114,8 @@ export const constructorReducer = (
         ...state,
         orderSum: 0,
         ingridientsConstructor: [],
-        bunConstructor: [],
-        order: {},
+        bunConstructor: null,
+        order: null,
         countIngridientsConstructor: {},
         isModalOpen: false,
       };

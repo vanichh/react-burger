@@ -12,7 +12,7 @@ export const ModalOrder: FC = () => {
   const { ordersList } = useSelector((store) => store.wsOrders);
 
 
-  if (ordersList.length === 0) {
+  if (!ordersList.length) {
     return null;
   }
 

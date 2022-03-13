@@ -18,7 +18,7 @@ type TTypeInput = 'password' | 'text';
 export const ResetPassword: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { state }: any = useLocation();
+  const { state } = useLocation<{ [key: string]: string } | undefined>();
 
   const { successNewPassword, isAuth, passwordReset } = useSelector(
     store => store.user
