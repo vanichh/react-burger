@@ -5,7 +5,6 @@ import { formatTime } from 'utils/format-time';
 import { ListImgIgridients } from './list-img-Igridients';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'services/types';
-import { IDataProps } from 'utils/types';
 import { Link, useLocation } from 'react-router-dom';
 
 interface IOrderItemList {
@@ -26,9 +25,7 @@ export const OrderItem: FC<IOrderItemList> = (props) => {
 
   const { createdAt, ingredients, name, number, id } = props;
 
-  const { listIgridients }: { listIgridients: IDataProps[] } = useSelector(
-    (store) => store.igridients
-  );
+  const { listIgridients } = useSelector((store) => store.igridients);
 
   const newIngredients = ingredients.filter((number) => number);
 
