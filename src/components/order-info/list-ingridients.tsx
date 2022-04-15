@@ -5,19 +5,19 @@ import styles from './order-info.module.css';
 
 interface IListIngridients {
   ingridientsOrder: [string, number][];
-  listIgridients: (IDataProps & { count?: number })[];
+  listIgridients: IDataProps[];
   children?: ReactNode;
 }
 
-export const ListIngridients: FC<IListIngridients> = props => {
+type TIngridients = Array<IDataProps & { count: number }>;
+
+export const ListIngridients: FC<IListIngridients> = (props) => {
   const { ingridientsOrder, listIgridients } = props;
 
-  const arrIngridients: IListIngridients['listIgridients'] =
-    ingridientsOrder.map(item => {
-      const newItem = listIgridients.find(({ _id }) => _id === item[0]);
-      newItem.count = item[1];
-      return newItem;
-    });
+  const arrIngridients: TIngridients = ingridientsOrder.map(([id, count]) => ({
+    ...listIgridients.find(({ _id }) => _id === id),
+    count,
+  }));
 
   return (
     <ol className={`mb-10 pr-6 ${styles.list}`}>
@@ -28,10 +28,13 @@ export const ListIngridients: FC<IListIngridients> = props => {
           </div>
           <p className='ml-4 mr-4 text text_type_main-default'>{name}</p>
           <p
-            className={`${styles.item__count} mr-4 text text_type_digits-default`}>
+            className={`${styles.item__count} mr-4 text text_type_digits-default`}
+          >
             {count} x {price}
           </p>
-          <div className={styles.icon}><CurrencyIcon type='primary' /></div>
+          <div className={styles.icon}>
+            <CurrencyIcon type='primary' />
+          </div>
         </li>
       ))}
     </ol>
