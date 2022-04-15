@@ -29,7 +29,7 @@ export const AppHeader: FC = () => {
           <div className={`${styles.item} pl-5 pr-5 pt-4 pb-4 ml-2`}>
             <ListIcon type='primary' />
             <NavLink
-              to='feed'
+              to='/feed'
               className={CLASS_NAME_LINK}
               activeClassName='activ-link'
             >
