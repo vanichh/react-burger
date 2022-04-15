@@ -1,5 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useRef, useEffect, FC, useMemo, RefObject } from 'react';
+import {
+  useState,
+  useRef,
+  useEffect,
+  FC,
+  RefObject,
+  useCallback,
+} from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import { SectionIngredients } from './';
@@ -47,6 +54,29 @@ export const BurgerIngredients: FC = () => {
     refSectionIngredients.current.addEventListener('scroll', optimizedActivTab);
   }, []);
 
+  const IngridientsList = useCallback(
+    () => (
+      <div className={`${styles.wrapper} mb-5`} ref={refSectionIngredients}>
+        <SectionIngredients
+          refElem={refBun}
+          title='Булки'
+          dataIngredients={getIngredient('bun')}
+        />
+        <SectionIngredients
+          refElem={refSause}
+          title='Соусы'
+          dataIngredients={getIngredient('sauce')}
+        />
+        <SectionIngredients
+          refElem={refMain}
+          title='Начинки'
+          dataIngredients={getIngredient('main')}
+        />
+      </div>
+    ),
+    []
+  );
+
   return (
     <>
       <section className={`${styles.ingredients} ml-10`}>
@@ -76,31 +106,7 @@ export const BurgerIngredients: FC = () => {
             Начинки
           </Tab>
         </div>
-        {useMemo(
-          () => (
-            <div
-              className={`${styles.wrapper} mb-5`}
-              ref={refSectionIngredients}
-            >
-              <SectionIngredients
-                refElem={refBun}
-                title='Булки'
-                dataIngredients={getIngredient('bun')}
-              />
-              <SectionIngredients
-                refElem={refSause}
-                title='Соусы'
-                dataIngredients={getIngredient('sauce')}
-              />
-              <SectionIngredients
-                refElem={refMain}
-                title='Начинки'
-                dataIngredients={getIngredient('main')}
-              />
-            </div>
-          ),
-          []
-        )}
+        <IngridientsList />
       </section>
     </>
   );
