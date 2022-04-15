@@ -7,6 +7,7 @@ import { IngredientConstructor } from './ingredient-constructor';
 import BunBurger from './bun-ingredient-constructor';
 import { addBunConstructor } from 'services/actions';
 import { IDataProps } from 'utils/types';
+import cn from 'classnames';
 
 const CLASS_NAME_TEXT_CONSTRUCTOR = `${styles.constructor__text_default} text text_type_main-default`;
 
@@ -22,7 +23,7 @@ export const ListIngridientBurger: FC = () => {
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingridient',
-    collect: monitor => ({
+    collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
     drop(item: IDataProps) {
@@ -35,23 +36,24 @@ export const ListIngridientBurger: FC = () => {
   });
 
   const { ingridientsConstructor, bunConstructor } = useSelector(
-    store => store.burgerConstructor
+    (store) => store.burgerConstructor
   );
 
   // проверяем наличие ингридиентов в конструкторе чтоб выводить дефолтное состояние
   const isHaveIngridient =
-    bunConstructor || ingridientsConstructor.length? false : true;
-
-  const CLASS_NAME_WRAPPER = `${styles.wrapper} ${
-    isHover ? styles.hover_dnd : ''
-  }`;
+    bunConstructor || ingridientsConstructor.length ? false : true;
 
   return (
     <>
       {bunConstructor && (
         <BunBurger ingredientsBun={bunConstructor} type='top' />
       )}
-      <div ref={dropTarget} className={CLASS_NAME_WRAPPER}>
+      <div
+        ref={dropTarget}
+        className={cn(styles.wrapper, {
+          [styles.hover_dnd]: isHover,
+        })}
+      >
         {isHaveIngridient ? (
           <DefaultIngridient />
         ) : (

@@ -9,6 +9,7 @@ import {
 import iconIngreidient from 'images/burger-ingredients/icon-ingridients.png';
 import styles from './burger-constructor.module.css';
 import { IDataProps } from 'utils/types';
+import cn from 'classnames';
 
 interface IPropsIngredientConstructor {
   ingredient: IDataProps;
@@ -18,6 +19,7 @@ interface IPropsIngredientConstructor {
 // падиннги для создания пустого пространсва при DnD
 const PADDING_TOP = 'pt-25';
 const PADDING_BOTTOM = 'pb-25';
+const CLASS_NAME_WRAPPER = `${styles.constructor__wrapper}  ml-4 mr-4 pt-2 pb-2`;
 
 export const IngredientConstructor: FC<IPropsIngredientConstructor> = memo(
   ({ ingredient, index }) => {
@@ -28,17 +30,17 @@ export const IngredientConstructor: FC<IPropsIngredientConstructor> = memo(
     const [{ isDragging }, dragRef] = useDrag({
       type: 'locationIngridient',
       item: ingredient,
-      collect: monitor => ({
+      collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
     });
 
     const [{ isHover }, dropRef] = useDrop({
       accept: 'locationIngridient',
-      collect: monitor => ({
+      collect: (monitor) => ({
         isHover: monitor.isOver(),
       }),
-      drop(item:IDataProps) {
+      drop(item: IDataProps) {
         if (newPadding === PADDING_BOTTOM) {
           ++index; // учеличиваем индекс чтоб добавить элемент снизу
         }
@@ -65,15 +67,17 @@ export const IngredientConstructor: FC<IPropsIngredientConstructor> = memo(
 
     dragRef(dropRef(ref));
 
-    const CLASS_NAME_WRAPPER = `
-  ${styles.constructor__wrapper}  ml-4 mr-4 pt-2 pb-2
-  ${isHover ? `${styles.constructor__wrapper_activ} ${newPadding}` : ''}
-  `;
-
     return (
       <>
         {!isDragging ? (
-          <div ref={ref} key={ingredient._id} className={CLASS_NAME_WRAPPER}>
+          <div
+            ref={ref}
+            key={ingredient._id}
+            className={cn(CLASS_NAME_WRAPPER, {
+              [newPadding]: isHover,
+              [styles.constructor__wrapper_activ]: isHover,
+            })}
+          >
             <img
               src={iconIngreidient}
               alt={ingredient.name}
