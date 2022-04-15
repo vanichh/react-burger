@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ModalSwitch } from './modal-switch';
 
-export const Routing: FC = ({ children }) => {
+export const Routing: FC<{ basename?: string }> = ({ children, basename }) => {
   return (
-    <Router basename='/react-burger'>
+    <Router basename={basename || ''}>
       {children}
       <ModalSwitch />
     </Router>
