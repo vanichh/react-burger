@@ -2,7 +2,7 @@ import styles from './page.module.css';
 import { FC } from 'react'
 import { Link } from 'react-router-dom';
 import { Wrapper } from 'components/wrapper';
-const classNameLink = `${styles.link} text text_type_main-default activ-link mt-10`;
+const classNameLink = `${styles.link} text text_type_main-default mt-10`;
 
 export const NotFound404: FC = () => {
   return (

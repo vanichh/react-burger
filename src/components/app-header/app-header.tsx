@@ -1,4 +1,4 @@
-import  { FC, } from 'React';
+import { FC } from 'React';
 import styles from './app-header.module.css';
 import {
   Logo,
@@ -8,9 +8,10 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, Link } from 'react-router-dom';
 
-const CLASS_NAME_LINK = 'text text_type_main-default text_color_inactive pl-2';
+const CLASS_NAME_LINK = `text text_type_main-default text_color_inactive pl-2`;
 
 export const AppHeader: FC = () => {
+  console.log(styles.activ_link);
   return (
     <header className={`${styles.header} pt-4 pb-4`}>
       <div className={styles.wrapper}>
@@ -21,7 +22,7 @@ export const AppHeader: FC = () => {
               to='/'
               exact={true}
               className={CLASS_NAME_LINK}
-              activeClassName='activ-link'
+              activeStyle={{ color: 'white' }}
             >
               Kонструктор
             </NavLink>
@@ -31,7 +32,7 @@ export const AppHeader: FC = () => {
             <NavLink
               to='/feed'
               className={CLASS_NAME_LINK}
-              activeClassName='activ-link'
+              activeStyle={{ color: 'white' }}
             >
               Лента заказов
             </NavLink>
@@ -45,7 +46,7 @@ export const AppHeader: FC = () => {
           <NavLink
             to='/profile'
             className={CLASS_NAME_LINK}
-            activeClassName='activ-link'
+            activeStyle={{ color: 'white' }}
           >
             Личный кабинет
           </NavLink>
