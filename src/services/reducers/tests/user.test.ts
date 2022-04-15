@@ -1,4 +1,4 @@
-import { userReducer } from './user';
+import { userReducer } from '../user';
 import * as types from 'services/constants';
 import { initialState } from 'services/reducers/user';
 

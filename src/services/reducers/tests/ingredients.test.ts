@@ -1,4 +1,4 @@
-import { igridientsReducer } from './ingredients';
+import { igridientsReducer } from '../ingredients';
 import * as types from 'services/constants';
 import { IDataProps } from 'utils/types';
 import { initialState } from 'services/reducers/ingredients';

@@ -1,4 +1,4 @@
-import { constructorReducer } from './constructor';
+import { constructorReducer } from '../constructor';
 import * as types from 'services/constants';
 import { IDataProps } from 'utils/types';
 import { initialState } from 'services/reducers/constructor';

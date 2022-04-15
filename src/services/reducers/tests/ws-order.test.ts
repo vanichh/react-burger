@@ -1,4 +1,4 @@
-import { wsOredersReducer } from './ws-order';
+import { wsOredersReducer } from '../ws-order';
 import * as types from 'services/constants';
 import { initialState } from 'services/reducers/ws-order';
 import { WSS_GET_ORDERS } from 'utils/url-api';
