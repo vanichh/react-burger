@@ -12,14 +12,12 @@ import { Wrapper } from 'components/wrapper';
 import { Form } from 'components/form';
 import { useInputValue } from 'utils/hooks/use-Input-value';
 
+const initInputValue = { name: '', email: '', password: '' };
+
 export const RegisterPage: FC = () => {
   const dispatch = useDispatch();
 
-  const { handleValueInput, value } = useInputValue({
-    name: '',
-    email: '',
-    password: '',
-  });
+  const { handleValueInput, value } = useInputValue(initInputValue);
 
   const handleRegisterUser = (e: FormEvent) => {
     e.preventDefault();

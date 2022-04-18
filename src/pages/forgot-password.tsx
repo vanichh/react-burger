@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FC } from 'React';
+import { FC, ChangeEvent } from 'React';
 import {
   Button,
   Input,
@@ -13,15 +13,15 @@ import { resetPassword } from 'services/actions/user';
 import { Wrapper } from 'components/wrapper/wrapper';
 import { Form } from 'components/form';
 
+type THandle = ChangeEvent<HTMLInputElement>;
+
 export const ForgotPasswordPage: FC = () => {
-  const { state } = useLocation<{ [key: string]: string } | undefined>();
+  const { state } = useLocation<Record<string, string> | undefined>();
   const history = useHistory();
-  const { passwordReset, isAuth } = useSelector(store => store.user);
+  const { passwordReset, isAuth } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>('');
-  const handleValueInput = ({
-    target,
-  }: React.ChangeEvent<HTMLInputElement>) => {
+  const handleValueInput = ({ target }: THandle) => {
     setValue(target.value);
   };
 

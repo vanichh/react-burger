@@ -10,30 +10,25 @@ import { newPassword } from 'services/actions/user';
 import styles from './page.module.css';
 import { Wrapper } from 'components/wrapper';
 import { Form } from 'components/form';
+import { useInputValue } from 'utils/hooks';
 
-type TEvent = React.ChangeEvent<HTMLInputElement>;
 type TIcon = 'ShowIcon' | 'HideIcon';
 type TTypeInput = 'password' | 'text';
+
+const initInputValue = { password: '', codeEmail: '' };
 
 export const ResetPassword: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { state } = useLocation<{ [key: string]: string } | undefined>();
+  const { state } = useLocation<Record<string, string> | undefined>();
 
   const { successNewPassword, isAuth, passwordReset } = useSelector(
-    store => store.user
+    (store) => store.user
   );
-
-  const [value, setValue] = useState({
-    password: '',
-    codeEmail: '',
-  });
+  const { handleValueInput, value } = useInputValue(initInputValue);
   const [icon, setIcon] = useState<TIcon>('ShowIcon');
   const [typeInput, setTypeInput] = useState<TTypeInput>('password');
 
-  const handleValueInput = ({ target }: TEvent) => {
-    setValue(prev => ({ ...prev, [target.name]: target.value }));
-  };
   const handleShowPassword = () => {
     if (typeInput === 'password') {
       setIcon('HideIcon');

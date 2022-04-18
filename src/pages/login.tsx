@@ -15,16 +15,15 @@ import { Wrapper } from 'components/wrapper';
 import { Form } from 'components/form';
 import { useInputValue } from 'utils/hooks/use-Input-value';
 
+const initInputValue = { email: '', password: '' };
+
 export const LoginPage: FC = () => {
-  const { handleValueInput, value } = useInputValue({
-    email: '',
-    password: '',
-  });
+  const { handleValueInput, value } = useInputValue(initInputValue);
 
   const dispatch = useDispatch();
-  const { state } = useLocation<{ [key: string]: string } | undefined>();
+  const { state } = useLocation<Record<string, string> | undefined>();
 
-  const { isAuth } = useSelector(store => store.user);
+  const { isAuth } = useSelector((store) => store.user);
 
   const hendlerRequestLogin = (e: FormEvent) => {
     e.preventDefault();

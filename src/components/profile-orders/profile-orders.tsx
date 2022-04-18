@@ -8,7 +8,7 @@ import { closeWS } from 'services/actions';
 
 export const ProfileOrders: FC = () => {
   const dispatch = useDispatch();
-  const { isLoding } = useSelector(store => store.igridients);
+  const { isLoding } = useSelector((store) => store.igridients);
 
   useEffect(() => {
     if (isLoding) {
@@ -22,5 +22,9 @@ export const ProfileOrders: FC = () => {
   if (!isLoding) {
     return null;
   }
-  return <OrderList />;
+  return (
+    <>
+      <OrderList />
+    </>
+  );
 };

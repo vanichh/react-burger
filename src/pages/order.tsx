@@ -21,8 +21,6 @@ export const OrderPage: FC = () => {
     };
   }, [isLoding]);
 
-
-  console.log(2)
   if (ordersList.length === 0) {
     return null;
   }
