@@ -1,6 +1,6 @@
 const transliteTime = (
   number: number,
-  arrName: [string, string, string] = ['день', 'дней', 'дня']
+  arrNames: [string, string, string] = ['день назад', 'дней назад', 'дня назад']
 ): string => {
   switch (number) {
     case 0:
@@ -10,13 +10,13 @@ const transliteTime = (
     default:
       const newNumber = number % 10;
       if (newNumber > 10 && newNumber < 20) {
-        return `${number} ${arrName[2]} назад`;
+        return `${number} ${arrNames[2]}`;
       } else if (newNumber > 1 && newNumber < 5) {
-        return `${number} ${arrName[1]} назад`;
+        return `${number} ${arrNames[1]}`;
       } else if (newNumber === 1) {
-        return `${number} ${arrName[0]} назад`;
+        return `${number} ${arrNames[0]}`;
       }
-      return `${number} ${arrName[2]} назад`;
+      return `${number} ${arrNames[2]}`;
   }
 };
 
