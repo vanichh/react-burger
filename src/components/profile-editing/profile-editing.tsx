@@ -1,22 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState, useRef, useEffect, FC } from 'react';
+import { useState, useRef, useEffect, FC, MutableRefObject } from 'react';
 import { useSelector, useDispatch } from 'services/types';
 import { updateUser } from 'services/actions/user';
 import { Form } from '../form';
-import { useInputValue } from 'utils/custom-hooks';
+import { useInputValue } from 'utils/hooks/use-Input-value';
 
 type TThisHandle = 'name' | 'email' | 'password';
-type TIsDisable = { [index: string]: boolean };
-type TRef = { [index: string]: HTMLInputElement };
+type TIsDisable = Record<TThisHandle, boolean>;
+type TRef = Record<TThisHandle, MutableRefObject<HTMLInputElement>>;
 
 export const ProfileEditing: FC = () => {
-  const { name, email } = useSelector(store => store.user);
+  const { name, email } = useSelector((store) => store.user);
   const dispatch = useDispatch();
-  const refInputName = useRef(null);
-  const refInputEmail = useRef(null);
-  const refInputPassword = useRef(null);
-
   const { handleValueInput, value, setValue } = useInputValue<
     Record<TThisHandle, string>
   >({
@@ -26,9 +22,9 @@ export const ProfileEditing: FC = () => {
   });
 
   const ref: TRef = {
-    name: refInputName.current,
-    email: refInputEmail.current,
-    password: refInputPassword.current,
+    name: useRef(null),
+    email: useRef(null),
+    password: useRef(null),
   };
 
   const [isDisable, setIsDisable] = useState<TIsDisable>({
@@ -38,34 +34,26 @@ export const ProfileEditing: FC = () => {
   });
 
   function handleIsDisableClick(this: TThisHandle) {
-    setIsDisable(prev => ({
-      ...prev,
-      [this]: false,
-    }));
-    refInputName.current.focus();
+    setIsDisable((prev) => ({ ...prev, [this]: false }));
+    ref.name.current.focus();
   }
 
   function handeisDisableBlur(this: TThisHandle) {
-    setIsDisable(prev => ({
-      ...prev,
-      [this]: true,
-    }));
+    setIsDisable((prev) => ({ ...prev, [this]: true }));
 
-    const newValue = { [this]: value[this] };
-
-    dispatch(updateUser(newValue));
+    dispatch(updateUser({ [this]: value[this] }));
   }
 
   useEffect(() => {
-    for (let name in isDisable) {
-      if (!isDisable[name]) {
-        ref[name].focus();
+    for (const name in isDisable) {
+      if (!isDisable[name as TThisHandle]) {
+        ref[name as TThisHandle].current.focus();
       }
     }
   }, [isDisable]);
 
   useEffect(() => {
-    setValue(prev => ({ ...prev, name: name, email: email }));
+    setValue((prev) => ({ ...prev, name: name, email: email }));
   }, [name, email]);
 
   return (
@@ -84,7 +72,7 @@ export const ProfileEditing: FC = () => {
           errorText={'Ой, произошла ошибка'}
           onBlur={handeisDisableBlur.bind('name')}
           size={'default'}
-          ref={refInputName}
+          ref={ref.name}
         />
       </div>
       <div className='mb-6'>
@@ -101,7 +89,7 @@ export const ProfileEditing: FC = () => {
           onBlur={handeisDisableBlur.bind('email')}
           errorText={'Ой, произошла ошибка'}
           size={'default'}
-          ref={refInputEmail}
+          ref={ref.email}
         />
       </div>
       <div className='mb-6'>
@@ -118,7 +106,7 @@ export const ProfileEditing: FC = () => {
           onBlur={handeisDisableBlur.bind('password')}
           errorText={'Ой, произошла ошибка'}
           size={'default'}
-          ref={refInputPassword}
+          ref={ref.password}
         />
       </div>
     </Form>

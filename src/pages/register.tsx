@@ -10,7 +10,7 @@ import { useDispatch } from 'services/types';
 import { registrationUser } from 'services/actions/user';
 import { Wrapper } from 'components/wrapper';
 import { Form } from 'components/form';
-import { useInputValue } from 'utils/custom-hooks';
+import { useInputValue } from 'utils/hooks/use-Input-value';
 
 export const RegisterPage: FC = () => {
   const dispatch = useDispatch();

@@ -1,8 +1,8 @@
-import { Modal } from "components/modal";
-import { OrdeInfo } from "components/order-info";
-import { FC } from "react";
-import { useHistory } from "react-router-dom";
-import { useSelector } from "services/types";
+import { Modal } from 'components/modal';
+import { OrdeInfo } from 'components/order-info';
+import { FC } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'services/types';
 
 export const ModalOrder: FC = () => {
   const history = useHistory();
@@ -11,8 +11,7 @@ export const ModalOrder: FC = () => {
 
   const { ordersList } = useSelector((store) => store.wsOrders);
 
-
-  if (!ordersList.length) {
+  if (ordersList.length === 0) {
     return null;
   }
 

@@ -13,7 +13,7 @@ import { useSelector } from 'services/types';
 import { authorizationUser } from 'services/actions/user';
 import { Wrapper } from 'components/wrapper';
 import { Form } from 'components/form';
-import { useInputValue } from 'utils/custom-hooks';
+import { useInputValue } from 'utils/hooks/use-Input-value';
 
 export const LoginPage: FC = () => {
   const { handleValueInput, value } = useInputValue({

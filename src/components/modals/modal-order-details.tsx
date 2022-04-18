@@ -8,7 +8,7 @@ export const ModalOrderDetails: FC = () => {
   const dispatch = useDispatch();
   const isModalWindows = () => dispatch(isModalWindowsOrder());
 
-  const { order } = useSelector(store => store.burgerConstructor);
+  const { order } = useSelector((store) => store.burgerConstructor);
 
   return (
     <Modal closeModalWindows={isModalWindows}>

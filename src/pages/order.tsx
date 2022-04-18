@@ -7,8 +7,8 @@ import { OrdeInfo } from 'components/order-info';
 
 export const OrderPage: FC = () => {
   const dispatch = useDispatch();
-  const { isLoding } = useSelector(store => store.igridients);
-  const { socket, ordersList } = useSelector(store => store.wsOrders);
+  const { isLoding } = useSelector((store) => store.igridients);
+  const { socket, ordersList } = useSelector((store) => store.wsOrders);
 
   useEffect(() => {
     if (isLoding) {
@@ -21,7 +21,9 @@ export const OrderPage: FC = () => {
     };
   }, [isLoding]);
 
-  if (!ordersList.length) {
+
+  console.log(2)
+  if (ordersList.length === 0) {
     return null;
   }
 

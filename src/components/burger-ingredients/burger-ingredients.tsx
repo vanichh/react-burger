@@ -1,74 +1,44 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  useState,
-  useRef,
-  useEffect,
-  FC,
-  RefObject,
-  useCallback,
-} from 'react';
+import { useRef, useEffect, FC, useCallback } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import { SectionIngredients } from './';
 import { useSelector } from 'services/types';
 import { throttle } from 'utils/throttle';
-
-type TTypeBun = 'bun' | 'sauce' | 'main';
-type TToggleTab = (ref: RefObject<HTMLElement>, TtypeBun: TTypeBun) => void;
+import { useTab } from '../../utils/hooks/use-tab';
+import type { TTypeBun  } from '../../utils/hooks/use-tab';
 
 export const BurgerIngredients: FC = () => {
   // данные для отрисовки ингридиентов
   const { listIgridients } = useSelector((store) => store.igridients);
 
-  // переключение табов
-  const [current, setCurrent] = useState<TTypeBun>('bun');
+  const { ref, activTab, toggleTab, currentTab } = useTab();
 
-  const refBun = useRef<HTMLElement>(null);
-  const refSause = useRef<HTMLElement>(null);
-  const refMain = useRef<HTMLElement>(null);
-  const refSectionIngredients = useRef<HTMLDivElement>(null);
+  const divIngridients = useRef<HTMLDivElement>(null);
 
-  const toggleTab: TToggleTab = (ref, bun) => {
-    setCurrent(bun);
-    ref.current.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const activTab = () => {
-    const bunTop = refBun.current.getBoundingClientRect().top;
-    const sauseTop = refSause.current.getBoundingClientRect().top;
-    const mainTop = refMain.current.getBoundingClientRect().top;
-    if (bunTop > 200 && bunTop < 260) {
-      setCurrent('bun');
-    } else if (sauseTop > 200 && sauseTop < 260) {
-      setCurrent('sauce');
-    } else if (mainTop > 200 && mainTop < 260) {
-      setCurrent('main');
-    }
-  };
-  const getIngredient = (typeBun: TTypeBun) => {
-    return listIgridients.filter(({ type }) => type === typeBun);
-  };
+  const getIngredient = (typeBun: TTypeBun) =>
+    listIgridients.filter(({ type }) => type === typeBun);
 
   useEffect(() => {
     const optimizedActivTab = throttle(activTab, 50);
-    refSectionIngredients.current.addEventListener('scroll', optimizedActivTab);
+    divIngridients.current.addEventListener('scroll', optimizedActivTab);
   }, []);
 
   const IngridientsList = useCallback(
     () => (
-      <div className={`${styles.wrapper} mb-5`} ref={refSectionIngredients}>
+      <div className={`${styles.wrapper} mb-5`} ref={divIngridients}>
         <SectionIngredients
-          refElem={refBun}
+          refElem={ref.bun}
           title='Булки'
           dataIngredients={getIngredient('bun')}
         />
         <SectionIngredients
-          refElem={refSause}
+          refElem={ref.sause}
           title='Соусы'
           dataIngredients={getIngredient('sauce')}
         />
         <SectionIngredients
-          refElem={refMain}
+          refElem={ref.main}
           title='Начинки'
           dataIngredients={getIngredient('main')}
         />
@@ -86,22 +56,22 @@ export const BurgerIngredients: FC = () => {
         <div className={`${styles.list}`}>
           <Tab
             value='bun'
-            active={current === 'bun'}
-            onClick={() => toggleTab(refBun, 'bun')}
+            active={currentTab === 'bun'}
+            onClick={() => toggleTab(ref.bun, 'bun')}
           >
             Булки
           </Tab>
           <Tab
             value='sauce'
-            active={current === 'sauce'}
-            onClick={() => toggleTab(refSause, 'sauce')}
+            active={currentTab === 'sauce'}
+            onClick={() => toggleTab(ref.sause, 'sauce')}
           >
             Соусы
           </Tab>
           <Tab
             value='main'
-            active={current === 'main'}
-            onClick={() => toggleTab(refMain, 'main')}
+            active={currentTab === 'main'}
+            onClick={() => toggleTab(ref.main, 'main')}
           >
             Начинки
           </Tab>

@@ -9,9 +9,9 @@ import {
 import { NavLink, Link } from 'react-router-dom';
 
 const CLASS_NAME_LINK = `text text_type_main-default text_color_inactive pl-2`;
+const activLink = { color: 'white' };
 
 export const AppHeader: FC = () => {
-  console.log(styles.activ_link);
   return (
     <header className={`${styles.header} pt-4 pb-4`}>
       <div className={styles.wrapper}>
@@ -22,7 +22,7 @@ export const AppHeader: FC = () => {
               to='/'
               exact={true}
               className={CLASS_NAME_LINK}
-              activeStyle={{ color: 'white' }}
+              activeStyle={activLink}
             >
               Kонструктор
             </NavLink>
@@ -32,7 +32,7 @@ export const AppHeader: FC = () => {
             <NavLink
               to='/feed'
               className={CLASS_NAME_LINK}
-              activeStyle={{ color: 'white' }}
+              activeStyle={activLink}
             >
               Лента заказов
             </NavLink>
@@ -46,7 +46,7 @@ export const AppHeader: FC = () => {
           <NavLink
             to='/profile'
             className={CLASS_NAME_LINK}
-            activeStyle={{ color: 'white' }}
+            activeStyle={activLink}
           >
             Личный кабинет
           </NavLink>
