@@ -70,20 +70,21 @@ export const getNumberOrder: TThunks = () => async (dispatch, getState) => {
   const { bunConstructor, ingridientsConstructor, order } =
     getState().burgerConstructor;
 
+  const { _id: bun } = bunConstructor;
+
   const ingredients = [
-    bunConstructor._id,
-    ...ingridientsConstructor.map(elem => elem._id),
-    bunConstructor._id,
+    bun,
+    ...ingridientsConstructor.map(({ _id }) => _id),
+    bun,
   ];
   try {
-    const token = getCookie('accessToken') as string;
+    const token = `Bearer ${getCookie('accessToken')}`;
+
     const response = await request({
       url: API_ORDER,
       method: 'POST',
-      body: {
-        ingredients,
-      },
-      token: `Bearer ${token}`,
+      body: { ingredients },
+      token,
     });
     const res = await checkResponse(response);
     if (res.success) {
