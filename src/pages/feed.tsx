@@ -29,11 +29,11 @@ export const FeedPage: FC = () => {
   }
   return (
     <>
-      <main className={styles.container}>
+      <div className={styles.container}>
         <h2 className={CLASS_NAME_TITLE}>Лента заказов</h2>
         <OrderList />
         <InfoAllOrders />
-      </main>
+      </div>
     </>
   );
 };

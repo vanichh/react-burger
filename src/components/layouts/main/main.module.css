@@ -1,0 +1,6 @@
+.main {
+  padding-bottom: 40px;
+  max-height: calc(100vh - 88px);
+  height: 100%;
+  box-sizing: border-box;
+}

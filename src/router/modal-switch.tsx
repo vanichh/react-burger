@@ -1,10 +1,7 @@
 import { ModalIngredients, ModalOrder } from 'components/modals';
 import { ProtectedRoute } from './protected-route';
-import {
-  Switch,
-  Route,
-  useLocation,
-} from 'react-router-dom';
+import { Main } from 'components/layouts/main';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import {
   HomePage,
   LoginPage,
@@ -26,7 +23,7 @@ export const ModalSwitch: FC = () => {
   const location: ILocationState = useLocation();
   const background = location.state && location.state.background;
   return (
-    <>
+    <Main>
       <Switch location={background || location}>
         <Route path='/' exact component={HomePage} />
         <Route path='/feed' exact component={FeedPage} />
@@ -47,6 +44,6 @@ export const ModalSwitch: FC = () => {
           <Route path='/profile/orders/:id' component={ModalOrder} />
         </>
       )}
-    </>
+    </Main>
   );
 };

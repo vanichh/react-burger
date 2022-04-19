@@ -17,12 +17,12 @@ export const HomePage: FC = () => {
   return (
     <>
       {isLoding && (
-        <main className={styles.container}>
+        <div className={styles.container}>
           <DndProvider backend={HTML5Backend}>
             <BurgerIngredients />
             <BurgerConstructor />
           </DndProvider>
-        </main>
+        </div>
       )}
     </>
   );
