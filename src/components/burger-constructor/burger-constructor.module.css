@@ -12,6 +12,13 @@
   display: flex;
   align-items: center;
 }
+.constructor__wrapper:last-child {
+  margin-bottom: 0;
+}
+.constructor__wrapper:first-child {
+  margin-top: 0;
+}
+
 .constructor__wrapper_activ {
   transition: padding 0.3s ease;
 }
