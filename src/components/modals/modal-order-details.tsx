@@ -3,6 +3,7 @@ import { OrderDetails } from 'components/order-details';
 import { FC } from 'react';
 import { isModalWindowsOrder } from 'services/actions';
 import { useSelector, useDispatch } from 'services/types';
+import { Loading } from 'components/loading';
 
 export const ModalOrderDetails: FC = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ export const ModalOrderDetails: FC = () => {
 
   return (
     <Modal closeModalWindows={isModalWindows}>
-      <OrderDetails order={order} />
+      {!order ? <Loading /> : <OrderDetails order={order} />}
     </Modal>
   );
 };

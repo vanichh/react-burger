@@ -12,22 +12,20 @@ export const PaymentConstructor: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { isAuth } = useSelector(store => store.user);
+  const { isAuth } = useSelector((store) => store.user);
 
   const { bunConstructor, ingridientsConstructor, orderSum } = useSelector(
-    store => store.burgerConstructor
+    (store) => store.burgerConstructor
   );
 
   const isThereIngridients =
-    !bunConstructor || !ingridientsConstructor.length ? false : true;
+    !bunConstructor || !ingridientsConstructor.length ? null : true;
 
   const handlerOreder = () => {
-    if (isThereIngridients) {
-      if (!isAuth) {
-        return history.replace({ pathname: '/login' });
-      }
-      dispatch(getNumberOrder());
+    if (!isAuth) {
+      return history.replace({ pathname: '/login' });
     }
+    dispatch(getNumberOrder());
   };
 
   return (
@@ -36,7 +34,11 @@ export const PaymentConstructor: FC = () => {
         <p className='text text_type_digits-medium mr-2'>{orderSum}</p>
         <CurrencyIcon type='primary' />
       </div>
-      <Button onClick={handlerOreder} type='primary' size='large'>
+      <Button
+        onClick={isThereIngridients && handlerOreder}
+        type='primary'
+        size='large'
+      >
         Оформить заказ
       </Button>
     </div>

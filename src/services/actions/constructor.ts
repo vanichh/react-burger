@@ -67,6 +67,9 @@ export const changeStateElem = (type: 'add' | 'del', item: IDataProps) => {
 };
 
 export const getNumberOrder: TThunks = () => async (dispatch, getState) => {
+  
+  dispatch(isModalWindowsOrder(true));
+  
   const { bunConstructor, ingridientsConstructor, order } =
     getState().burgerConstructor;
 

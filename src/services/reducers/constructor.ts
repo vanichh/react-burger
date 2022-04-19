@@ -17,7 +17,7 @@ interface InitialState {
   isModalOpen: boolean;
   orderSum: number;
   bunConstructor: IDataProps | null;
-  countIngridientsConstructor: { [key: string]: number };
+  countIngridientsConstructor: Record<string, number>;
 }
 
 export const initialState: InitialState = {
@@ -90,7 +90,7 @@ export const constructorReducer = (
         orderSum:
           state.orderSum +
           action.item.price * 2 -
-          (state.bunConstructor? state.bunConstructor.price * 2 : 0),
+          (state.bunConstructor ? state.bunConstructor.price * 2 : 0),
         countIngridientsConstructor: {
           ...state.countIngridientsConstructor,
           [action.item._id]: 2,
