@@ -9,11 +9,11 @@ import { addBunConstructor } from 'services/actions';
 import { IDataProps } from 'utils/types';
 import cn from 'classnames';
 
-const CLASS_NAME_TEXT_CONSTRUCTOR = `${styles.constructor__text_default} text text_type_main-default`;
+const CLASS_NAME_TEXT = `${styles.constructor__text_default} text text_type_main-default`;
 
 // дефолтное состояние без ингридиентов
 const DefaultIngridient: FC = () => (
-  <p className={CLASS_NAME_TEXT_CONSTRUCTOR}>
+  <p className={CLASS_NAME_TEXT}>
     Пожалуйста, перенесите сюда булку и ингредиенты для создания заказа
   </p>
 );
