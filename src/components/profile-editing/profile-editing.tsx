@@ -3,7 +3,7 @@ import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState, useRef, useEffect, FC, MutableRefObject } from 'react';
 import { useSelector, useDispatch } from 'services/types';
 import { updateUser } from 'services/actions/user';
-import { Form } from '../form';
+import { Form } from '../../ui/form';
 import { useInputValue } from 'utils/hooks/use-Input-value';
 
 type TThisHandle = 'name' | 'email' | 'password';

@@ -8,8 +8,8 @@ import { FC, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'services/types';
 import { registrationUser } from 'services/actions/user';
-import { Wrapper } from 'components/wrapper';
-import { Form } from 'components/form';
+import { Wrapper } from 'ui/wrapper';
+import { Form } from 'ui/form';
 import { useInputValue } from 'utils/hooks/use-Input-value';
 
 const initInputValue = { name: '', email: '', password: '' };

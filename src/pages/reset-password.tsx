@@ -8,8 +8,8 @@ import { useSelector, useDispatch } from 'services/types';
 import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import { newPassword } from 'services/actions/user';
 import styles from './page.module.css';
-import { Wrapper } from 'components/wrapper';
-import { Form } from 'components/form';
+import { Wrapper } from 'ui/wrapper';
+import { Form } from 'ui/form';
 import { useInputValue } from 'utils/hooks';
 
 type TIcon = 'ShowIcon' | 'HideIcon';

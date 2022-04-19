@@ -11,8 +11,8 @@ import styles from './page.module.css';
 import { useDispatch } from 'services/types';
 import { useSelector } from 'services/types';
 import { authorizationUser } from 'services/actions/user';
-import { Wrapper } from 'components/wrapper';
-import { Form } from 'components/form';
+import { Wrapper } from 'ui/wrapper';
+import { Form } from 'ui/form';
 import { useInputValue } from 'utils/hooks/use-Input-value';
 
 const initInputValue = { email: '', password: '' };

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { ProfileEditing } from 'components/profile-editing';
 import { ProfileOrders } from 'components/profile-orders';
 import { Route, Switch } from 'react-router-dom';
-import { Wrapper } from 'components/wrapper';
+import { Wrapper } from 'ui/wrapper';
 import { MenuProfile } from 'components/menu-profile';
 
 const style = { alignItems: 'start' };

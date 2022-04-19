@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { FC } from 'react';
 import { IngredientDetails } from 'components/ingredient-details/ingredient-details';
-import { Wrapper } from 'components/wrapper';
+import { Wrapper } from 'ui/wrapper';
 import { useSelector } from 'services/types/';
 import { NotFound404 } from './not-found-404';
 import styles from './page.module.css';

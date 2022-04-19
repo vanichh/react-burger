@@ -8,6 +8,10 @@
   display: block;
 }
 
+.container:first-child{
+  margin-top: 0;
+}
+
 .title {
   display: flex;
 }

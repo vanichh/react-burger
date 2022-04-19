@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { FC, useEffect } from 'react';
-import { Wrapper } from 'components/wrapper';
+import { Wrapper } from 'ui/wrapper';
 import { useSelector, useDispatch } from 'services/types';
 import { startWSOrdersAll } from 'services/actions';
 import { OrdeInfo } from 'components/order-info';
