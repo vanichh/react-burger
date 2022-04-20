@@ -4,9 +4,9 @@ const transliteTime = (
 ): string => {
   switch (number) {
     case 0:
-      return 'Сегодня ';
+      return 'Сегодня';
     case 1:
-      return 'Вчера ';
+      return 'Вчера';
     default:
       const newNumber = number % 10;
       if (newNumber > 10 && newNumber < 20) {
@@ -20,15 +20,13 @@ const transliteTime = (
   }
 };
 
-export const formatTime = (time: string): string => {
-  const date = new Date(time);
-  const dataUnix = Math.round(date.getTime() / 1000);
-  const currentDataUnix = Math.round(new Date().getTime() / 1000);
-  const differenceday = Math.round((currentDataUnix - dataUnix) / 86400);
-  const dayOrder = transliteTime(differenceday);
-  const hourAndMinute = Intl.DateTimeFormat('ru', {
+export const formatTime = (timeUnix: string): string => {
+  const date = new Date(timeUnix);
+  const differenceday = new Date().getDate() - date.getDate();
+  const day = transliteTime(differenceday);
+  const time = Intl.DateTimeFormat('ru', {
     timeStyle: 'short',
   }).format(date);
   const timeZpne = ` I-GTM${Math.floor(date.getTimezoneOffset() / 60)}`;
-  return `${dayOrder} ${hourAndMinute} ${timeZpne} `;
+  return `${day} ${time} ${timeZpne}`;
 };
