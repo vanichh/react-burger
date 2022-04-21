@@ -1,12 +1,12 @@
 /* eslint-disable no-sequences */
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { useSelector } from 'services/types';
 import { useParams } from 'react-router-dom';
 import { formatTime } from 'utils/format-time';
 import styles from './order-info.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ListIngridients } from './list-ingridients';
-import { statusOrder } from './status-order'
+import { statusOrder } from './status-order';
 
 const CLASS_NAME_TIME = `text text_type_main-small text_color_inactive`;
 const CLASS_NAME_PRICE = `${styles.price} text text_type_digits-default mr-3`;
@@ -27,15 +27,13 @@ export const OrdeInfo: FC = () => {
   );
 
   const ingridientsOrder = Object.entries(
-    ingredients.reduce(
-      (acum: { [key: string]: number }, id) => (
-        (acum[id] = (acum[id] || 0) + 1), acum
-      ),
+    ingredients.reduce<Record<string, number>>(
+      (acum, id) => ((acum[id] = (acum[id] || 0) + 1), acum),
       {}
     )
   );
 
-  const timeOrder = formatTime(createdAt);
+  const timeOrder = useMemo(() => formatTime(createdAt), [createdAt]);
 
   return (
     <div className={styles.container}>

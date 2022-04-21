@@ -11,6 +11,8 @@ interface IListIngridients {
 
 type TIngridients = Array<IDataProps & { count: number }>;
 
+const CLASS_NAME_PRICE = `${styles.item__count} mr-4 text text_type_digits-default`;
+
 export const ListIngridients: FC<IListIngridients> = (props) => {
   const { ingridientsOrder, listIgridients } = props;
 
@@ -27,11 +29,7 @@ export const ListIngridients: FC<IListIngridients> = (props) => {
             <img src={image_mobile} alt={name} />
           </div>
           <p className='ml-4 mr-4 text text_type_main-default'>{name}</p>
-          <p
-            className={`${styles.item__count} mr-4 text text_type_digits-default`}
-          >
-            {count} x {price}
-          </p>
+          <p className={CLASS_NAME_PRICE}>{`${count} x ${price}`}</p>
           <div className={styles.icon}>
             <CurrencyIcon type='primary' />
           </div>

@@ -19,7 +19,7 @@ interface IPropsIngredientConstructor {
 // падиннги для создания пустого пространсва при DnD
 const PADDING_TOP = 'pt-25';
 const PADDING_BOTTOM = 'pb-25';
-const CLASS_NAME_WRAPPER = `${styles.constructor__wrapper}  m-4`;
+const CLASS_NAME_WRAPPER = `${styles.constructor__wrapper} m-4`;
 
 export const IngredientConstructor: FC<IPropsIngredientConstructor> = memo(
   ({ ingredient, index }) => {
