@@ -53,7 +53,7 @@ export const ProfileEditing: FC = () => {
   }, [isDisable]);
 
   useEffect(() => {
-    setValue((prev) => ({ ...prev, name: name, email: email }));
+    setValue((prev) => ({ ...prev, name, email }));
   }, [name, email]);
 
   return (

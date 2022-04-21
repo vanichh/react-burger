@@ -17,6 +17,8 @@ type TTypeInput = 'password' | 'text';
 
 const initInputValue = { password: '', codeEmail: '' };
 
+const CLASS_NAME_CALL = 'text text_type_main-default text_color_inactive mr-4';
+
 export const ResetPassword: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -91,9 +93,7 @@ export const ResetPassword: FC = () => {
         </div>
       </Form>
       <div className={`${styles.aligin_text} mb-4`}>
-        <p className='text text_type_main-default text_color_inactive mr-4'>
-          Вспомнили пароль?
-        </p>
+        <p className={CLASS_NAME_CALL}>Вспомнили пароль?</p>
         <Link to='/register'>
           <p className='text text_type_main-default'>Войти</p>
         </Link>

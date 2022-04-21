@@ -14,6 +14,9 @@ import { useInputValue } from 'utils/hooks/use-Input-value';
 
 const initInputValue = { name: '', email: '', password: '' };
 
+const CLASS_NAME_QUESTION =
+  'text text_type_main-default text_color_inactive mr-4';
+
 export const RegisterPage: FC = () => {
   const dispatch = useDispatch();
 
@@ -68,9 +71,7 @@ export const RegisterPage: FC = () => {
         </div>
       </Form>
       <div className={styles.aligin_text}>
-        <p className='text text_type_main-default text_color_inactive mr-4'>
-          Уже зарегистрированы?
-        </p>
+        <p className={CLASS_NAME_QUESTION}>Уже зарегистрированы?</p>
         <Link to='/login'>
           <p className='text text_type_main-default'>Войти</p>
         </Link>
