@@ -16,8 +16,8 @@ const CLASS_NAME_NUMBER = `text text_type_digits-default ${styles['number-order'
 export const OrdeInfo: FC = () => {
   const { id } = useParams<{ id: string }>();
   const { name, number, status, createdAt, ingredients } = useSelector(
-    (store) => store.wsOrders.ordersList
-  ).find(({ _id }) => _id === id);
+    (store) => store.wsOrders.ordersList.find(({ _id }) => _id === id)
+  );
 
   const { listIgridients } = useSelector((store) => store.igridients);
 
