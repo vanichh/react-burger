@@ -4,7 +4,7 @@ import { useDrop } from 'react-dnd';
 import { useSelector, useDispatch } from 'services/types';
 import { changeStateElem } from 'services/actions/constructor';
 import { IngredientConstructor } from './ingredient-constructor';
-import BunBurger from './bun-ingredient-constructor';
+import { BunBurger } from './bun-ingredient-constructor';
 import { addBunConstructor } from 'services/actions';
 import { IDataProps } from 'utils/types';
 import cn from 'classnames';
