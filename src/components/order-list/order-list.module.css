@@ -55,7 +55,7 @@
 .list {
   width: 600px;
   overflow-y: scroll;
-  max-height: calc(100vh - 188px);
+  max-height: calc(100vh - 208px);
 }
 
 .list::-webkit-scrollbar {
