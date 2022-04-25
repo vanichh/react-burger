@@ -36,7 +36,7 @@ export const MenuProfile: FC = () => {
         Выход
       </NavLink>
       <p className='text text_type_main-default text_color_inactive mt-20'>
-        В этом разделе вы сможите изменить персольнальные данные
+        В этом разделе вы сможете изменить персональные данные
       </p>
     </nav>
   );
